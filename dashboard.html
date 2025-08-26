@@ -1,0 +1,2230 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Caption Dashboard</title>
+    <style>
+        :root {
+            --bg: #0e0f12;
+            --panel: #15171c;
+            --panel-2: #1b1f26;
+            --border: #242833;
+            --text: #e8eaf0;
+            --muted: #9aa0a6;
+            --accent: #3b82f6;
+            --accent-2: #1d4ed8;
+            --success: #22c55e;
+            --danger: #ef4444;
+            --radius: 12px;
+            --shadow: 0 10px 30px rgba(0,0,0,0.35);
+        }
+
+        * { box-sizing: border-box; }
+        html, body { height: 100%; }
+        body {
+            margin: 0;
+            padding: 24px;
+            background: radial-gradient(1200px 800px at 10% -10%, rgba(59,130,246,0.06), transparent 60%),
+                        radial-gradient(1000px 700px at 100% 0%, rgba(16,185,129,0.05), transparent 60%),
+                        var(--bg);
+            color: var(--text);
+            font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        h1 { text-align: center; margin: 0 0 18px; font-weight: 700; letter-spacing: .2px; }
+        h2, h3 { text-align: center; margin: 0 0 14px; font-weight: 600; }
+
+        .container {
+            display: flex; gap: 20px; justify-content: space-between; flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        .column {
+            flex: 1; min-width: 260px;
+            padding: 18px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015));
+            box-shadow: var(--shadow);
+        }
+        .preview-section {
+            padding: 18px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            margin-top: 20px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015));
+            box-shadow: var(--shadow);
+        }
+
+        /* Inputs */
+        label { 
+            font-size: 12px; 
+            color: var(--muted); 
+            display: block; 
+            margin: 16px 0 8px; 
+            font-weight: 500;
+        }
+        input, select, button {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: var(--panel);
+            color: var(--text);
+            font-size: 14px;
+            outline: none;
+            transition: border-color .2s ease, box-shadow .2s ease, background-color .2s ease, transform .08s ease;
+            margin-bottom: 8px;
+        }
+        input:focus, select:focus { 
+            border-color: var(--accent); 
+            box-shadow: 0 0 0 4px rgba(59,130,246,0.2); 
+        }
+
+        /* Buttons */
+        button {
+            background: linear-gradient(180deg, rgba(59,130,246,0.16), rgba(59,130,246,0.08));
+            border-color: rgba(59,130,246,0.35);
+            font-weight: 600; 
+            letter-spacing: .2px; 
+            cursor: pointer;
+            margin-bottom: 12px;
+            padding: 14px 20px;
+        }
+        button:hover { 
+            box-shadow: 0 2px 14px rgba(59,130,246,0.25); 
+        }
+        button:active { 
+            transform: translateY(1px); 
+        }
+        button:disabled { 
+            background: #21242c; 
+            color: #6b7280; 
+            border-color: #2b3040; 
+            cursor: not-allowed; 
+        }
+
+        .danger { 
+            background: linear-gradient(180deg, rgba(239,68,68,0.2), rgba(239,68,68,0.12)); 
+            border-color: rgba(239,68,68,0.45); 
+        }
+        .success { 
+            background: linear-gradient(180deg, rgba(34,197,94,0.18), rgba(34,197,94,0.10)); 
+            border: 1px solid rgba(34,197,94,0.45);
+            color: var(--text);
+            border-radius: 8px;
+            padding: 10px 14px;
+            cursor: pointer;
+            margin: 0;
+            width: auto;
+        }
+        .success:hover {
+            box-shadow: 0 2px 12px rgba(34,197,94,0.25);
+        }
+        
+        .secondary {
+            background: linear-gradient(180deg, rgba(107,114,128,0.18), rgba(107,114,128,0.10));
+            border: 1px solid rgba(107,114,128,0.45);
+            color: var(--text);
+            border-radius: 8px;
+            padding: 10px 14px;
+            cursor: pointer;
+            margin: 0 0 0 10px;
+            width: auto;
+        }
+        .secondary:hover {
+            box-shadow: 0 2px 12px rgba(107,114,128,0.25);
+        }
+
+        .status { 
+            margin-top: 16px; 
+            margin-bottom: 24px;
+            font-weight: 700; 
+            color: var(--muted); 
+            padding: 12px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+        .links div { 
+            margin: 12px 0; 
+            color: var(--muted); 
+            padding: 8px 0;
+        }
+
+        /* Table */
+        table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            margin-top: 20px; 
+        }
+        thead th {
+            position: sticky; 
+            top: 0; 
+            z-index: 1;
+            background: var(--panel-2); 
+            color: var(--text);
+        }
+        th, td { 
+            border: 1px solid var(--border); 
+            padding: 14px 12px; 
+            text-align: left; 
+            font-size: 14px; 
+        }
+        tbody tr:nth-child(even) { 
+            background: rgba(255,255,255,0.02); 
+        }
+
+        .edit-btn, .delete-btn { 
+            background: linear-gradient(180deg, rgba(59,130,246,0.2), rgba(59,130,246,0.12)); 
+            border: 1px solid rgba(59,130,246,0.45); 
+            color: var(--text); 
+            border-radius: 8px; 
+            padding: 10px 14px; 
+            cursor: pointer; 
+            margin: 0 5px 0 0;
+            width: auto;
+        }
+        .edit-btn:hover { 
+            box-shadow: 0 2px 12px rgba(59,130,246,0.25); 
+        }
+        
+        .delete-btn { 
+            background: linear-gradient(180deg, rgba(239,68,68,0.2), rgba(239,68,68,0.12)); 
+            border: 1px solid rgba(239,68,68,0.45); 
+        }
+        .delete-btn:hover { 
+            box-shadow: 0 2px 12px rgba(239,68,68,0.25); 
+        }
+
+        /* Scheduler accessibility enhancements */
+        .scheduler input[type="date"], .scheduler select {
+            padding: 12px 16px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--panel-2);
+            color: var(--text);
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+        .scheduler select {
+            min-width: 80px;
+        }
+        
+        /* Checkbox and toggle styling */
+        .scheduler .checkbox-group {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        
+        .scheduler .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .scheduler .checkbox-item input[type="checkbox"] {
+            width: auto;
+            margin: 0;
+        }
+        
+        .scheduler .checkbox-item label {
+            margin: 0;
+            font-size: 14px;
+            color: var(--text);
+        }
+        
+        /* Scheduler specific spacing */
+        .scheduler h2 {
+            margin-bottom: 24px;
+        }
+        
+        .scheduler h3 {
+            margin-top: 32px;
+            margin-bottom: 20px;
+        }
+        
+        /* Active event styling */
+        .active-event {
+            background-color: rgba(34, 197, 94, 0.1) !important;
+            border-left: 4px solid var(--success) !important;
+            font-weight: 500;
+        }
+        
+        /* Schedule table improvements */
+        #schedule-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        #schedule-table th,
+        #schedule-table td {
+            padding: 16px 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        #schedule-table th {
+            background: var(--panel-2);
+            font-weight: 600;
+            color: var(--muted);
+            font-size: 14px;
+        }
+        
+        #schedule-table tr:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+        
+        .time-selector {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        
+        .time-selector select {
+            flex: 1;
+            min-width: 0;
+            margin-bottom: 0;
+        }
+        
+        /* Make minute dropdowns scrollable with limited height */
+        .time-selector select[id*="minute"] {
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .time-separator {
+            color: var(--muted);
+            font-size: 16px;
+            font-weight: 600;
+            user-select: none;
+        }
+        
+        .hint { 
+            font-size: 12px; 
+            color: var(--muted); 
+            margin-top: 4px; 
+            margin-bottom: 16px; 
+        }
+
+        /* Column spacing improvements */
+        .column {
+            flex: 1; 
+            min-width: 260px;
+            padding: 24px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015));
+            box-shadow: var(--shadow);
+        }
+        
+        .column h2 {
+            margin-bottom: 24px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .column h3 {
+            margin-top: 28px;
+            margin-bottom: 18px;
+        }
+
+        /* Preview container tweaks */
+        .preview-container { 
+            border-radius: var(--radius) !important; 
+            border-color: var(--border) !important; 
+            box-shadow: var(--shadow); 
+        }
+        
+        .preview-section {
+            padding: 24px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            margin-top: 24px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015));
+            box-shadow: var(--shadow);
+        }
+        
+        .preview-section h2 {
+            margin-bottom: 20px;
+        }
+
+        /* Additional spacing improvements */
+        .container {
+            display: flex; 
+            gap: 24px; 
+            justify-content: space-between; 
+            flex-wrap: wrap;
+            margin-bottom: 24px;
+        }
+        
+        /* Duration display styling */
+        .duration-display {
+            margin: 16px 0;
+            padding: 12px;
+            background: rgba(255,255,255,0.02);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            color: var(--muted);
+            font-size: 14px;
+            text-align: center;
+        }
+        
+        /* Form group spacing */
+        .form-group {
+            margin-bottom: 12px;
+        }
+        
+        /* Form row layout for condensed settings */
+        .form-row {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 12px;
+        }
+        
+        .form-group.half {
+            flex: 1;
+            margin-bottom: 0;
+        }
+        
+        .form-group.third {
+            flex: 1;
+            margin-bottom: 0;
+        }
+        
+        .form-group.quarter {
+            flex: 1;
+            margin-bottom: 0;
+            min-width: 0;
+        }
+        
+        .form-group.third {
+            flex: 1;
+            margin-bottom: 0;
+            min-width: 0;
+        }
+        
+        /* Ensure all form fields have consistent width */
+        .form-group.quarter input,
+        .form-group.quarter select {
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        /* Ensure consistent spacing and alignment */
+        .form-row {
+            align-items: flex-end;
+        }
+        
+        .form-group.quarter label {
+            display: block;
+            margin-bottom: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text);
+        }
+        
+        /* Settings section styling */
+        .settings-section {
+            margin-bottom: 20px;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+        
+        .settings-section h3 {
+            margin: 0 0 12px 0;
+            color: var(--text);
+            font-size: 16px;
+            font-weight: 600;
+        }
+        
+        .settings-section:last-child {
+            margin-bottom: 0;
+        }
+        
+        /* Responsive design for form rows */
+        @media (max-width: 1200px) {
+            .form-row {
+                gap: 12px;
+            }
+            
+            .form-group.quarter {
+                flex: 0 0 calc(50% - 6px);
+            }
+            
+            .form-group.third {
+                flex: 0 0 calc(50% - 6px);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .form-row {
+                flex-direction: column;
+                gap: 12px;
+            }
+            
+            .form-group.half,
+            .form-group.third,
+            .form-group.quarter {
+                flex: none;
+            }
+        }
+        
+        /* Button group spacing */
+        .button-group {
+            margin-bottom: 24px;
+        }
+        
+        .button-group button {
+            margin-bottom: 8px;
+        }
+        
+        /* Status and links section improvements */
+        .status-section {
+            margin-top: 24px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+        }
+        
+        .links-section {
+            margin-top: 24px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+        }
+        
+        /* Table improvements */
+        .table-container {
+            margin-top: 20px;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+        
+        /* Input group styling */
+        .input-group {
+            margin-bottom: 20px;
+        }
+        
+        .input-group label {
+            margin-bottom: 8px;
+        }
+        
+        .input-group input,
+        .input-group select {
+            margin-bottom: 0;
+        }
+
+        /* View Settings specific spacing */
+        .settings-section .form-group {
+            margin-bottom: 12px;
+        }
+        
+        .settings-section label {
+            margin: 8px 0 4px;
+        }
+        
+        .settings-section input,
+        .settings-section select {
+            margin-bottom: 4px;
+            padding: 8px 12px;
+        }
+        
+        .settings-section .hint {
+            margin-top: 2px;
+            margin-bottom: 8px;
+        }
+        
+        .settings-section .button-group {
+            margin-bottom: 12px;
+        }
+        
+        .settings-section .button-group button {
+            margin-bottom: 4px;
+            padding: 8px 14px;
+        }
+
+        /* Schedule section specific spacing */
+        .scheduler .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .scheduler label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: var(--text);
+        }
+        
+        .scheduler input,
+        .scheduler select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            background: var(--panel-2);
+            color: var(--text);
+        }
+        
+        .scheduler .time-selector {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .scheduler .time-selector select {
+            width: auto;
+            min-width: 60px;
+        }
+        
+        .scheduler .time-input {
+            width: 60px !important;
+            text-align: center;
+            padding: 8px 4px;
+        }
+        
+        .scheduler .timezone-select {
+            width: 100%;
+        }
+        
+        /* Schedule form row styling */
+        .scheduler .form-row {
+            margin-bottom: 20px;
+        }
+        
+        .scheduler .form-group.quarter {
+            margin-bottom: 0;
+        }
+        
+        /* Time selector styling within quarter layout */
+        .scheduler .time-selector {
+            display: flex;
+            gap: 4px;
+            align-items: center;
+        }
+        
+        .scheduler .time-input {
+            flex: 1;
+            min-width: 0;
+            text-align: center;
+        }
+        
+        .scheduler .time-separator {
+            color: var(--muted);
+            font-size: 14px;
+            font-weight: 600;
+            user-select: none;
+            flex-shrink: 0;
+        }
+        
+        .scheduler .time-selector select {
+            flex: 1;
+            min-width: 0;
+        }
+        
+
+        
+        .scheduler .repeats-section {
+            background: var(--panel-2);
+            padding: 15px;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+            margin-top: 15px;
+        }
+        
+        .scheduler .interval-input {
+            width: 60px !important;
+            display: inline-block;
+            margin: 0 5px;
+        }
+        
+
+        
+        .scheduler .ending-details {
+            margin-top: 10px;
+        }
+        
+        .scheduler .ending-details input {
+            width: auto !important;
+            min-width: 120px;
+        }
+        
+        .scheduler .button-group {
+            margin-top: 20px;
+        }
+        
+        .scheduler .button-group button {
+            width: 100%;
+        }
+        
+        .scheduler h3 {
+            margin-top: 30px;
+            margin-bottom: 15px;
+            color: var(--text);
+        }
+        
+        .scheduler .table-container {
+            margin-top: 15px;
+        }
+        
+        .scheduler .active-status {
+            color: var(--success);
+            font-weight: 600;
+        }
+        
+        .scheduler .paused-status {
+            color: var(--danger);
+            font-weight: 600;
+        }
+
+        @media (max-width: 980px) {
+            .container { gap: 16px; }
+            .column { padding: 20px; }
+            .preview-section { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <h1>Live Caption Dashboard</h1>
+    <div class="container">
+        <div class="column">
+            <h2>Controls</h2>
+            <div class="button-group">
+                <button onclick="startRecognition()">Start Recognition</button>
+                <button onclick="stopRecognition()">Stop Recognition</button>
+                <button onclick="saveTranscript()">Save Transcript</button>
+                <button onclick="window.open('/user')">Open User View Window</button>
+                <button onclick="window.open('/')">Open Production View Window</button>
+                <button onclick="window.open('/dictionary_page')">Custom Dictionary</button>
+            </div>
+            
+            <div class="status-section">
+                <h3>System Status</h3>
+                <div class="status">
+                    <div id="recognition-status">Checking recognition status...</div>
+                    <div id="emergency-shutoff-status" style="margin-top: 8px; padding: 8px; background: rgba(255, 193, 7, 0.1); border-radius: 4px; border-left: 3px solid #ffc107; display: none;">
+                        <strong>⚠️ Emergency Shutoff Active:</strong> 
+                        <span id="emergency-shutoff-timer">25:00</span> remaining
+                    </div>
+                </div>
+            </div>
+
+            <div class="links-section">
+                <h3>Remote Access Links</h3>
+                <div class="links">
+                    <div>User View: <span id="user-view-ip">Loading...</span></div>
+                    <div>Production View: <span id="production-view-ip">Loading...</span></div>
+                    <div id="local-ip">Local IP: Loading...</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="column">
+            <h2>View Settings</h2>
+            
+            <!-- Production Settings Section -->
+            <div class="settings-section">
+                <h3>Production View</h3>
+                <div class="form-row">
+                    <div class="form-group quarter">
+                        <label>Font Size (px): <input type="number" id="font_size"></label>
+                    </div>
+                    <div class="form-group quarter">
+                        <label>Font Style:
+                            <select id="font_style">
+                                <option>Arial</option>
+                                <option>Helvetica</option>
+                                <option>Times New Roman</option>
+                                <option>Courier New</option>
+                            </select>
+                        </label>
+                    </div>
+                    <div class="form-group quarter">
+                        <label>Background Color: <input type="color" id="bg_color"></label>
+                    </div>
+                    <div class="form-group quarter">
+                        <label>Text Color: <input type="color" id="text_color"></label>
+                    </div>
+                </div>
+                
+                <div class="hint">
+                    <strong>Position Guide:</strong><br>
+                    • <strong>Top:</strong> Text at top with X/Y padding<br>
+                    • <strong>Middle:</strong> Text centered vertically with X padding<br>
+                    • <strong>Bottom:</strong> Text at bottom with X/Y padding (default)
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group quarter">
+                        <label>Position:
+                            <select id="preview_position">
+                                <option>Top</option>
+                                <option>Middle</option>
+                                <option>Bottom</option>
+                            </select>
+                        </label>
+                    </div>
+                    <div class="form-group quarter">
+                        <label>X Padding (px): <input type="number" id="main_text_position_x" min="0"></label>
+                    </div>
+                    <div class="form-group quarter">
+                        <label>Y Padding (px): <input type="number" id="main_text_position_y" min="0"></label>
+                    </div>
+                    <div class="form-group quarter">
+                        <label>Max Line Length: <input type="number" id="max_line_length" min="10" max="300" value="90"></label>
+                    </div>
+                </div>
+                
+
+                
+                <div class="form-row">
+                    <div class="form-group quarter">
+                        <label>Number of Lines: <input type="number" id="max_lines" min="1" max="10"></label>
+                    </div>
+                </div>
+                
+                <div class="button-group">
+                    <button class="success" onclick="resetSettings()">Default Settings</button>
+                    <button class="danger" onclick="clearProductionCaptions()">Clear All Captions</button>
+                </div>
+            </div>
+            
+            <!-- User Settings Section -->
+            <div class="settings-section">
+                <h3>User View (Defaults)</h3>
+                <div class="form-row">
+                    <div class="form-group quarter">
+                        <label>Font Size (px): <input type="number" id="user_font_size" min="12" max="72"></label>
+                    </div>
+                    <div class="form-group quarter">
+                        <label>Font Style:
+                            <select id="user_font_style">
+                                <option value="Arial">Arial</option>
+                                <option value="Helvetica">Helvetica</option>
+                                <option value="Times New Roman">Times New Roman</option>
+                                <option value="Courier New">Courier New</option>
+                            </select>
+                        </label>
+                    </div>
+                    <div class="form-group quarter">
+                        <label>Background Color: <input type="color" id="user_bg_color"></label>
+                    </div>
+                    <div class="form-group quarter">
+                        <label>Text Color: <input type="color" id="user_text_color"></label>
+                    </div>
+                   
+
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group quarter">
+                        <label>Max Line Length: <input type="number" id="user_max_line_length" min="10" max="2000"></label>
+                    </div>
+                    <div class="form-group quarter">
+                        <label>Number of Lines: <input type="number" id="user_lines" min="1" max="20"></label>
+                    </div>
+                </div>
+                
+                <div class="button-group">
+                    <button class="success" onclick="resetUserSettings()">Default User Settings</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="column scheduler">
+            <h2><i class="clock-icon">🕐</i> Schedule</h2>
+            
+            <div class="form-row">
+                <div class="form-group quarter">
+                    <label>START DATE</label>
+                    <input type="date" id="schedule_date" class="date-input">
+                </div>
+                
+                <div class="form-group quarter">
+                    <label>START TIME</label>
+                    <div class="time-selector">
+                        <input type="number" id="start_hour" min="1" max="12" placeholder="Hour" class="time-input">
+                        <span class="time-separator">:</span>
+                        <input type="number" id="start_minute" min="0" max="59" placeholder="Min" class="time-input">
+                        <select id="start_ampm">
+                            <option value="AM">AM</option>
+                            <option value="PM">PM</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group quarter">
+                    <label>END TIME</label>
+                    <div class="time-selector">
+                        <input type="number" id="stop_hour" min="1" max="12" placeholder="Hour" class="time-input">
+                        <span class="time-separator">:</span>
+                        <input type="number" id="stop_minute" min="0" max="59" placeholder="Min" class="time-input">
+                        <select id="stop_ampm">
+                            <option value="AM">AM</option>
+                            <option value="PM">PM</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group quarter">
+                    <label>TIMEZONE</label>
+                    <select id="timezone" class="timezone-select">
+                        <option value="America/New_York" selected>America/New_York</option>
+                        <option value="America/Chicago">America/Chicago</option>
+                        <option value="America/Denver">America/Denver</option>
+                        <option value="America/Los_Angeles">America/Los_Angeles</option>
+                        <option value="UTC">UTC</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="form-group checkbox-group">
+                <div class="checkbox-item">
+                    <input type="checkbox" id="pause_event">
+                    <label for="pause_event">Pause Event</label>
+                </div>
+                
+                <div class="checkbox-item">
+                    <input type="checkbox" id="repeats" checked>
+                    <label for="repeats">Repeats</label>
+                </div>
+            </div>
+            
+            <div id="repeats-section" class="repeats-section">
+                <div class="form-row">
+                    <div class="form-group third">
+                        <label>REPEATS</label>
+                        <select id="recurrence_type">
+                            <option value="one-time">One-time</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly" selected>Monthly</option>
+                            <option value="yearly">Yearly</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group third">
+                        <label>EVERY</label>
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <input type="number" id="recurrence_interval" value="1" min="1" max="99" class="interval-input">
+                            <span id="interval_unit">month</span>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group third">
+                        <label>ENDING</label>
+                        <select id="ending_type">
+                            <option value="never" selected>Never</option>
+                            <option value="after_occurrences">After</option>
+                            <option value="on_date">On</option>
+                        </select>
+                        <div id="ending_details" class="ending-details" style="display: none;">
+                            <input type="number" id="ending_occurrences" placeholder="occurrences" min="1" style="display: none;">
+                            <input type="date" id="ending_date" style="display: none;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="button-group">
+                <button class="success" id="save-schedule-btn" onclick="saveSchedule()">Save Schedule</button>
+                <button class="secondary" id="cancel-edit-btn" onclick="cancelEdit()" style="display: none;">Cancel Edit</button>
+            </div>
+
+            <h3>Scheduled Events</h3>
+            <div class="table-container">
+                <table id="schedule-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Start Time</th>
+                            <th>End Time</th>
+                            <th>Timezone</th>
+                            <th>Status</th>
+                            <th>Recurrence</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="schedule-body"></tbody>
+                </table>
+            </div>
+            
+
+        </div>
+    </div>
+
+    <div class="preview-section">
+        <h2>Production View Preview</h2>
+        <div class="preview-container" style="position: relative; width: 100%; height: 150px; background-color: #000000; border: 2px solid #333; border-radius: 5px; overflow: hidden;">
+            <div id="preview" style="position: absolute; width: 100%; text-align: left; box-sizing: border-box; font-size: 45px; font-family: Arial; background-color: #000000; color: #FFFFFF; bottom: 0; left: 0; transition: all 0.3s ease; white-space: pre-wrap; line-height: 1.2; padding: 0 0 0 50px;">Waiting for captions...</div>
+        </div>
+    </div>
+
+    <script>
+        let settingsTimeout = null;
+        let userSettingsTimeout = null;
+        const authHeader = 'Basic ' + btoa('admin:Northway12121');
+
+        // WebSocket for captions and status updates
+        const ws = new WebSocket(`ws://${window.location.hostname}:8000/ws/captions?token=Northway12121`);
+        ws.onopen = () => console.log('Dashboard WebSocket connected');
+        ws.onmessage = function(event) {
+            try {
+                const data = JSON.parse(event.data);
+                if (data.type === "caption") {
+                    document.querySelector(".status").textContent = "Status: Connected";
+                    // Only show production captions in the preview (not user captions)
+                    const productionText = data.translations.production && data.translations.production["en-US"];
+                    const userText = data.translations.user && data.translations.user["en-US"];
+                    
+                    // Debug: log what we're receiving
+                    if (productionText || userText) {
+                        console.log('WebSocket caption data:', {
+                            production: productionText,
+                            user: userText,
+                            hasProduction: !!productionText,
+                            hasUser: !!userText
+                        });
+                    }
+                    
+                    // Update preview based on production text
+                    if (productionText !== undefined) {
+                        if (productionText.trim() !== '') {
+                            document.querySelector("#preview").innerHTML = productionText;
+                            console.log('Updated preview with production caption:', productionText);
+                        } else {
+                            document.querySelector("#preview").innerHTML = ""; // Show blank when cleared
+                            console.log('Preview cleared');
+                        }
+                    }
+                } else if (data.type === "settings") {
+                    console.log('Dashboard received settings:', data.settings);
+                    // Update form inputs
+                    Object.keys(data.settings).forEach(key => {
+                        const input = document.getElementById(key);
+                        if (input) {
+                            input.value = data.settings[key];
+                            if ((key === 'font_style' || key === 'preview_position') && input.tagName === 'SELECT') {
+                                const option = input.querySelector(`option[value="${data.settings[key]}"]`);
+                                if (option) option.selected = true;
+                            }
+                        }
+                    });
+                    // Apply settings to preview
+                    applyPreviewSettings(data.settings);
+                }
+            } catch (error) {
+                console.error('Dashboard WebSocket message error:', error);
+            }
+        };
+        ws.onclose = () => {
+            document.querySelector(".status").textContent = "Status: Not connected";
+            console.log('Dashboard WebSocket disconnected');
+        };
+        ws.onerror = error => console.error('Dashboard WebSocket error:', error);
+
+        // Fetch local IP
+        fetch('/get_ip')
+            .then(response => response.json())
+            .then(data => {
+                const ip = data.ip;
+                const port = window.location.port || '8000';
+                document.getElementById('local-ip').textContent = `Local IP: ${ip}`;
+                document.getElementById('user-view-ip').textContent = `${ip}:${port}/user`;
+                document.getElementById('production-view-ip').textContent = `${ip}:${port}/`;
+            })
+            .catch(error => console.error('Failed to fetch IP:', error));
+
+        // Populate time dropdowns
+        function populateTimeDropdowns() {
+            const startHour = document.getElementById('start_hour');
+            const startMinute = document.getElementById('start_minute');
+            const stopHour = document.getElementById('stop_hour');
+            const stopMinute = document.getElementById('stop_minute');
+            
+            // Clear existing options
+            startHour.innerHTML = '<option value="">Hour</option>';
+            startMinute.innerHTML = '<option value="">Min</option>';
+            stopHour.innerHTML = '<option value="">Hour</option>';
+            stopMinute.innerHTML = '<option value="">Min</option>';
+            
+            // Populate hours (1-12)
+            for (let hour = 1; hour <= 12; hour++) {
+                const hourOption = document.createElement('option');
+                hourOption.value = hour.toString();
+                hourOption.textContent = hour.toString();
+                
+                startHour.appendChild(hourOption.cloneNode(true));
+                stopHour.appendChild(hourOption.cloneNode(true));
+            }
+            
+            // Populate minutes (00-59)
+            for (let minute = 0; minute < 60; minute++) {
+                const minuteOption = document.createElement('option');
+                minuteOption.value = minute.toString().padStart(2, '0');
+                minuteOption.textContent = minute.toString().padStart(2, '0');
+                
+                startMinute.appendChild(minuteOption.cloneNode(true));
+                stopMinute.appendChild(minuteOption.cloneNode(true));
+            }
+        }
+
+        // Populate time fields with existing values
+        function populateTimeFields(startTime, stopTime) {
+            if (startTime) {
+                const start12 = convertTo12Hour(startTime);
+                document.getElementById('start_hour').value = start12.hour;
+                document.getElementById('start_minute').value = start12.minute;
+                document.getElementById('start_ampm').value = start12.ampm;
+            }
+            
+            if (stopTime) {
+                const stop12 = convertTo12Hour(stopTime);
+                document.getElementById('stop_hour').value = stop12.hour;
+                document.getElementById('stop_minute').value = stop12.minute;
+                document.getElementById('stop_ampm').value = stop12.ampm;
+            }
+        }
+        
+        // Clear time fields
+        function clearTimeFields() {
+            document.getElementById('start_hour').value = '';
+            document.getElementById('start_minute').value = '';
+            document.getElementById('start_ampm').value = 'AM';
+            document.getElementById('stop_hour').value = '';
+            document.getElementById('stop_minute').value = '';
+            document.getElementById('stop_ampm').value = 'AM';
+        }
+        
+        // Load schedule
+        function loadSchedule() {
+            fetch('/schedule', {
+                headers: { 'Authorization': authHeader }
+            })
+                .then(response => {
+                    if (!response.ok) throw new Error(`Failed to load schedule: ${response.status}`);
+                    return response.json();
+                })
+                .then(schedules => {
+                    const tbody = document.getElementById('schedule-body');
+                    tbody.innerHTML = '';
+                    
+                    // Filter out events that have passed their stop time
+                    const now = new Date();
+                    const currentTime = now.getHours() * 60 + now.getMinutes(); // Convert to minutes for comparison
+                    const currentDate = now.toISOString().split('T')[0]; // YYYY-MM-DD format
+                    
+                    console.log(`Schedule filtering - Current time: ${now.toLocaleString()}, Current time in minutes: ${currentTime}, Current date: ${currentDate}`);
+                    
+                    const activeSchedules = schedules.filter(s => {
+                        // For one-time events, check if they've passed their stop time today
+                        if (s.recurrence_type === 'one-time') {
+                            console.log(`  Checking one-time event: ${s.date} ${s.start_time}-${s.stop_time}`);
+                            if (s.date < currentDate) {
+                                console.log(`    - Past date, removing`);
+                                return false; // Past date, don't show
+                            }
+                            if (s.date === currentDate && s.stop_time) {
+                                const [stopHour, stopMinute] = s.stop_time.split(':').map(Number);
+                                const stopTimeMinutes = stopHour * 60 + stopMinute;
+                                const shouldKeep = currentTime < stopTimeMinutes;
+                                console.log(`    - Today's event, stop time: ${stopTimeMinutes}, current: ${currentTime}, should keep: ${shouldKeep}`);
+                                return shouldKeep; // Only show if stop time hasn't passed
+                            }
+                            console.log(`    - Future date or no stop time, keeping`);
+                            return true; // Future date or no stop time, show it
+                        }
+                        
+                        // For recurring events, check if stop time has passed today
+                        if (s.stop_time) {
+                            const [stopHour, stopMinute] = s.stop_time.split(':').map(Number);
+                            const stopTimeMinutes = stopHour * 60 + stopMinute;
+                            
+                            // Check if today matches the recurrence pattern
+                            let shouldShowToday = false;
+                            const scheduleDate = new Date(s.date);
+                            
+                            if (s.recurrence_type === 'weekly') {
+                                const todayWeekday = now.toLocaleDateString('en-US', { weekday: 'long' }).toLowerCase();
+                                const scheduleWeekday = scheduleDate.toLocaleDateString('en-US', { weekday: 'long' }).toLowerCase();
+                                shouldShowToday = todayWeekday === scheduleWeekday;
+                            } else if (s.recurrence_type === 'monthly') {
+                                shouldShowToday = now.getDate() === scheduleDate.getDate();
+                            } else if (s.recurrence_type === 'yearly') {
+                                const todayMonthDay = `${now.getMonth() + 1}-${now.getDate()}`;
+                                const scheduleMonthDay = `${scheduleDate.getMonth() + 1}-${scheduleDate.getDate()}`;
+                                shouldShowToday = todayMonthDay === scheduleMonthDay;
+                            }
+                            
+                            if (shouldShowToday) {
+                                return currentTime < stopTimeMinutes; // Only show if stop time hasn't passed
+                            }
+                        }
+                        
+                        return true; // Show all other recurring events
+                    });
+                    
+                    console.log(`Schedule filtering complete - Original: ${schedules.length}, Active: ${activeSchedules.length}`);
+                    
+                    activeSchedules.forEach(s => {
+                        const row = document.createElement('tr');
+                        // Format the display date based on recurrence type
+                        let displayDate = s.date;
+                        let isActiveToday = false;
+                        
+                        if (s.recurrence_type === 'weekly') {
+                            const today = new Date();
+                            // Parse date in local timezone to avoid UTC conversion issues
+                            const [year, month, day] = s.date.split('-').map(Number);
+                            const referenceDate = new Date(year, month - 1, day); // month is 0-indexed
+                            const referenceWeekday = referenceDate.toLocaleDateString('en-US', { weekday: 'long' });
+                            // For weekly events, show the reference date and weekday
+                            displayDate = `${referenceDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric' })} (${referenceWeekday})`;
+                            // Check if this weekly event should be active today by comparing with the stored reference date
+                            const referenceWeekdayLower = referenceWeekday.toLowerCase();
+                            isActiveToday = today.toLocaleDateString('en-US', { weekday: 'long' }).toLowerCase() === referenceWeekdayLower;
+                            
+                            // Debug logging for weekly events
+                            console.log(`Weekly event debug - Stored date: ${s.date}, Parsed date: ${referenceDate.toISOString()}, Reference weekday: ${referenceWeekday}, Today: ${today.toLocaleDateString('en-US', { weekday: 'long' }).toLowerCase()}, Is active: ${isActiveToday}`);
+                            
+                            if (isActiveToday) {
+                                displayDate += ' (Today)';
+                            }
+                        } else if (s.recurrence_type === 'monthly') {
+                            const today = new Date();
+                            // Parse date in local timezone to avoid UTC conversion issues
+                            const [year, month, day] = s.date.split('-').map(Number);
+                            const referenceDate = new Date(year, month - 1, day); // month is 0-indexed
+                            isActiveToday = today.getDate() === referenceDate.getDate();
+                            displayDate = `${referenceDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric' })} (Day ${referenceDate.getDate()})${isActiveToday ? ' (Today)' : ''}`;
+                        } else if (s.recurrence_type === 'yearly') {
+                            const today = new Date();
+                            // Parse date in local timezone to avoid UTC conversion issues
+                            const [year, month, day] = s.date.split('-').map(Number);
+                            const referenceDate = new Date(year, month - 1, day); // month is 0-indexed
+                            const todayMonthDay = `${today.getMonth() + 1}-${today.getDate()}`;
+                            const referenceMonthDay = `${referenceDate.getMonth() + 1}-${referenceDate.getDate()}`;
+                            isActiveToday = todayMonthDay === referenceMonthDay;
+                            displayDate = `${referenceDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric' })}${isActiveToday ? ' (Today)' : ''}`;
+                        } else {
+                            // One-time event
+                            // Parse date in local timezone to avoid UTC conversion issues
+                            const [year, month, day] = s.date.split('-').map(Number);
+                            const date = new Date(year, month - 1, day); // month is 0-indexed
+                            const today = new Date();
+                            const todayDate = today.toISOString().split('T')[0];
+                            isActiveToday = s.date === todayDate;
+                            displayDate = `${date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}${isActiveToday ? ' (Today)' : ''}`;
+                        }
+                        
+                        // Convert times to 12-hour format for display
+                        const startTimeDisplay = s.start_time ? convertTo12Hour(s.start_time) : null;
+                        const stopTimeDisplay = s.stop_time ? convertTo12Hour(s.stop_time) : null;
+                        
+                        const startTimeText = startTimeDisplay ? 
+                            `${startTimeDisplay.hour}:${startTimeDisplay.minute} ${startTimeDisplay.ampm}` : '';
+                        const stopTimeText = stopTimeDisplay ? 
+                            `${stopTimeDisplay.hour}:${stopTimeDisplay.minute} ${stopTimeDisplay.ampm}` : '';
+                        
+                        // Format timezone and status
+                        const timezoneText = s.timezone || 'Default';
+                        const statusText = s.pause_event ? 'Paused' : 'Active';
+                        const statusClass = s.pause_event ? 'paused-status' : 'active-status';
+                        
+                        // Add visual indication for active events
+                        const rowClass = isActiveToday ? 'active-event' : '';
+                        
+                        row.innerHTML = `
+                            <td class="${rowClass}">${displayDate}</td>
+                            <td>${startTimeText}</td>
+                            <td>${stopTimeText}</td>
+                            <td>${timezoneText}</td>
+                            <td class="${statusClass}">${statusText}</td>
+                            <td>${s.recurrence_type.charAt(0).toUpperCase() + s.recurrence_type.slice(1)}</td>
+                            <td>
+                                <button class="edit-btn" onclick="editSchedule('${s.date}')">Edit</button>
+                                <button class="delete-btn" onclick="deleteSchedule('${s.date}')">Delete</button>
+                            </td>
+                        `;
+                        
+                        // Add visual styling for active events
+                        if (isActiveToday) {
+                            row.style.backgroundColor = 'rgba(34, 197, 94, 0.1)';
+                            row.style.borderLeft = '4px solid #22c55e';
+                        }
+                        
+                        tbody.appendChild(row);
+                    });
+                })
+                .catch(error => console.error('Failed to load schedule:', error));
+        }
+
+        // Delete schedule
+        function deleteSchedule(date) {
+            fetch(`/schedule?date=${encodeURIComponent(date)}`, {
+                method: 'DELETE',
+                headers: { 'Authorization': authHeader }
+            })
+                .then(response => {
+                    if (response.ok) loadSchedule();
+                    else throw new Error(`Failed to delete schedule: ${response.status}`);
+                })
+                .catch(error => {
+                    console.error('Delete schedule error:', error);
+                    alert('Failed to delete schedule: ' + error.message);
+                });
+        }
+
+        // Edit schedule
+        function editSchedule(date) {
+            // Find the schedule data
+            fetch('/schedule', {
+                headers: { 'Authorization': authHeader }
+            })
+                .then(response => response.json())
+                .then(schedules => {
+                    const schedule = schedules.find(s => s.date === date);
+                    if (schedule) {
+                        populateScheduleForm(schedule);
+                    } else {
+                        alert('Schedule not found');
+                    }
+                })
+                .catch(error => {
+                    console.error('Failed to load schedule for editing:', error);
+                    alert('Failed to load schedule for editing');
+                });
+        }
+
+        // Start recognition
+        function startRecognition() {
+            // Check current status first
+            fetch('/recognition_status', {
+                headers: { 'Authorization': authHeader }
+            })
+                .then(response => {
+                    if (!response.ok) throw new Error(`Failed to get recognition status: ${response.status}`);
+                    return response.json();
+                })
+                .then(status => {
+                    if (status.is_recognizing) {
+                        console.log('Recognition is already running');
+                        alert('Recognition is already running');
+                        return;
+                    }
+                    
+                    // Start recognition
+                    return fetch('/start_recognition', {
+                        method: 'POST',
+                        headers: { 'Authorization': authHeader }
+                    });
+                })
+                .then(response => {
+                    if (response && !response.ok) throw new Error(`Failed to start recognition: ${response.status}`);
+                    if (response) {
+                        updateRecognitionStatus(true);
+                    }
+                })
+                .catch(error => {
+                    console.error('Start recognition error:', error);
+                    alert('Failed to start recognition: ' + error.message);
+                });
+        }
+
+        // Stop recognition
+        function stopRecognition() {
+            // Check current status first
+            fetch('/recognition_status', {
+                headers: { 'Authorization': authHeader }
+            })
+                .then(response => {
+                    if (!response.ok) throw new Error(`Failed to get recognition status: ${response.status}`);
+                    return response.json();
+                })
+                .then(status => {
+                    if (!status.is_recognizing) {
+                        console.log('Recognition is already stopped');
+                        alert('Recognition is already stopped');
+                        return;
+                    }
+                    
+                    // Stop recognition
+                    return fetch('/stop_recognition', {
+                        method: 'POST',
+                        headers: { 'Authorization': authHeader }
+                    });
+                })
+                .then(response => {
+                    if (response && !response.ok) throw new Error(`Failed to stop recognition: ${response.status}`);
+                    if (response) {
+                        updateRecognitionStatus(false);
+                    }
+                })
+                .catch(error => {
+                    console.error('Stop recognition error:', error);
+                    alert('Failed to stop recognition: ' + error.message);
+                });
+        }
+
+        // Update recognition status and button states
+        function updateRecognitionStatus(isRunning) {
+            const startBtn = document.querySelector('button[onclick="startRecognition()"]');
+            const stopBtn = document.querySelector('button[onclick="stopRecognition()"]');
+            const statusDiv = document.querySelector('.status');
+            
+            if (isRunning) {
+                startBtn.disabled = true;
+                stopBtn.disabled = false;
+                statusDiv.textContent = 'Status: Recognition running';
+                statusDiv.style.color = 'green';
+            } else {
+                startBtn.disabled = false;
+                stopBtn.disabled = true;
+                statusDiv.textContent = 'Status: Recognition stopped';
+                statusDiv.style.color = 'red';
+            }
+        }
+
+        // Load current recognition status
+        function loadRecognitionStatus() {
+            fetch('/recognition_status', {
+                headers: { 'Authorization': authHeader }
+            })
+                .then(response => {
+                    if (!response.ok) throw new Error(`Failed to get recognition status: ${response.status}`);
+                    return response.json();
+                })
+                .then(status => {
+                    updateRecognitionStatus(status.is_recognizing);
+                    // Check emergency shutoff status if recognition is active
+                    if (status.is_recognizing) {
+                        checkEmergencyShutoffStatus();
+                    } else {
+                        hideEmergencyShutoffStatus();
+                    }
+                })
+                .catch(error => {
+                    console.error('Failed to load recognition status:', error);
+                    updateRecognitionStatus(false);
+                    hideEmergencyShutoffStatus();
+                });
+        }
+
+        // Check emergency shutoff status
+        function checkEmergencyShutoffStatus() {
+            fetch('/emergency_shutoff_status', {
+                headers: { 'Authorization': authHeader }
+            })
+                .then(response => {
+                    if (!response.ok) throw new Error(`Failed to get emergency shutoff status: ${response.status}`);
+                    return response.json();
+                })
+                .then(status => {
+                    if (status.timer_active) {
+                        showEmergencyShutoffStatus(status.remaining_minutes, status.remaining_seconds);
+                    } else {
+                        hideEmergencyShutoffStatus();
+                    }
+                })
+                .catch(error => {
+                    console.error('Failed to load emergency shutoff status:', error);
+                    hideEmergencyShutoffStatus();
+                });
+        }
+
+        // Show emergency shutoff status
+        function showEmergencyShutoffStatus(minutes, seconds) {
+            const statusDiv = document.getElementById('emergency-shutoff-status');
+            const timerSpan = document.getElementById('emergency-shutoff-timer');
+            
+            if (statusDiv && timerSpan) {
+                const timeStr = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                timerSpan.textContent = timeStr;
+                statusDiv.style.display = 'block';
+                
+                // Update timer every second
+                if (!window.emergencyTimerInterval) {
+                    window.emergencyTimerInterval = setInterval(() => {
+                        if (seconds > 0) {
+                            seconds--;
+                        } else if (minutes > 0) {
+                            minutes--;
+                            seconds = 59;
+                        } else {
+                            // Timer expired, hide status
+                            hideEmergencyShutoffStatus();
+                            return;
+                        }
+                        timerSpan.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                    }, 1000);
+                }
+            }
+        }
+
+        // Hide emergency shutoff status
+        function hideEmergencyShutoffStatus() {
+            const statusDiv = document.getElementById('emergency-shutoff-status');
+            if (statusDiv) {
+                statusDiv.style.display = 'none';
+            }
+            
+            // Clear timer interval
+            if (window.emergencyTimerInterval) {
+                clearInterval(window.emergencyTimerInterval);
+                window.emergencyTimerInterval = null;
+            }
+        }
+
+        // Set up periodic status check
+        function startStatusCheck() {
+            // Check status every 5 seconds
+            setInterval(loadRecognitionStatus, 5000);
+            // Refresh schedule list every minute to remove expired events
+            setInterval(loadSchedule, 60000);
+        }
+
+        // Convert 12-hour time to 24-hour format
+        function convertTo24Hour(hour, minute, ampm) {
+            let hour24 = parseInt(hour);
+            if (ampm === 'PM' && hour24 !== 12) {
+                hour24 += 12;
+            } else if (ampm === 'AM' && hour24 === 12) {
+                hour24 = 0;
+            }
+            return `${hour24.toString().padStart(2, '0')}:${minute}`;
+        }
+        
+        // Convert 24-hour time to 12-hour format for display
+        function convertTo12Hour(time24) {
+            if (!time24) return { hour: '', minute: '', ampm: 'AM' };
+            
+            const [hour, minute] = time24.split(':');
+            let hour12 = parseInt(hour);
+            let ampm = 'AM';
+            
+            if (hour12 === 0) {
+                hour12 = 12;
+            } else if (hour12 === 12) {
+                ampm = 'PM';
+            } else if (hour12 > 12) {
+                hour12 -= 12;
+                ampm = 'PM';
+            }
+            
+            return { hour: hour12.toString(), minute, ampm };
+        }
+
+        // Convert 24-hour time to 12-hour format for form population
+        function convertFrom24Hour(time24) {
+            if (!time24) return { hour: '', minute: '', ampm: 'AM' };
+            
+            const [hour24, minute] = time24.split(':').map(Number);
+            let hour12 = hour24;
+            let ampm = 'AM';
+            
+            if (hour24 === 0) {
+                hour12 = 12;
+            } else if (hour24 === 12) {
+                ampm = 'PM';
+            } else if (hour24 > 12) {
+                hour12 = hour24 - 12;
+                ampm = 'PM';
+            }
+            
+            return {
+                hour: hour12,
+                minute: minute.toString().padStart(2, '0'),
+                ampm: ampm
+            };
+        }
+        
+        // Save schedule
+        function saveSchedule() {
+            const startHour = document.getElementById('start_hour').value;
+            const startMinute = document.getElementById('start_minute').value;
+            const startAmPm = document.getElementById('start_ampm').value;
+            const stopHour = document.getElementById('stop_hour').value;
+            const stopMinute = document.getElementById('stop_minute').value;
+            const stopAmPm = document.getElementById('stop_ampm').value;
+            
+            const schedule = {
+                date: document.getElementById('schedule_date').value,
+                start_time: convertTo24Hour(startHour, startMinute, startAmPm),
+                stop_time: convertTo24Hour(stopHour, stopMinute, stopAmPm),
+                timezone: document.getElementById('timezone').value,
+                pause_event: document.getElementById('pause_event').checked,
+                repeats: document.getElementById('repeats').checked,
+                recurrence_type: document.getElementById('recurrence_type').value,
+                recurrence_interval: parseInt(document.getElementById('recurrence_interval').value) || 1,
+
+                ending_type: document.getElementById('ending_type').value,
+                ending_occurrences: document.getElementById('ending_occurrences').value || null,
+                ending_date: document.getElementById('ending_date').value || null
+            };
+            
+            // Validate required fields
+            if (!schedule.date) {
+                alert('Please select a date');
+                return;
+            }
+            
+            if (!startHour || !startMinute || !startAmPm) {
+                alert('Please select a complete start time');
+                return;
+            }
+            
+            if (!stopHour || !stopMinute || !stopAmPm) {
+                alert('Please select a complete end time');
+                return;
+            }
+            
+            // Validate that stop time is after start time
+            if (schedule.start_time >= schedule.stop_time) {
+                alert('End time must be after start time');
+                return;
+            }
+
+            console.log('Sending advanced schedule:', schedule);
+            
+            // Check if we're editing an existing schedule
+            const isEditing = window.editingScheduleDate === schedule.date;
+            
+            fetch('/schedule', {
+                method: 'POST',
+                headers: {
+                    'Authorization': authHeader,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(schedule)
+            })
+                .then(response => {
+                    console.log('Schedule save response:', response.status);
+                    if (!response.ok) {
+                        return response.text().then(text => {
+                            throw new Error(`Failed to save schedule: ${response.status} - ${text}`);
+                        });
+                    }
+                    loadSchedule();
+                    // Clear form after successful save
+                    clearScheduleForm();
+                    // Clear editing state
+                    window.editingScheduleDate = null;
+                    // Update button text
+                    document.getElementById('save-schedule-btn').textContent = 'Save Schedule';
+                })
+                .catch(error => {
+                    console.error('Save schedule error:', error);
+                    alert(error.message);
+                });
+        }
+
+        // Clear schedule form
+        function clearScheduleForm() {
+            document.getElementById('schedule_date').value = '';
+            document.getElementById('start_hour').value = '';
+            document.getElementById('start_minute').value = '';
+            document.getElementById('start_ampm').value = 'AM';
+            document.getElementById('stop_hour').value = '';
+            document.getElementById('stop_minute').value = '';
+            document.getElementById('stop_ampm').value = 'AM';
+            document.getElementById('timezone').value = 'America/New_York';
+            document.getElementById('pause_event').checked = false;
+            document.getElementById('repeats').checked = true;
+            document.getElementById('recurrence_type').value = 'monthly';
+            document.getElementById('recurrence_interval').value = '1';
+
+            document.getElementById('ending_type').value = 'never';
+            document.getElementById('ending_occurrences').value = '';
+            document.getElementById('ending_date').value = '';
+            
+            // Clear editing state
+            window.editingScheduleDate = null;
+            
+            // Reset button text
+            document.getElementById('save-schedule-btn').textContent = 'Save Schedule';
+            
+            // Hide cancel button
+            document.getElementById('cancel-edit-btn').style.display = 'none';
+        }
+
+        // Populate schedule form with existing data
+        function populateScheduleForm(schedule) {
+            // Set basic fields
+            document.getElementById('schedule_date').value = schedule.date;
+            document.getElementById('timezone').value = schedule.timezone || 'America/New_York';
+            document.getElementById('pause_event').checked = schedule.pause_event || false;
+            document.getElementById('repeats').checked = schedule.repeats !== false;
+            document.getElementById('recurrence_type').value = schedule.recurrence_type || 'one-time';
+            document.getElementById('recurrence_interval').value = schedule.recurrence_interval || '1';
+            
+
+            
+            // Set ending conditions
+            document.getElementById('ending_type').value = schedule.ending_type || 'never';
+            document.getElementById('ending_occurrences').value = schedule.ending_occurrences || '';
+            document.getElementById('ending_date').value = schedule.ending_date || '';
+            
+            // Parse and set start time
+            if (schedule.start_time) {
+                const startTime = convertFrom24Hour(schedule.start_time);
+                document.getElementById('start_hour').value = startTime.hour;
+                document.getElementById('start_minute').value = startTime.minute;
+                document.getElementById('start_ampm').value = startTime.ampm;
+            }
+            
+            // Parse and set stop time
+            if (schedule.stop_time) {
+                const stopTime = convertFrom24Hour(schedule.stop_time);
+                document.getElementById('stop_hour').value = stopTime.hour;
+                document.getElementById('stop_minute').value = stopTime.minute;
+                document.getElementById('stop_ampm').value = stopTime.ampm;
+            }
+            
+            // Update form state
+            handleEndingTypeChange();
+            handleRecurrenceTypeChange();
+            
+            // Set editing state
+            window.editingScheduleDate = schedule.date;
+            
+            // Update button text
+            document.getElementById('save-schedule-btn').textContent = 'Update Schedule';
+            
+            // Show cancel button
+            document.getElementById('cancel-edit-btn').style.display = 'inline-block';
+            
+            // Scroll to form
+            document.querySelector('.scheduler').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Cancel editing and return to create mode
+        function cancelEdit() {
+            clearScheduleForm();
+            // Hide cancel button
+            document.getElementById('cancel-edit-btn').style.display = 'none';
+        }
+
+
+
+        // Handle ending type changes
+        function handleEndingTypeChange() {
+            const endingType = document.getElementById('ending_type').value;
+            const endingDetails = document.getElementById('ending_details');
+            const endingOccurrences = document.getElementById('ending_occurrences');
+            const endingDate = document.getElementById('ending_date');
+            
+            endingDetails.style.display = 'none';
+            endingOccurrences.style.display = 'none';
+            endingDate.style.display = 'none';
+            
+            if (endingType === 'after_occurrences') {
+                endingDetails.style.display = 'block';
+                endingOccurrences.style.display = 'inline-block';
+            } else if (endingType === 'on_date') {
+                endingDetails.style.display = 'block';
+                endingDate.style.display = 'inline-block';
+            }
+        }
+
+        // Handle recurrence type changes
+        function handleRecurrenceTypeChange() {
+            const recurrenceType = document.getElementById('recurrence_type').value;
+            const intervalUnit = document.getElementById('interval_unit');
+            
+            if (recurrenceType === 'weekly') {
+                intervalUnit.textContent = 'week';
+            } else if (recurrenceType === 'monthly') {
+                intervalUnit.textContent = 'month';
+            } else if (recurrenceType === 'yearly') {
+                intervalUnit.textContent = 'year';
+            } else {
+                intervalUnit.textContent = 'day';
+            }
+        }
+
+        // Save transcript
+        function saveTranscript() {
+            fetch('/save_transcript', {
+                method: 'POST',
+                headers: { 'Authorization': authHeader }
+            })
+                .then(response => {
+                    if (!response.ok) throw new Error(`Failed to save transcript: ${response.status}`);
+                    return response.json();
+                })
+                .then(data => alert(`Transcript saved to ${data.file_path}`))
+                .catch(error => {
+                    console.error('Save transcript error:', error);
+                    alert('Failed to save transcript: ' + error.message);
+                });
+        }
+
+        // Apply settings to preview (mirrors production view)
+        function applyPreviewSettings(settings) {
+            const previewDiv = document.getElementById('preview');
+            const container = document.querySelector('.preview-container');
+            
+            // Apply visual settings
+            previewDiv.style.fontSize = `${settings.font_size || 45}px`;
+            previewDiv.style.fontFamily = settings.font_style || 'Arial';
+            previewDiv.style.backgroundColor = settings.bg_color || '#000000';
+            previewDiv.style.color = settings.text_color || '#FFFFFF';
+            
+            // Apply position settings with padding
+            if (settings.preview_position === 'top') {
+                previewDiv.style.top = `${settings.main_text_position_y || 30}px`;
+                previewDiv.style.bottom = 'auto';
+                previewDiv.style.left = `${settings.main_text_position_x || 50}px`;
+                previewDiv.style.right = 'auto';
+                previewDiv.style.transform = 'none';
+            } else if (settings.preview_position === 'middle') {
+                previewDiv.style.top = '50%';
+                previewDiv.style.bottom = 'auto';
+                previewDiv.style.left = `${settings.main_text_position_x || 50}px`;
+                previewDiv.style.right = 'auto';
+                previewDiv.style.transform = 'translateY(-50%)';
+            } else if (settings.preview_position === 'bottom') {
+                // Default to bottom with padding
+                previewDiv.style.bottom = `${settings.main_text_position_y || 30}px`;
+                previewDiv.style.top = 'auto';
+                previewDiv.style.left = `${settings.main_text_position_x || 50}px`;
+                previewDiv.style.right = 'auto';
+                previewDiv.style.transform = 'none';
+            }
+            
+            // Update container background
+            container.style.backgroundColor = settings.bg_color || '#000000';
+        }
+
+        // Update settings with debounce
+        function updateSettings() {
+            clearTimeout(settingsTimeout);
+            settingsTimeout = setTimeout(() => {
+                const settings = {
+                    font_size: parseInt(document.getElementById('font_size').value) || 45,
+                    font_style: document.getElementById('font_style').value,
+                    bg_color: document.getElementById('bg_color').value,
+                    text_color: document.getElementById('text_color').value,
+                    preview_position: document.getElementById('preview_position').value,
+                    main_text_position_x: document.getElementById('main_text_position_x').value === '' ? 0 : parseInt(document.getElementById('main_text_position_x').value) || 0,
+                    main_text_position_y: document.getElementById('main_text_position_y').value === '' ? 0 : parseInt(document.getElementById('main_text_position_y').value) || 0,
+                    max_line_length: parseInt(document.getElementById('max_line_length').value) || 90,
+                    max_lines: parseInt(document.getElementById('max_lines').value) || 1
+                };
+                console.log('Sending settings:', settings);
+                
+                // Apply settings to preview immediately
+                applyPreviewSettings(settings);
+                
+                fetch('/settings', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': authHeader,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(settings)
+                })
+                    .then(response => {
+                        if (!response.ok) throw new Error(`Settings update failed: ${response.status}`);
+                        console.log('Settings updated successfully');
+                        return response.json();
+                    })
+                    .then(data => console.log('Settings response:', data))
+                    .catch(error => {
+                        console.error('Settings update error:', error);
+                        alert('Failed to update settings: ' + error.message);
+                    });
+            }, 500); // Debounce for 500ms
+        }
+
+        // Reset settings to defaults
+        function resetSettings() {
+            const defaults = {
+                font_size: 45,
+                font_style: 'Arial',
+                bg_color: '#000000',
+                text_color: '#FFFFFF',
+                preview_position: 'bottom',
+                main_text_position_x: 0,
+                main_text_position_y: 0,
+                max_line_length: 90,
+                max_lines: 1
+            };
+            console.log('Resetting to defaults:', defaults);
+            
+            // Apply defaults to preview immediately
+            applyPreviewSettings(defaults);
+            
+            fetch('/settings', {
+                method: 'POST',
+                headers: {
+                    'Authorization': authHeader,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(defaults)
+            })
+                .then(response => {
+                    if (!response.ok) throw new Error(`Failed to reset settings: ${response.status}`);
+                    console.log('Settings reset successfully');
+                    Object.keys(defaults).forEach(key => {
+                        const input = document.getElementById(key);
+                        if (input) {
+                            input.value = defaults[key];
+                            if ((key === 'font_style' || key === 'preview_position') && input.tagName === 'SELECT') {
+                                const option = input.querySelector(`option[value="${defaults[key]}"]`);
+                                if (option) option.selected = true;
+                            }
+                        }
+                    });
+                    return response.json();
+                })
+                .then(data => console.log('Reset settings response:', data))
+                .catch(error => {
+                    console.error('Reset settings error:', error);
+                    alert('Failed to reset settings: ' + error.message);
+                });
+        }
+
+        // Update user settings with debounce
+        function updateUserSettings() {
+            clearTimeout(userSettingsTimeout);
+            userSettingsTimeout = setTimeout(() => {
+                const userSettings = {
+                    user_bg_color: document.getElementById('user_bg_color').value,
+                    user_text_color: document.getElementById('user_text_color').value,
+                    user_font_style: document.getElementById('user_font_style').value,
+                    user_font_size: parseInt(document.getElementById('user_font_size').value) || 24,
+                    user_max_line_length: parseInt(document.getElementById('user_max_line_length').value) || 80,
+                    user_lines: parseInt(document.getElementById('user_lines').value) || 3
+                };
+                console.log('Sending user settings:', userSettings);
+                
+                fetch('/user_settings', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': authHeader,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(userSettings)
+                })
+                    .then(response => {
+                        if (!response.ok) throw new Error(`User settings update failed: ${response.status}`);
+                        console.log('User settings updated successfully');
+                        return response.json();
+                    })
+                    .then(data => console.log('User settings response:', data))
+                    .catch(error => {
+                        console.error('User settings update error:', error);
+                        alert('Failed to update user settings: ' + error.message);
+                    });
+            }, 500); // Debounce for 500ms
+        }
+
+        // Reset user settings to defaults
+        function resetUserSettings() {
+            const userDefaults = {
+                user_bg_color: '#000000',
+                user_text_color: '#FFFFFF',
+                user_font_style: 'Arial',
+                user_font_size: 24,
+                user_max_line_length: 80,
+                user_lines: 3
+            };
+            console.log('Resetting user settings to defaults:', userDefaults);
+            
+            fetch('/user_settings', {
+                method: 'POST',
+                headers: {
+                    'Authorization': authHeader,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(userDefaults)
+            })
+                .then(response => {
+                    if (!response.ok) throw new Error(`Failed to reset user settings: ${response.status}`);
+                    console.log('User settings reset successfully');
+                    Object.keys(userDefaults).forEach(key => {
+                        const input = document.getElementById(key);
+                        if (input) {
+                            input.value = userDefaults[key];
+                            if (key === 'user_font_style' && input.tagName === 'SELECT') {
+                                const option = input.querySelector(`option[value="${userDefaults[key]}"]`);
+                                if (option) option.selected = true;
+                            }
+                        }
+                    });
+                    return response.json();
+                })
+                .then(data => console.log('Reset user settings response:', data))
+                .catch(error => {
+                    console.error('Reset user settings error:', error);
+                    alert('Failed to reset user settings: ' + error.message);
+                });
+        }
+
+        // Clear all captions
+        function clearProductionCaptions() {
+            // No popups; perform action silently with console logs
+            fetch('/clear_production_captions', {
+                method: 'POST',
+                headers: {
+                    'Authorization': authHeader,
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                if (!response.ok) throw new Error(`Failed to clear captions: ${response.status}`);
+                console.log('All captions cleared successfully');
+                return response.json();
+            })
+            .then(data => console.log('Clear captions response:', data))
+            .catch(error => {
+                console.error('Clear captions error:', error);
+            });
+        }
+
+        // Load initial settings from server
+        function loadSettings() {
+            fetch('/settings', {
+                headers: { 'Authorization': authHeader }
+            })
+                .then(response => {
+                    if (!response.ok) throw new Error(`Failed to load settings: ${response.status}`);
+                    return response.json();
+                })
+                .then(settings => {
+                    console.log('Loaded settings from server:', settings);
+                    // Update form inputs with current settings
+                    Object.keys(settings).forEach(key => {
+                        const input = document.getElementById(key);
+                        if (input) {
+                            input.value = settings[key];
+                            if ((key === 'font_style' || key === 'preview_position') && input.tagName === 'SELECT') {
+                                const option = input.querySelector(`option[value="${settings[key]}"]`);
+                                if (option) option.selected = true;
+                            }
+                        }
+                    });
+                    // Apply settings to preview
+                    applyPreviewSettings(settings);
+                })
+                .catch(error => {
+                    console.error('Failed to load settings:', error);
+                });
+        }
+
+        // Initialize settings inputs and add event listeners
+        document.addEventListener('DOMContentLoaded', () => {
+            loadSettings(); // Load initial settings
+            populateTimeDropdowns(); // Populate time dropdowns
+            setCurrentDate(); // Set current date in schedule input
+            debugCurrentDate(); // Debug current date info
+            loadSchedule();
+            loadRecognitionStatus();
+            startStatusCheck();
+            
+            // Add event listeners to settings inputs for real-time preview updates
+            const settingsInputs = [
+                'font_size', 'font_style', 'bg_color', 'text_color', 'preview_position',
+                'main_text_position_x', 'main_text_position_y', 'max_line_length', 'max_lines'
+            ];
+            
+            settingsInputs.forEach(inputId => {
+                const input = document.getElementById(inputId);
+                if (input) {
+                    input.addEventListener('input', updateSettings);
+                    input.addEventListener('change', updateSettings);
+                }
+            });
+
+            // Add event listeners to user settings inputs
+            const userSettingsInputs = [
+                'user_bg_color', 'user_text_color', 'user_font_style', 'user_font_size',
+                'user_max_line_length', 'user_lines'
+            ];
+            
+            userSettingsInputs.forEach(inputId => {
+                const input = document.getElementById(inputId);
+                if (input) {
+                    input.addEventListener('input', updateUserSettings);
+                    input.addEventListener('change', updateUserSettings);
+                }
+            });
+            
+            // Load production settings
+            fetch('/settings', {
+                headers: { 'Authorization': authHeader }
+            })
+                .then(response => {
+                    if (!response.ok) throw new Error(`Failed to load settings: ${response.status}`);
+                    return response.json();
+                })
+                .then(settings => {
+                    console.log('Loaded initial settings:', settings);
+                    Object.keys(settings).forEach(key => {
+                        const input = document.getElementById(key);
+                        if (input) {
+                            input.value = settings[key];
+                            if ((key === 'font_style' || key === 'preview_position') && input.tagName === 'SELECT') {
+                                const option = input.querySelector(`option[value="${settings[key]}"]`);
+                                if (option) option.selected = true;
+                            }
+                        }
+                    });
+                    // Apply initial settings to preview
+                    applyPreviewSettings(settings);
+                })
+                .catch(error => console.error('Failed to load initial settings:', error));
+
+            // Load user settings
+            fetch('/user_settings', {
+                headers: { 'Authorization': authHeader }
+            })
+                .then(response => {
+                    if (!response.ok) throw new Error(`Failed to load user settings: ${response.status}`);
+                    return response.json();
+                })
+                .then(userSettings => {
+                    console.log('Loaded initial user settings:', userSettings);
+                    Object.keys(userSettings).forEach(key => {
+                        const input = document.getElementById(key);
+                        if (input) {
+                            input.value = userSettings[key];
+                            if (key === 'user_font_style' && input.tagName === 'SELECT') {
+                                const option = input.querySelector(`option[value="${userSettings[key]}"]`);
+                                if (option) option.selected = true;
+                            }
+                        }
+                    });
+                })
+                .catch(error => console.error('Failed to load initial user settings:', error));
+
+            // Add event listeners for production settings
+            ['font_size', 'font_style', 'bg_color', 'text_color', 'preview_position', 'main_text_position_x', 'main_text_position_y', 'max_line_length', 'max_lines'].forEach(id => {
+                const input = document.getElementById(id);
+                if (input) {
+                    input.addEventListener('input', updateSettings);
+                    input.addEventListener('change', updateSettings);
+                }
+            });
+
+            // Add event listeners for advanced scheduling form
+            const scheduleInputs = [
+                'start_hour', 'start_minute', 'start_ampm', 'stop_hour', 'stop_minute', 'stop_ampm',
+                'timezone', 'pause_event', 'repeats', 'recurrence_type', 'recurrence_interval',
+                'ending_type', 'ending_occurrences', 'ending_date'
+            ];
+            
+            scheduleInputs.forEach(inputId => {
+                const input = document.getElementById(inputId);
+                if (input) {
+                    if (input.type === 'checkbox') {
+                        // No special handling needed for checkboxes
+                    } else if (inputId === 'ending_type') {
+                        input.addEventListener('change', handleEndingTypeChange);
+                    } else if (inputId === 'recurrence_type') {
+                        input.addEventListener('change', handleRecurrenceTypeChange);
+                    }
+                }
+            });
+
+
+
+            // Initialize the form
+            handleEndingTypeChange();
+            handleRecurrenceTypeChange();
+        });
+
+        // Set current date in schedule date input
+        function setCurrentDate() {
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = String(today.getMonth() + 1).padStart(2, '0');
+            const day = String(today.getDate()).padStart(2, '0');
+            const currentDate = `${year}-${month}-${day}`;
+            
+            const dateInput = document.getElementById('schedule_date');
+            if (dateInput) {
+                dateInput.value = currentDate;
+                console.log(`Set current date in scheduler: ${currentDate} (${today.toLocaleDateString('en-US', { weekday: 'long' })})`);
+            }
+        }
+        
+        // Debug function to show current date info
+        function debugCurrentDate() {
+            const today = new Date();
+            console.log('=== Current Date Debug Info ===');
+            console.log(`Full Date: ${today.toLocaleDateString()}`);
+            console.log(`Day of Week: ${today.toLocaleDateString('en-US', { weekday: 'long' })}`);
+            console.log(`Day of Month: ${today.getDate()}`);
+            console.log(`Month: ${today.getMonth() + 1}`);
+            console.log(`Year: ${today.getFullYear()}`);
+            console.log(`ISO String: ${today.toISOString()}`);
+            console.log(`================================`);
+        }
+        
+        // Debug function to show schedule data
+        function debugScheduleData() {
+            fetch('/schedule', {
+                headers: { 'Authorization': authHeader }
+            })
+                .then(response => response.json())
+                .then(schedules => {
+                    console.log('=== Raw Schedule Data from Backend ===');
+                    schedules.forEach((s, i) => {
+                        console.log(`Schedule ${i + 1}:`, s);
+                    });
+                    console.log('=====================================');
+                })
+                .catch(error => console.error('Failed to load schedule for debug:', error));
+        }
+
+        // User settings are now handled purely locally on each device
+    </script>
+</body>
+</html>

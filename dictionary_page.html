@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Custom Dictionary</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        input, button { margin: 10px; padding: 5px; }
+        ul { list-style: none; padding: 0; }
+        li { margin: 5px 0; }
+        #loading { color: gray; }
+    </style>
+</head>
+<body>
+    <h2>Custom Dictionary</h2>
+    <div id="loading">Loading dictionary...</div>
+    <h3>Spelling Corrections</h3>
+    <form id="spelling-form">
+        <input type="text" id="incorrect" placeholder="Incorrect spelling">
+        <input type="text" id="correct" placeholder="Correct spelling">
+        <button type="submit">Add Correction</button>
+    </form>
+    <ul id="spelling-list"></ul>
+    <h3>Custom Phrases</h3>
+    <form id="phrase-form">
+        <input type="text" id="phrase" placeholder="New phrase">
+        <button type="submit">Add Phrase</button>
+    </form>
+    <ul id="phrase-list"></ul>
+    <h3>Books of the Bible</h3>
+    <form id="book-form">
+        <input type="text" id="book" placeholder="Book name">
+        <button type="submit">Add Book</button>
+    </form>
+    <ul id="book-list"></ul>
+    <script>
+        async function loadDictionary() {
+            console.log('loadDictionary called');
+            try {
+                const response = await fetch('/dictionary', { 
+                    headers: { Authorization: 'Basic ' + btoa('{{ADMIN_USERNAME}}:{{ADMIN_PASSWORD}}') } 
+                });
+                console.log('loadDictionary response status:', response.status);
+                if (!response.ok) throw new Error('Failed to fetch dictionary: ' + response.status);
+                const data = await response.json();
+                console.log('loadDictionary data:', data);
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('spelling-list').innerHTML = Object.entries(data.spelling_corrections).map(([k, v]) => `<li>${k} -> ${v} <button onclick="deleteSpelling('${k}')">Delete</button></li>`).join('');
+                document.getElementById('phrase-list').innerHTML = data.custom_phrases.map(p => `<li>${p} <button onclick="deletePhrase('${p}')">Delete</button></li>`).join('');
+                document.getElementById('book-list').innerHTML = data.bible_books.map(b => `<li>${b} <button onclick="deleteBook('${b}')">Delete</button></li>`).join('');
+                console.log('loadDictionary completed, updated DOM');
+            } catch (e) {
+                console.error('Error loading dictionary:', e);
+                document.getElementById('loading').innerText = 'Failed to load dictionary: ' + e.message;
+            }
+        }
+
+        document.getElementById('spelling-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const correction = { incorrect: document.getElementById('incorrect').value, correct: document.getElementById('correct').value };
+            try {
+                await fetch('/dictionary/spelling', { 
+                    method: 'POST', 
+                    headers: { 
+                        'Content-Type': 'application/json', 
+                        Authorization: 'Basic ' + btoa('{{ADMIN_USERNAME}}:{{ADMIN_PASSWORD}}') 
+                    }, 
+                    body: JSON.stringify(correction) 
+                });
+                loadDictionary();
+            } catch (e) {
+                console.error('Error adding spelling correction:', e);
+            }
+        });
+
+        document.getElementById('phrase-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const phrase = { phrase: document.getElementById('phrase').value };
+            try {
+                await fetch('/dictionary/phrase', { 
+                    method: 'POST', 
+                    headers: { 
+                        'Content-Type': 'application/json', 
+                        Authorization: 'Basic ' + btoa('{{ADMIN_USERNAME}}:{{ADMIN_PASSWORD}}') 
+                    }, 
+                    body: JSON.stringify(phrase) 
+                });
+                loadDictionary();
+            } catch (e) {
+                console.error('Error adding phrase:', e);
+            }
+        });
+
+        document.getElementById('book-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const book = { book: document.getElementById('book').value };
+            try {
+                await fetch('/dictionary/bible_book', { 
+                    method: 'POST', 
+                    headers: { 
+                        'Content-Type': 'application/json', 
+                        Authorization: 'Basic ' + btoa('{{ADMIN_USERNAME}}:{{ADMIN_PASSWORD}}') 
+                    }, 
+                    body: JSON.stringify(book) 
+                });
+                loadDictionary();
+            } catch (e) {
+                console.error('Error adding book:', e);
+            }
+        });
+
+        async function deleteSpelling(incorrect) {
+            console.log('deleteSpelling called with:', incorrect);
+            try {
+                const response = await fetch(`/dictionary/spelling?incorrect=${encodeURIComponent(incorrect)}`, { 
+                    method: 'DELETE', 
+                    headers: { Authorization: 'Basic ' + btoa('{{ADMIN_USERNAME}}:{{ADMIN_PASSWORD}}') } 
+                });
+                console.log('deleteSpelling response status:', response.status);
+                if (!response.ok) throw new Error('Failed to delete spelling: ' + response.status);
+                const result = await response.json();
+                console.log('deleteSpelling result:', result);
+                loadDictionary();
+            } catch (e) {
+                console.error('Error deleting spelling:', e);
+                alert('Error deleting spelling correction: ' + e.message);
+            }
+        }
+
+        async function deletePhrase(phrase) {
+            console.log('deletePhrase called with:', phrase);
+            try {
+                const response = await fetch(`/dictionary/phrase?phrase=${encodeURIComponent(phrase)}`, { 
+                    method: 'DELETE', 
+                    headers: { Authorization: 'Basic ' + btoa('{{ADMIN_USERNAME}}:{{ADMIN_PASSWORD}}') } 
+                });
+                console.log('deletePhrase response status:', response.status);
+                if (!response.ok) throw new Error('Failed to delete phrase: ' + response.status);
+                const result = await response.json();
+                console.log('deletePhrase result:', result);
+                loadDictionary();
+            } catch (e) {
+                console.error('Error deleting phrase:', e);
+                alert('Error deleting phrase: ' + e.message);
+            }
+        }
+
+        async function deleteBook(book) {
+            console.log('deleteBook called with:', book);
+            try {
+                const response = await fetch(`/dictionary/bible_book?book=${encodeURIComponent(book)}`, { 
+                    method: 'DELETE', 
+                    headers: { Authorization: 'Basic ' + btoa('{{ADMIN_USERNAME}}:{{ADMIN_PASSWORD}}') } 
+                });
+                console.log('deleteBook response status:', response.status);
+                if (!response.ok) throw new Error('Failed to delete book: ' + response.status);
+                const result = await response.json();
+                console.log('deleteBook result:', result);
+                loadDictionary();
+            } catch (e) {
+                console.error('Error deleting book:', e);
+                alert('Error deleting book: ' + e.message);
+            }
+        }
+
+        loadDictionary();
+    </script>
+</body>
+</html>

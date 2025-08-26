@@ -1,0 +1,623 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>User View</title>
+    <style>
+        :root {
+            --bg: #000000;
+            --panel: #121212;
+            --panel-2: #1a1a1a;
+            --border: #2a2a2a;
+            --text: #ffffff;
+            --muted: #9aa0a6;
+            --accent: #3b82f6; /* blue-500 */
+            --accent-2: #1d4ed8; /* blue-700 */
+            --success: #22c55e;
+            --danger: #ef4444;
+            --radius: 12px;
+            --shadow: 0 8px 24px rgba(0,0,0,0.35);
+        }
+
+        * { box-sizing: border-box; }
+
+        html, body { height: 100%; }
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            height: 100vh;   /* fallback */
+            height: 100dvh;  /* dynamic viewport */
+            height: 100svh;  /* small viewport: avoids being under iOS address bar */
+            overflow: hidden; /* Only caption area scrolls */
+            display: flex;
+            flex-direction: column;
+            padding-bottom: 50px;
+        }
+
+        /* Top bar */
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 14px 16px;
+            margin: 0 0 8px;
+            border-radius: 12px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+            border: 1px solid var(--border);
+            backdrop-filter: blur(6px);
+            box-shadow: var(--shadow);
+        }
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+        }
+        .brand .dot {
+            width: 10px; height: 10px; border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 12px rgba(59,130,246,0.8);
+        }
+        .brand .title { opacity: 0.95; }
+
+        .controls { display: flex; align-items: center; gap: 10px; }
+        label[for="language"] { font-size: 14px; color: var(--muted); }
+
+        /* Inputs */
+        select, input[type="number"], input[type="color"], select#font_style {
+            appearance: none;
+            -webkit-appearance: none;
+            border: 1px solid var(--border);
+            background: var(--panel);
+            color: var(--text);
+            padding: 10px 12px;
+            border-radius: 10px;
+            outline: none;
+            font-size: 14px;
+            transition: border-color .2s ease, box-shadow .2s ease, background-color .2s ease;
+        }
+        select:focus, input[type="number"]:focus, input[type="color"]:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px rgba(59,130,246,0.2);
+        }
+
+        /* Buttons */
+        button {
+            appearance: none;
+            border: 1px solid var(--border);
+            background: linear-gradient(180deg, #1f2937, #111827);
+            color: var(--text);
+            padding: 10px 12px;
+            border-radius: 10px;
+            font-weight: 600;
+            letter-spacing: .2px;
+            cursor: pointer;
+            transition: transform .08s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease;
+        }
+        button:hover { border-color: var(--accent); box-shadow: 0 2px 14px rgba(59,130,246,0.25); }
+        button:active { transform: translateY(1px); }
+
+        #settings-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(180deg, rgba(59,130,246,0.16), rgba(59,130,246,0.08));
+            border-color: rgba(59,130,246,0.35);
+        }
+
+        #language-status { margin-left: 6px; font-size: 12px; color: var(--muted); }
+
+        /* Settings panel */
+        #settings-menu {
+            display: none;
+            position: fixed;
+            top: 76px;
+            right: 24px;
+            width: min(360px, calc(100% - 48px));
+            background: linear-gradient(180deg, #0b0b0b, #111);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 16px;
+        }
+        #settings-menu h3 { margin: 0 0 8px; font-size: 16px; opacity: .9; }
+        #settings-menu .subtle { font-size: 12px; color: var(--muted); margin-bottom: 14px; }
+        #settings-menu .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        #settings-menu .grid .full { grid-column: 1 / -1; }
+        #settings-menu label { display: block; font-size: 12px; color: var(--muted); margin: 6px 0 6px; }
+        #settings-menu input, #settings-menu select { width: 100%; }
+        #settings-menu .danger { background: linear-gradient(180deg, rgba(239,68,68,0.2), rgba(239,68,68,0.12)); border-color: rgba(239,68,68,0.45); }
+
+        /* Caption area */
+        #caption-container {
+            /* Fill remaining space below the top bar */
+            flex: 1 1 auto;
+            min-height: 0; /* allow flex child to shrink properly */
+            height: auto;
+            overflow-y: auto; /* only this area scrolls */
+            border: 1px solid var(--border);
+            padding: 12px; /* slight inner padding for aesthetics */
+            margin: 8px;   /* slight outer margin around the entire div */
+            background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+            border-radius: var(--radius);
+            display: flex;
+            flex-direction: column;
+            box-shadow: var(--shadow);
+            overscroll-behavior: contain; /* prevent scroll chaining on mobile */
+            padding-bottom: 0;
+            scroll-padding-bottom: 0;
+        }
+        #caption-text {
+            font-size: 28px;
+            color: var(--text);
+            margin: 0;
+            width: 100%;
+            white-space: normal;
+            word-wrap: anywhere;
+            line-height: 1.5;
+            flex-grow: 1;
+            letter-spacing: 0.2px;
+        }
+
+        /* Each finalized caption entry block */
+        .caption-entry { padding: 4px 0; }
+        .caption-entry + .caption-entry { border-top: 1px dashed #333; margin-top: 10px; padding-top: 14px; }
+
+        /* Custom scrollbar */
+        #caption-container::-webkit-scrollbar { width: 12px; }
+        #caption-container::-webkit-scrollbar-track { background: #191919; border-radius: 8px; }
+        #caption-container::-webkit-scrollbar-thumb { background: #2f2f2f; border-radius: 8px; border: 2px solid #191919; }
+        #caption-container::-webkit-scrollbar-thumb:hover { background: #3a3a3a; }
+        #caption-container { scrollbar-width: thin; scrollbar-color: #2f2f2f #191919; }
+
+        /* Visually hidden (for accessible labels) */
+        .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+        /* Responsive */
+        @media (max-width: 720px) {
+            body { padding: 0; }
+            .controls { gap: 8px; }
+            #caption-text { font-size: 22px; }
+            #settings-menu { right: 16px; left: 16px; width: auto; }
+        }
+    </style>
+</head>
+<body>
+    <div class="topbar" style="padding-bottom: calc(env(safe-area-inset-top) * 0.5);">
+        <div class="brand">
+            <span class="dot"></span>
+            <span class="title">Caption Viewer</span>
+        </div>
+        <div class="controls">
+            <label for="language" class="sr-only">Output Language</label>
+            <select id="language">
+                {{LANGUAGE_OPTIONS}}
+            </select>
+            <span id="language-status"></span>
+            <button id="settings-button" aria-haspopup="true" aria-expanded="false">⚙ Settings</button>
+        </div>
+    </div>
+
+    <div id="settings-menu" role="dialog" aria-modal="true" aria-labelledby="settings-title">
+        <h3 id="settings-title">Display Settings</h3>
+        <div class="subtle">Adjust appearance and behavior. Changes save automatically.</div>
+        <div class="grid">
+            <div class="full">
+                <label for="bg_color">Background Color</label>
+                <input type="color" id="bg_color" value="#000000">
+            </div>
+            <div class="full">
+                <label for="text_color">Text Color</label>
+                <input type="color" id="text_color" value="#FFFFFF">
+            </div>
+            <div>
+                <label for="font_style">Font Style</label>
+                <select id="font_style">
+                    <option value="Arial" selected>Arial</option>
+                    <option value="Helvetica">Helvetica</option>
+                    <option value="Times New Roman">Times New Roman</option>
+                    <option value="Courier New">Courier New</option>
+                </select>
+            </div>
+            <div>
+                <label for="font_size">Font Size (px)</label>
+                <input type="number" id="font_size" value="24" min="12" max="72">
+            </div>
+            <div class="full">
+                <label for="auto_finalize_delay">Auto-Finalize Delay (seconds)</label>
+                <input type="number" id="auto_finalize_delay" value="10" min="1" max="60" step="0.5">
+            </div>
+            <div class="full">
+                <button class="danger" onclick="clearCaptions()">Clear Captions</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="caption-container">
+        <div id="caption-text">Waiting for captions...</div>
+    </div>
+
+    <script>
+        const websocketToken = "{{WEBSOCKET_TOKEN}}";
+        const ws = new WebSocket(`ws://${window.location.hostname}:8000/ws/captions?token=${websocketToken}`);
+
+        let captionHistory = [];
+        let lastText = '';
+        let lastIsFinal = false;
+        let currentLanguage = 'en-US';
+
+        // Function to escape HTML
+        function escapeHtml(str) {
+            return str
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        // Function to update the display with separated entries
+        function updateDisplay() {
+            const captionElement = document.getElementById('caption-text');
+            if (lastText && lastText.trim() !== '') {
+                // Split on newlines to separate finalized entries; filter out empties
+                const entries = lastText.split(/\n+/).filter(Boolean);
+                const html = entries.map(part => `<div class="caption-entry">${escapeHtml(part)}</div>`).join("");
+                captionElement.innerHTML = html;
+            } else {
+                captionElement.textContent = "Waiting for captions...";
+            }
+
+            // Auto-scroll to bottom with a small delay to ensure rendering is complete
+            setTimeout(() => {
+                const container = document.getElementById('caption-container');
+                container.scrollTop = container.scrollHeight;
+            }, 60);
+        }
+
+        // Load saved settings from localStorage and merge with server defaults
+        function loadSettings() {
+            // First, get the default settings from the server
+            fetch('/user_settings_public')
+                .then(response => response.json())
+                .then(serverDefaults => {
+                    console.log('Loaded server defaults:', serverDefaults);
+                    
+                    // Get local settings or use empty object
+                    const localSettings = JSON.parse(localStorage.getItem('userSettings')) || {};
+                    
+                    // Merge server defaults with local settings (local settings take precedence)
+                    const settings = {
+                        bg_color: localSettings.bg_color || serverDefaults.user_bg_color || '#000000',
+                        text_color: localSettings.text_color || serverDefaults.user_text_color || '#FFFFFF',
+                        font_style: localSettings.font_style || serverDefaults.user_font_style || 'Arial',
+                        font_size: localSettings.font_size || serverDefaults.user_font_size || 24,
+                        auto_finalize_delay: localSettings.auto_finalize_delay || serverDefaults.user_auto_finalize_delay || 10.0
+                    };
+
+                    // Apply visual settings
+                    document.body.style.backgroundColor = settings.bg_color;
+                    document.getElementById('caption-container').style.backgroundColor = settings.bg_color;
+                    const captionText = document.getElementById('caption-text');
+                    captionText.style.color = settings.text_color;
+                    captionText.style.fontFamily = settings.font_style;
+                    captionText.style.fontSize = `${settings.font_size}px`;
+
+                    // Set form values
+                    document.getElementById('bg_color').value = settings.bg_color;
+                    document.getElementById('text_color').value = settings.text_color;
+                    document.getElementById('font_style').value = settings.font_style;
+                    document.getElementById('font_size').value = settings.font_size;
+                    document.getElementById('auto_finalize_delay').value = settings.auto_finalize_delay;
+
+                    updateDisplay();
+
+                    // Save merged settings back to localStorage
+                    localStorage.setItem('userSettings', JSON.stringify(settings));
+                })
+                .catch(error => {
+                    console.error('Failed to load server defaults:', error);
+                    // Fallback to local settings only
+                    const settings = JSON.parse(localStorage.getItem('userSettings')) || {
+                        bg_color: '#000000',
+                        text_color: '#FFFFFF',
+                        font_style: 'Arial',
+                        font_size: 24,
+                        auto_finalize_delay: 10.0
+                    };
+                    
+                    // Apply visual settings
+                    document.body.style.backgroundColor = settings.bg_color;
+                    document.getElementById('caption-container').style.backgroundColor = settings.bg_color;
+                    const captionText = document.getElementById('caption-text');
+                    captionText.style.color = settings.text_color;
+                    captionText.style.fontFamily = settings.font_style;
+                    captionText.style.fontSize = `${settings.font_size}px`;
+
+                    // Set form values
+                    document.getElementById('bg_color').value = settings.bg_color;
+                    document.getElementById('text_color').value = settings.text_color;
+                    document.getElementById('font_style').value = settings.font_style;
+                    document.getElementById('font_size').value = settings.font_size;
+                    document.getElementById('auto_finalize_delay').value = settings.auto_finalize_delay;
+
+                    updateDisplay();
+
+                    // Save settings back to ensure all defaults are stored
+                    localStorage.setItem('userSettings', JSON.stringify(settings));
+                });
+        }
+
+        // Update settings dynamically when inputs change
+        function updateSettings() {
+            const settings = {
+                bg_color: document.getElementById('bg_color').value,
+                text_color: document.getElementById('text_color').value,
+                font_style: document.getElementById('font_style').value,
+                font_size: parseInt(document.getElementById('font_size').value) || 24,
+                auto_finalize_delay: parseFloat(document.getElementById('auto_finalize_delay').value) || 10.0
+            };
+            
+            // Apply visual settings immediately
+            document.body.style.backgroundColor = settings.bg_color;
+            document.getElementById('caption-container').style.backgroundColor = settings.bg_color;
+            const captionText = document.getElementById('caption-text');
+            captionText.style.color = settings.text_color;
+            captionText.style.fontFamily = settings.font_style;
+            captionText.style.fontSize = `${settings.font_size}px`;
+            
+            // Save to localStorage
+            localStorage.setItem('userSettings', JSON.stringify(settings));
+            
+            // Send auto-finalization delay to backend
+            if (settings.auto_finalize_delay) {
+                fetch('/user_settings_public', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        user_auto_finalize_delay: settings.auto_finalize_delay
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Auto-finalization delay updated on server:', data);
+                })
+                .catch(error => {
+                    console.error('Error updating auto-finalization delay:', error);
+                });
+            }
+        }
+
+        // Toggle settings menu visibility
+        document.getElementById('settings-button').onclick = () => {
+            const menu = document.getElementById('settings-menu');
+            menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+        };
+
+        // Add event listeners for settings inputs
+        document.addEventListener('DOMContentLoaded', () => {
+            const inputs = ['bg_color', 'text_color', 'font_style', 'font_size', 'auto_finalize_delay'];
+            inputs.forEach(inputId => {
+                const input = document.getElementById(inputId);
+                if (input) {
+                    input.addEventListener('input', updateSettings);
+                    input.addEventListener('change', updateSettings);
+                }
+            });
+        });
+
+        // Handle language change
+        document.getElementById('language').onchange = () => {
+            currentLanguage = document.getElementById('language').value;
+            console.log('Language changed to:', currentLanguage);
+            
+            // Notify backend of language change for proper recognizer routing
+            fetch('/set_user_language', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ language: currentLanguage })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Backend notified of language change:', data);
+            })
+            .catch(error => {
+                console.error('Error notifying backend of language change:', error);
+            });
+            
+            document.getElementById('caption-text').textContent = "Waiting for captions...";
+            captionHistory = [];
+            lastText = '';
+        };
+
+        ws.onopen = () => {
+            console.log("WebSocket connected");
+            loadSettings(); // Apply settings on page load
+            
+            // Ensure language dropdown is synchronized with currentLanguage
+            const languageSelect = document.getElementById('language');
+            if (languageSelect && languageSelect.value) {
+                currentLanguage = languageSelect.value;
+                console.log('Initialized currentLanguage to:', currentLanguage);
+                
+                // Notify backend of initial language selection
+                fetch('/set_user_language', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ language: currentLanguage })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Backend notified of initial language:', data);
+                })
+                .catch(error => {
+                    console.error('Error notifying backend of initial language:', error);
+                });
+            }
+        };
+
+        ws.onmessage = (event) => {
+            try {
+                const data = JSON.parse(event.data);
+                if (data.type === "caption") {
+                    console.log('Received caption data:', data);
+                    console.log('Current language:', currentLanguage);
+                    console.log('Available languages in caption:', data.translations.user ? Object.keys(data.translations.user) : 'none');
+                    
+                    // Handle user captions (all languages with history)
+                    if (data.translations.user && data.translations.user[currentLanguage]) {
+                        const text = data.translations.user[currentLanguage];
+                        console.log('Received user caption for', currentLanguage, ':', text);
+                        
+                        // Simply use the text as received (backend handles all processing)
+                        lastText = text;
+                        updateDisplay();
+                    } else if (data.translations.user && data.translations.user['en-US'] && currentLanguage !== 'en-US') {
+                        // Fallback to English if selected language isn't available
+                        const text = data.translations.user['en-US'];
+                        console.log('Fallback: Showing English caption instead of', currentLanguage, ':', text);
+                        
+                        lastText = text;
+                        updateDisplay();
+                    } else {
+                        console.log('No caption available for current language:', currentLanguage);
+                        if (data.translations.user) {
+                            console.log('Available languages:', Object.keys(data.translations.user));
+                        }
+                    }
+                    
+                    // Update language status indicator
+                    const statusSpan = document.getElementById('language-status');
+                    if (statusSpan && data.translations.user) {
+                        const availableLanguages = Object.keys(data.translations.user);
+                        if (availableLanguages.length > 1) {
+                            statusSpan.textContent = `(${availableLanguages.length} languages available)`;
+                            statusSpan.style.color = '#0a0';
+                        } else if (availableLanguages.length === 1) {
+                            statusSpan.textContent = '(English only)';
+                            statusSpan.style.color = '#888';
+                        }
+                    }
+                
+                    if (data.settings) {
+                        console.log('Received user settings update:', data.settings);
+                        const settings = JSON.parse(localStorage.getItem('userSettings')) || {};
+                        
+                        // Update settings with new values from server
+                        if (data.settings.user_bg_color) settings.bg_color = data.settings.user_bg_color;
+                        if (data.settings.user_text_color) settings.text_color = data.settings.user_text_color;
+                        if (data.settings.user_font_style) settings.font_style = data.settings.user_font_style;
+                        if (data.settings.user_font_size) settings.font_size = data.settings.user_font_size;
+                        
+                        localStorage.setItem('userSettings', JSON.stringify(settings));
+                        
+                        // Apply visual settings
+                        document.body.style.backgroundColor = settings.bg_color;
+                        document.getElementById('caption-container').style.backgroundColor = settings.bg_color;
+                        const captionText = document.getElementById('caption-text');
+                        captionText.style.color = settings.text_color;
+                        captionText.style.fontFamily = settings.font_style;
+                        captionText.style.fontSize = `${settings.font_size}px`;
+                        
+                        // Update form fields with new settings
+                        document.getElementById('bg_color').value = settings.bg_color;
+                        document.getElementById('text_color').value = settings.text_color;
+                        document.getElementById('font_style').value = settings.font_style;
+                        document.getElementById('font_size').value = settings.font_size;
+                        
+                        console.log('Updated settings from WebSocket:', settings);
+                        updateDisplay();
+                    }
+                }
+            } catch (error) {
+                console.error('WebSocket message error:', error);
+            }
+        };
+
+        ws.onclose = () => {
+            console.log("WebSocket disconnected");
+        };
+
+        ws.onerror = (error) => {
+            console.error("WebSocket error:", error);
+        };
+
+        function clearCaptions() {
+            lastText = '';
+            document.getElementById('caption-text').textContent = "Waiting for captions...";
+        }
+
+        // Add event listeners for dynamic settings update
+        ['bg_color', 'text_color', 'font_style', 'font_size'].forEach(id => {
+            const input = document.getElementById(id);
+            if (input) {
+                input.addEventListener('input', updateSettings);
+                input.addEventListener('change', updateSettings);
+            }
+        });
+    </script>
+</body>
+</html>

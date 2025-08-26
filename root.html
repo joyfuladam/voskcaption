@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Production View</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #000000; /* Default body background black */
+        }
+        #caption {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            text-align: left;
+            box-sizing: border-box;
+            font-size: 45px; /* font_size */
+            font-family: Arial; /* font_style */
+            background-color: #000000; /* bg_color */
+            color: #FFFFFF; /* text_color */
+            transition: none; /* Remove transitions for real-time display */
+            white-space: pre-wrap; /* Preserve line breaks */
+            line-height: 1.2; /* Adjust line spacing for multiple lines */
+            padding: 0 0 0 50px; /* Default left padding */
+        }
+    </style>
+</head>
+<body>
+    <div id="caption">Waiting for captions...</div>
+
+    <script>
+        const authHeader = 'Basic ' + btoa('admin:Northway12121');
+        let CONFIG = {};
+        let lastText = '';
+        let currentLanguage = 'en-US';
+
+        function updateDisplay() {
+            const captionDiv = document.getElementById('caption');
+            
+            // Display text or show blank when cleared
+            if (lastText && lastText.trim() !== '') {
+                // Use innerHTML to preserve line breaks while escaping HTML to prevent XSS
+                captionDiv.innerHTML = lastText.replace(/&/g, '&amp;')
+                                              .replace(/</g, '&lt;')
+                                              .replace(/>/g, '&gt;')
+                                              .replace(/\n/g, '<br>');
+            } else {
+                captionDiv.innerHTML = ""; // Show blank instead of "Waiting for captions..."
+            }
+        }
+
+        function applySettings(settings) {
+            CONFIG = {...CONFIG, ...settings};
+            const captionDiv = document.getElementById('caption');
+            
+            // Apply visual settings
+            captionDiv.style.fontSize = `${CONFIG.font_size}px`;
+            captionDiv.style.fontFamily = CONFIG.font_style;
+            captionDiv.style.backgroundColor = CONFIG.bg_color;
+            captionDiv.style.color = CONFIG.text_color;
+            
+            // Apply position settings with padding
+            if (CONFIG.preview_position === 'top') {
+                captionDiv.style.top = `${CONFIG.main_text_position_y}px`;
+                captionDiv.style.bottom = 'auto';
+                captionDiv.style.left = `${CONFIG.main_text_position_x}px`;
+                captionDiv.style.right = 'auto';
+                captionDiv.style.transform = 'none';
+            } else if (CONFIG.preview_position === 'middle') {
+                captionDiv.style.top = '50%';
+                captionDiv.style.bottom = 'auto';
+                captionDiv.style.left = `${CONFIG.main_text_position_x}px`;
+                captionDiv.style.right = 'auto';
+                captionDiv.style.transform = 'translateY(-50%)';
+            } else if (CONFIG.preview_position === 'bottom') {
+                // Bottom positioning with padding
+                captionDiv.style.bottom = `${CONFIG.main_text_position_y}px`;
+                captionDiv.style.top = 'auto';
+                captionDiv.style.left = `${CONFIG.main_text_position_x}px`;
+                captionDiv.style.right = 'auto';
+                captionDiv.style.transform = 'none';
+            }
+        }
+
+        function connectWebSocket() {
+            const ws = new WebSocket(`ws://${window.location.hostname}:8000/ws/captions?token=Northway12121`);
+            
+            ws.onopen = function() {
+                console.log('WebSocket connected');
+            };
+
+            ws.onmessage = (event) => {
+                try {
+                    const data = JSON.parse(event.data);
+                    console.log('WebSocket received:', data);
+                    
+                    if (data.type === "caption") {
+                        console.log('Caption data received:', data.translations);
+                        if (data.translations.production && data.translations.production[currentLanguage] !== undefined) {
+                            const text = data.translations.production[currentLanguage];
+                            console.log('Received production caption:', text, 'Type:', typeof text, 'Length:', text.length);
+                            
+                            // Simply use the text as received (backend handles all processing)
+                            lastText = text;
+                            updateDisplay();
+                        } else {
+                            console.log('No production caption found for language:', currentLanguage);
+                        }
+                    } else if (data.type === "settings") {
+                        console.log('Received settings update:', data.settings);
+                        applySettings(data.settings);
+                    }
+                } catch (error) {
+                    console.error('WebSocket message error:', error);
+                }
+            };
+
+            ws.onclose = function() {
+                console.log('WebSocket disconnected, reconnecting in 5s...');
+                document.getElementById('caption').innerHTML = "Disconnected";
+                setTimeout(connectWebSocket, 5000);
+            };
+
+            ws.onerror = function(error) {
+                console.error('WebSocket error:', error);
+            };
+        }
+
+        // Fetch initial settings
+        fetch('/settings', {
+            headers: { 'Authorization': authHeader }
+        })
+            .then(response => {
+                if (!response.ok) throw new Error(`Failed to fetch settings: ${response.status}`);
+                return response.json();
+            })
+            .then(settings => {
+                console.log('Initial settings:', settings);
+                applySettings(settings);
+            })
+            .catch(error => console.error('Failed to fetch initial settings:', error));
+
+        // Start WebSocket connection
+        connectWebSocket();
+    </script>
+</body>
+</html>

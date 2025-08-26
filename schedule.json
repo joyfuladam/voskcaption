@@ -1,0 +1,28 @@
+[
+  {
+    "date": "2025-08-24",
+    "start_time": "08:00",
+    "stop_time": "12:30",
+    "timezone": "America/New_York",
+    "pause_event": false,
+    "repeats": true,
+    "recurrence_type": "weekly",
+    "recurrence_interval": 1,
+    "ending_type": "never",
+    "ending_occurrences": null,
+    "ending_date": null
+  },
+  {
+    "date": "2025-08-23",
+    "start_time": "16:00",
+    "stop_time": "18:30",
+    "timezone": "America/New_York",
+    "pause_event": false,
+    "repeats": true,
+    "recurrence_type": "weekly",
+    "recurrence_interval": 1,
+    "ending_type": "never",
+    "ending_occurrences": null,
+    "ending_date": null
+  }
+]
