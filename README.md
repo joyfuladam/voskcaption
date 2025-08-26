@@ -2,6 +2,8 @@
 
 A real-time captioning application with web interface and audio processing capabilities.
 
+**✅ Successfully connected to GitHub at: https://github.com/joyfuladam/caption.git**
+
 ## Features
 
 - Real-time audio transcription
