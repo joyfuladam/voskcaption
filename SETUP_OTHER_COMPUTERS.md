@@ -17,6 +17,27 @@ curl -sSL https://raw.githubusercontent.com/joyfuladam/caption/main/setup_new_co
 
 ---
 
+## ⚙️ **Configuration Setup (Important!)**
+
+After running the setup script, you need to configure the application:
+
+1. **Copy the template configuration:**
+   ```bash
+   cp config.template.json config.json
+   ```
+
+2. **Edit the configuration file:**
+   - Open `config.json` in any text editor
+   - Add your Azure Speech API key to `"speech_key"`
+   - Customize other settings as needed
+
+3. **Get an Azure Speech API key:**
+   - Go to [Azure Portal](https://portal.azure.com)
+   - Create a Speech Service resource
+   - Copy the key and region
+
+---
+
 ## 📋 **Manual Setup (Step by Step)**
 
 ### **Step 1: Install Prerequisites**

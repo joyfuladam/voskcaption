@@ -67,12 +67,24 @@ else
     echo "   $PYTHON_CMD -m pip install --user -r requirements.txt"
 fi
 
+# Set up configuration
+echo "⚙️  Setting up configuration..."
+if [ ! -f "config.json" ] && [ -f "config.template.json" ]; then
+    echo "📋 Creating configuration file from template..."
+    cp config.template.json config.json
+    echo "✅ Configuration file created!"
+    echo "⚠️  IMPORTANT: Edit config.json to add your Azure Speech API key"
+else
+    echo "✅ Configuration file already exists"
+fi
+
 echo ""
 echo "🎉 Caption5 setup complete!"
 echo ""
 echo "📋 Next steps:"
-echo "   1. Run the application: $PYTHON_CMD captionStable.py"
-echo "   2. For updates, use: ./update_app.sh"
-echo "   3. Check README.md for more information"
+echo "   1. Edit config.json to add your Azure Speech API key"
+echo "   2. Run the application: $PYTHON_CMD captionStable.py"
+echo "   3. For updates, use: ./update_app.sh"
+echo "   4. Check README.md for more information"
 echo ""
 echo "🚀 Ready to start captioning!"
