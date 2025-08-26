@@ -1,0 +1,23 @@
+{
+    "speech_key": "",
+    "service_region": "eastus",
+    "font_size": 45,
+    "font_style": "Arial",
+    "bg_color": "#000000",
+    "text_color": "#FFFFFF",
+    "main_text_position_x": 0,
+    "main_text_position_y": 0,
+    "preview_position": "bottom",
+    "max_line_length": 90,
+    "max_lines": 1,
+    "text_justify": "left",
+    "text_anchor": "sw",
+    "text_padding_x": 50,
+    "text_padding_y": 0,
+    "preview_fine_tune_x": 50,
+    "preview_fine_tune_y": 50,
+    "initial_silence_timeout_ms": "15000",
+    "end_silence_timeout_ms": "15000",
+    "max_transcript_lines": 1000,
+    "pause_threshold_seconds": 2.0
+}
