@@ -11,6 +11,10 @@ import json
 import requests
 from datetime import datetime
 import time
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 class GitHubUpdater:
     def __init__(self, repo_owner="joyfuladam", repo_name="caption", branch="main"):
@@ -20,10 +24,25 @@ class GitHubUpdater:
         self.github_api_url = f"https://api.github.com/repos/{repo_owner}/{repo_name}/commits/{branch}"
         self.local_git_path = os.path.dirname(os.path.abspath(__file__))
         
+        # Get GitHub token from environment variable
+        self.github_token = os.getenv('GITHUB_TOKEN')
+        self.auth_headers = {}
+        if self.github_token:
+            self.auth_headers = {
+                'Authorization': f'token {self.github_token}',
+                'Accept': 'application/vnd.github.v3+json'
+            }
+            print("Using GitHub token for authentication")
+        else:
+            print("No GitHub token found, using unauthenticated requests")
+        
     def get_latest_commit_info(self):
         """Get the latest commit information from GitHub"""
         try:
-            response = requests.get(self.github_api_url, timeout=10)
+            print(f"Fetching from GitHub API: {self.github_api_url}")
+            response = requests.get(self.github_api_url, headers=self.auth_headers, timeout=10)
+            print(f"GitHub API response status: {response.status_code}")
+            
             if response.status_code == 200:
                 commit_data = response.json()
                 return {
@@ -32,7 +51,14 @@ class GitHubUpdater:
                     'date': commit_data['commit']['author']['date'],
                     'author': commit_data['commit']['author']['name']
                 }
+            elif response.status_code == 403:
+                print("GitHub API rate limit exceeded or access denied")
+                return None
+            elif response.status_code == 404:
+                print("Repository not found or access denied")
+                return None
             else:
+                print(f"GitHub API error: {response.status_code} - {response.text}")
                 return None
         except Exception as e:
             print(f"Error fetching GitHub info: {e}")
