@@ -59,12 +59,48 @@ if [ ! -f "requirements.txt" ]; then
     exit 1
 fi
 
-echo "📦 Installing Python dependencies..."
-if $PYTHON_CMD -m pip install -r requirements.txt; then
-    echo "✅ Dependencies installed successfully"
+# Create virtual environment
+echo "🐍 Creating virtual environment..."
+if [ -d "venv" ]; then
+    echo "✅ Virtual environment already exists"
 else
-    echo "⚠️  Some dependencies may have failed to install. You can try:"
-    echo "   $PYTHON_CMD -m pip install --user -r requirements.txt"
+    if $PYTHON_CMD -m venv venv; then
+        echo "✅ Virtual environment created successfully"
+    else
+        echo "❌ Failed to create virtual environment. Trying alternative method..."
+        if $PYTHON_CMD -m virtualenv venv; then
+            echo "✅ Virtual environment created with virtualenv"
+        else
+            echo "❌ Failed to create virtual environment. Installing dependencies globally..."
+            echo "⚠️  Note: This may conflict with other Python projects"
+        fi
+    fi
+fi
+
+# Activate virtual environment and install dependencies
+if [ -d "venv" ]; then
+    echo "🔌 Activating virtual environment..."
+    source venv/bin/activate
+    
+    echo "📦 Installing Python dependencies in virtual environment..."
+    if pip install -r requirements.txt; then
+        echo "✅ Dependencies installed successfully in virtual environment"
+    else
+        echo "⚠️  Some dependencies may have failed to install. You can try:"
+        echo "   pip install --upgrade pip"
+        echo "   pip install -r requirements.txt"
+    fi
+    
+    # Deactivate virtual environment
+    deactivate
+else
+    echo "📦 Installing Python dependencies globally..."
+    if $PYTHON_CMD -m pip install -r requirements.txt; then
+        echo "✅ Dependencies installed successfully globally"
+    else
+        echo "⚠️  Some dependencies may have failed to install. You can try:"
+        echo "   $PYTHON_CMD -m pip install --user -r requirements.txt"
+    fi
 fi
 
 # Set up configuration
@@ -78,13 +114,30 @@ else
     echo "✅ Configuration file already exists"
 fi
 
+# Create activation script
+echo "📝 Creating activation script..."
+cat > activate_caption5.sh << 'EOF'
+#!/bin/bash
+# Caption5 Virtual Environment Activation Script
+echo "🔌 Activating Caption5 virtual environment..."
+source venv/bin/activate
+echo "✅ Virtual environment activated!"
+echo "🚀 You can now run: python captionStable.py"
+echo "💡 To deactivate, run: deactivate"
+EOF
+
+chmod +x activate_caption5.sh
+
 echo ""
 echo "🎉 Caption5 setup complete!"
 echo ""
 echo "📋 Next steps:"
 echo "   1. Edit config.json to add your Azure Speech API key"
-echo "   2. Run the application: $PYTHON_CMD captionStable.py"
-echo "   3. For updates, use: ./update_app.sh"
-echo "   4. Check README.md for more information"
+echo "   2. Activate virtual environment: source venv/bin/activate"
+echo "   3. Run the application: python captionStable.py"
+echo "   4. Or use the activation script: ./activate_caption5.sh"
+echo "   5. For updates, use: ./update_app.sh"
+echo "   6. Check README.md for more information"
 echo ""
+echo "💡 Quick start: ./activate_caption5.sh"
 echo "🚀 Ready to start captioning!"

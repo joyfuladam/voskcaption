@@ -50,7 +50,28 @@ if %errorlevel% equ 0 (
     REM Check if requirements.txt changed
     git diff --name-only HEAD~1 HEAD | findstr "requirements.txt" >nul
     if %errorlevel% equ 0 (
-        echo 📋 Dependencies may have changed. Consider running: pip install -r requirements.txt
+        echo 📋 Dependencies may have changed. Updating virtual environment...
+        
+        REM Check if virtual environment exists
+        if exist "venv" (
+            echo 🔌 Activating virtual environment to update dependencies...
+            call venv\Scripts\activate.bat
+            
+            pip install -r requirements.txt
+            if %errorlevel% equ 0 (
+                echo ✅ Dependencies updated successfully in virtual environment
+            ) else (
+                echo ⚠️  Some dependencies may have failed to update. You can try:
+                echo    venv\Scripts\activate.bat
+                echo    pip install --upgrade pip
+                echo    pip install -r requirements.txt
+            )
+            
+            deactivate
+        ) else (
+            echo ⚠️  Virtual environment not found. Consider running setup_new_computer.bat first
+            echo    Or install dependencies manually: pip install -r requirements.txt
+        )
     )
     
     REM Check if main application file changed
@@ -59,8 +80,22 @@ if %errorlevel% equ 0 (
         echo 🔄 Main application updated. You may need to restart the application.
     )
     
+    REM Check if virtual environment scripts were added
+    git diff --name-only HEAD~1 HEAD | findstr "activate_caption5" >nul
+    if %errorlevel% equ 0 (
+        echo 🐍 New virtual environment activation scripts added!
+        echo    Use: activate_caption5.bat
+    )
+    
     echo.
     echo 🎉 Update complete! Check the README.md for any additional setup steps.
+    echo.
+    echo 💡 Quick start:
+    if exist "venv" (
+        echo    venv\Scripts\activate.bat ^&^& python captionStable.py
+    ) else (
+        echo    activate_caption5.bat
+    )
 ) else (
     echo ❌ Update failed. Please check for conflicts and try again.
 )
