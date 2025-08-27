@@ -538,6 +538,50 @@
             padding-top: 20px;
             border-top: 1px solid var(--border);
         }
+
+        /* Update Section Styles */
+        .update-section {
+            margin-top: 24px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+        }
+        .update-status {
+            text-align: center;
+        }
+        .update-indicator {
+            margin-bottom: 12px;
+            font-size: 16px;
+            font-weight: 500;
+        }
+        .update-details {
+            margin: 12px 0;
+            padding: 12px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 6px;
+            font-size: 12px;
+            line-height: 1.4;
+        }
+        .commit-info {
+            margin-bottom: 8px;
+            color: var(--muted);
+        }
+        .update-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+        .update-btn:hover {
+            background: var(--accent-2);
+        }
+        .update-btn:disabled {
+            background: var(--muted);
+            cursor: not-allowed;
+        }
         
         /* Table improvements */
         .table-container {
@@ -760,7 +804,28 @@
                 <div class="links">
                     <div>User View: <span id="user-view-ip">Loading...</span></div>
                     <div>Production View: <span id="production-view-ip">Loading...</span></div>
-                    <div id="local-ip">Local IP: Loading...</div>
+                    <div id="local-ip">Local IP: Loading...</span></div>
+                </div>
+            </div>
+
+            <!-- GitHub Update Checker -->
+            <div class="update-section">
+                <h3>🔄 System Updates</h3>
+                <div id="update-status" class="update-status">
+                    <div class="update-indicator">
+                        <span id="update-icon">⏳</span>
+                        <span id="update-message">Checking for updates...</span>
+                    </div>
+                    <div id="update-details" class="update-details" style="display: none;">
+                        <div class="commit-info">
+                            <small>Local: <span id="local-commit">-</span></small><br>
+                            <small>Remote: <span id="remote-commit">-</span></small>
+                        </div>
+                        <small id="last-check">Last checked: Never</small>
+                    </div>
+                    <button id="update-button" onclick="performUpdate()" style="display: none;" class="update-btn">
+                        🔄 Update Now
+                    </button>
                 </div>
             </div>
         </div>
@@ -1526,6 +1591,117 @@
             setInterval(loadRecognitionStatus, 5000);
             // Refresh schedule list every minute to remove expired events
             setInterval(loadSchedule, 60000);
+            // Check for updates every 5 minutes
+            setInterval(checkForUpdates, 300000);
+        }
+
+        // GitHub Update Checker Functions
+        function checkForUpdates() {
+            fetch('/check_updates', {
+                headers: { 'Authorization': authHeader }
+            })
+            .then(response => {
+                if (!response.ok) throw new Error(`Failed to check for updates: ${response.status}`);
+                return response.json();
+            })
+            .then(updateInfo => {
+                updateUpdateStatus(updateInfo);
+            })
+            .catch(error => {
+                console.error('Failed to check for updates:', error);
+                updateUpdateStatus({
+                    status: 'error',
+                    message: 'Unable to Check Updates',
+                    icon: '❌'
+                });
+            });
+        }
+
+        function updateUpdateStatus(updateInfo) {
+            const updateIcon = document.getElementById('update-icon');
+            const updateMessage = document.getElementById('update-message');
+            const updateDetails = document.getElementById('update-details');
+            const updateButton = document.getElementById('update-button');
+            const localCommit = document.getElementById('local-commit');
+            const remoteCommit = document.getElementById('remote-commit');
+            const lastCheck = document.getElementById('last-check');
+
+            // Update icon and message
+            updateIcon.textContent = updateInfo.icon || '⏳';
+            updateMessage.textContent = updateInfo.message || 'Checking for updates...';
+
+            // Update details if available
+            if (updateInfo.local_commit && updateInfo.remote_commit) {
+                localCommit.textContent = updateInfo.local_commit.sha || '-';
+                remoteCommit.textContent = updateInfo.remote_commit.sha || '-';
+                updateDetails.style.display = 'block';
+            }
+
+            // Update last check time
+            if (updateInfo.last_check) {
+                const checkTime = new Date(updateInfo.last_check);
+                lastCheck.textContent = `Last checked: ${checkTime.toLocaleString()}`;
+            }
+
+            // Show/hide update button
+            if (updateInfo.show_update_button) {
+                updateButton.style.display = 'inline-block';
+            } else {
+                updateButton.style.display = 'none';
+            }
+
+            // Update colors based on status
+            updateMessage.style.color = updateInfo.status === 'success' ? 'var(--success)' : 
+                                      updateInfo.status === 'warning' ? 'var(--danger)' : 
+                                      updateInfo.status === 'error' ? 'var(--danger)' : 'var(--text)';
+        }
+
+        function performUpdate() {
+            const updateButton = document.getElementById('update-button');
+            const updateMessage = document.getElementById('update-message');
+            
+            // Disable button and show updating message
+            updateButton.disabled = true;
+            updateButton.textContent = '🔄 Updating...';
+            updateMessage.textContent = 'Updating from GitHub...';
+            
+            fetch('/perform_update', {
+                method: 'POST',
+                headers: { 'Authorization': authHeader }
+            })
+            .then(response => {
+                if (!response.ok) throw new Error(`Failed to perform update: ${response.status}`);
+                return response.json();
+            })
+            .then(result => {
+                if (result.status === 'success') {
+                    updateMessage.textContent = 'Update completed successfully!';
+                    updateMessage.style.color = 'var(--success)';
+                    
+                    // Show restart message
+                    setTimeout(() => {
+                        if (confirm('Update completed! The application needs to restart to apply changes. Would you like to restart now?')) {
+                            window.location.reload();
+                        }
+                    }, 1000);
+                } else {
+                    updateMessage.textContent = `Update failed: ${result.message}`;
+                    updateMessage.style.color = 'var(--danger)';
+                }
+            })
+            .catch(error => {
+                console.error('Update failed:', error);
+                updateMessage.textContent = `Update failed: ${error.message}`;
+                updateMessage.style.color = 'var(--danger)';
+            })
+            .finally(() => {
+                // Re-enable button
+                updateButton.disabled = false;
+                updateButton.textContent = '🔄 Update Now';
+                
+                // Re-check for updates after a delay
+                setTimeout(checkForUpdates, 5000);
+            });
         }
 
         // Convert 12-hour time to 24-hour format
@@ -2067,6 +2243,7 @@
             loadSchedule();
             loadRecognitionStatus();
             startStatusCheck();
+            checkForUpdates(); // Check for updates on page load
             
             // Add event listeners to settings inputs for real-time preview updates
             const settingsInputs = [

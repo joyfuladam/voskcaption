@@ -329,6 +329,61 @@ async def get_audio_devices():
     devices = sd.query_devices()
     return [{"name": device["name"], "index": i} for i, device in enumerate(devices)]
 
+# -------------------------------------------------------------------
+# GitHub Update Endpoints
+# -------------------------------------------------------------------
+@app.get("/check_updates", dependencies=[Depends(get_current_username)])
+async def check_updates():
+    """Check for GitHub updates"""
+    try:
+        from github_updater import GitHubUpdater
+        updater = GitHubUpdater()
+        status = updater.get_update_status_display()
+        return status
+    except Exception as e:
+        log_message(logging.ERROR, f"Error checking for updates: {e}")
+        return {
+            'status': 'error',
+            'message': f'Error checking for updates: {str(e)}',
+            'last_check': datetime.now().isoformat()
+        }
+
+@app.post("/perform_update", dependencies=[Depends(get_current_username)])
+async def perform_update():
+    """Perform GitHub update"""
+    try:
+        from github_updater import GitHubUpdater
+        updater = GitHubUpdater()
+        result = updater.perform_update()
+        
+        if result['status'] == 'success':
+            log_message(logging.INFO, "GitHub update completed successfully")
+            # Broadcast update notification to all clients
+            await broadcast_update_notification(result)
+        else:
+            log_message(logging.ERROR, f"GitHub update failed: {result['message']}")
+        
+        return result
+    except Exception as e:
+        log_message(logging.ERROR, f"Error performing update: {e}")
+        return {
+            'status': 'error',
+            'message': f'Error performing update: {str(e)}'
+        }
+
+async def broadcast_update_notification(update_result):
+    """Broadcast update notification to all connected clients"""
+    for client in clients:
+        try:
+            await client.send_text(json.dumps({
+                "type": "update_notification", 
+                "result": update_result
+            }))
+            log_message(logging.DEBUG, f"Sent update notification to client: {client.client}")
+        except Exception as e:
+            log_message(logging.ERROR, f"WebSocket send error for update notification: {e}")
+            clients.remove(client)
+
 @app.post("/setup")
 async def set_setup(setup: dict):
     device_index = setup.get("audio_device")
