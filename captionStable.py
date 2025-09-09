@@ -1,4 +1,4 @@
-import azure.cognitiveservices.speech as speechsdk
+from vosk_speech_recognizer import VoskSpeechRecognizer
 import logging
 import os
 import asyncio
@@ -28,6 +28,12 @@ load_dotenv()
 # Setup logging
 # -------------------------------------------------------------------
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
+
+# Check if Vosk model exists
+VOSK_MODEL_PATH = os.path.join(CURRENT_DIR, "models", "vosk-model-en-us-0.22")
+if not os.path.exists(VOSK_MODEL_PATH):
+    print("⚠️  Vosk model not found. Please run: python download_vosk_model.py")
+    print(f"Expected model path: {VOSK_MODEL_PATH}")
 LOG_FILE = os.path.join(CURRENT_DIR, "caption_log.txt")
 
 logging.basicConfig(
@@ -49,8 +55,8 @@ def load_config():
     try:
         with open(CONFIG_FILE, 'r') as f:
             config = json.load(f)
-        # Override speech_key with environment variable if set
-        config["speech_key"] = os.getenv("AZURE_SPEECH_KEY", config.get("speech_key", ""))
+        # Override model_path with environment variable if set
+        config["model_path"] = os.getenv("VOSK_MODEL_PATH", config.get("model_path", VOSK_MODEL_PATH))
         log_message(logging.INFO, "Configuration loaded successfully")
         return config
     except FileNotFoundError:
@@ -65,9 +71,9 @@ def load_config():
 
 CONFIG = load_config()
 
-# Validate Azure key
-if not CONFIG["speech_key"]:
-    raise ValueError("AZURE_SPEECH_KEY environment variable or config.speech_key not set")
+# Validate Vosk model path
+if not CONFIG.get("model_path") or not os.path.exists(CONFIG["model_path"]):
+    raise ValueError(f"Vosk model not found at {CONFIG.get('model_path', 'not set')}. Please run: python download_vosk_model.py")
 
 # -------------------------------------------------------------------
 # File Paths
@@ -387,7 +393,7 @@ async def broadcast_update_notification(update_result):
 @app.post("/setup")
 async def set_setup(setup: dict):
     device_index = setup.get("audio_device")
-    speech_key = setup.get("speech_key")
+    model_path = setup.get("model_path")
     if device_index is not None:
         try:
             sd.default.device = int(device_index)
@@ -395,9 +401,9 @@ async def set_setup(setup: dict):
         except Exception as e:
             log_message(logging.ERROR, f"Failed to set audio device: {e}")
             raise HTTPException(status_code=400, detail=f"Failed to set audio device: {e}")
-    if speech_key:
-        CONFIG["speech_key"] = speech_key
-        log_message(logging.INFO, "Updated Azure speech key")
+    if model_path:
+        CONFIG["model_path"] = model_path
+        log_message(logging.INFO, f"Updated Vosk model path to {model_path}")
     return {"status": "success"}
 
 @app.get("/settings", dependencies=[Depends(get_current_username)])
@@ -758,31 +764,9 @@ fastapi_thread.start()
 time.sleep(1)
 
 # -------------------------------------------------------------------
-# Azure Speech Service Setup
+# Vosk Speech Recognition Setup (will be initialized after callbacks are defined)
 # -------------------------------------------------------------------
-speech_config = speechsdk.SpeechConfig(
-    subscription=CONFIG["speech_key"],
-    region=CONFIG["service_region"],
-    speech_recognition_language="en-US"
-)
-speech_config.set_property(speechsdk.PropertyId.SpeechServiceConnection_InitialSilenceTimeoutMs, CONFIG["initial_silence_timeout_ms"])
-speech_config.set_property(speechsdk.PropertyId.SpeechServiceConnection_EndSilenceTimeoutMs, CONFIG["end_silence_timeout_ms"])
-
-# Production recognizer for both production view and user view (English)
-production_recognizer = speechsdk.SpeechRecognizer(speech_config=speech_config)
-
-translation_config = speechsdk.translation.SpeechTranslationConfig(
-    subscription=CONFIG["speech_key"],
-    region=CONFIG["service_region"],
-    speech_recognition_language="en-US"
-)
-dictionary = load_dictionary()
-for lang in dictionary.get("supported_languages", []):
-    if lang["code"] != "en-US":
-        translation_config.add_target_language(lang["code"])
-translation_config.set_property(speechsdk.PropertyId.SpeechServiceConnection_InitialSilenceTimeoutMs, CONFIG["initial_silence_timeout_ms"])
-translation_config.set_property(speechsdk.PropertyId.SpeechServiceConnection_EndSilenceTimeoutMs, CONFIG["end_silence_timeout_ms"])
-translation_recognizer = speechsdk.translation.TranslationRecognizer(translation_config=translation_config)
+vosk_recognizer = None  # Will be initialized later
 
 is_recognizing = False
 should_be_recognizing = False
@@ -831,19 +815,14 @@ def correct_bible_books(text):
 def apply_text_corrections(text):
     return correct_bible_books(spelling_corrections(text))
 
-def map_azure_language_code(azure_code):
-    """Map Azure Speech language codes to dictionary language codes"""
+def map_vosk_language_code(vosk_code):
+    """Map Vosk language codes to dictionary language codes"""
+    # Vosk primarily supports English, but we keep this for future expansion
     mapping = {
-        'es': 'es-ES',
-        'fr': 'fr-FR', 
-        'de': 'de-DE',
-        'zh-Hans': 'zh-CN',
-        'ja': 'ja-JP',
-        'ru': 'ru-RU',
-        'ar': 'ar-EG',
-        'en-US': 'en-US'  # Keep as is
+        'en-US': 'en-US',
+        'en': 'en-US'
     }
-    return mapping.get(azure_code, azure_code)
+    return mapping.get(vosk_code, 'en-US')
 
 def auto_finalize_user_speech():
     """Auto-finalize user speech after the specified delay"""
@@ -1069,119 +1048,59 @@ def debounce_update_user_caption():
 
 
 # -------------------------------------------------------------------
-# Speech SDK Event Handlers
+# Vosk Speech Recognition Event Handlers
 # -------------------------------------------------------------------
-def on_production_speech_recognizing(evt):
-    """Production recognizer - sends to both production view and user view (English)"""
+def on_vosk_recognizing(text):
+    """Handle partial recognition results from Vosk"""
     global last_caption
-    if evt.result.reason == speechsdk.ResultReason.RecognizingSpeech:
-        text = evt.result.text
-        # Process for production view
-        process_production_speech_text(text=text, is_recognized=False)
-        # Also process for user view when English is selected
-        if current_user_language == "en-US":
-            process_user_speech_text(text=text, is_recognized=False)
+    log_message(logging.DEBUG, f"Vosk recognizing: {text}")
+    
+    # Process for production view
+    process_production_speech_text(text=text, is_recognized=False)
+    
+    # Also process for user view when English is selected
+    if current_user_language == "en-US":
+        process_user_speech_text(text=text, is_recognized=False)
 
-def on_production_speech_recognized(evt):
-    """Production recognizer - sends to both production view and user view (English)"""
+def on_vosk_recognized(text):
+    """Handle final recognition results from Vosk"""
     global last_caption
-    if evt.result.reason == speechsdk.ResultReason.RecognizedSpeech:
-        text = evt.result.text
-        # Process for production view
-        process_production_speech_text(text=text, is_recognized=True)
-        # Also process for user view when English is selected
-        if current_user_language == "en-US":
-            process_user_speech_text(text=text, is_recognized=True)
-    elif evt.result.reason == speechsdk.ResultReason.NoMatch:
-        try:
-            asyncio.run(send_caption_to_clients({"en-US": last_caption}, languages=["en-US"], caption_type="production"))
-        except Exception as e:
-            log_message(logging.ERROR, f"Failed to send production no-match caption: {e}")
+    log_message(logging.DEBUG, f"Vosk recognized: {text}")
+    
+    # Process for production view
+    process_production_speech_text(text=text, is_recognized=True)
+    
+    # Also process for user view when English is selected
+    if current_user_language == "en-US":
+        process_user_speech_text(text=text, is_recognized=True)
 
-
-
-def on_translation_recognizing(evt):
-    """Translation recognizer - only sends to user view when non-English is selected"""
-    if evt.result.reason == speechsdk.ResultReason.TranslatingSpeech:
-        translations = evt.result.translations
-        # Add English from the original text if not already included
-        translations_dict = dict(translations)
-        if evt.result.text and "en-US" not in translations_dict:
-            translations_dict["en-US"] = evt.result.text
-        
-        # Map Azure language codes to dictionary language codes
-        mapped_translations = {}
-        for azure_code, text in translations_dict.items():
-            mapped_code = map_azure_language_code(azure_code)
-            mapped_translations[mapped_code] = text
-        
-        log_message(logging.DEBUG, f"Translation recognizing: current_user_language={current_user_language}, original_translations={list(translations_dict.keys())}, mapped_translations={list(mapped_translations.keys())}")
-        
-        # Only process for user view if user is viewing non-English languages
-        if current_user_language != "en-US":
-            log_message(logging.DEBUG, f"Processing translation for user view: {mapped_translations}")
-            process_user_speech_text(translations=mapped_translations, is_recognized=False)
-        else:
-            log_message(logging.DEBUG, f"Skipping translation processing - user language is English")
-
-def on_translation_recognized(evt):
-    """Translation recognizer - only sends to user view when non-English is selected"""
-    if evt.result.reason == speechsdk.ResultReason.TranslatedSpeech:
-        translations = evt.result.translations
-        # Add English from the original text if not already included
-        translations_dict = dict(translations)
-        if evt.result.text and "en-US" not in translations_dict:
-            translations_dict["en-US"] = evt.result.text
-            
-        # Map Azure language codes to dictionary language codes
-        mapped_translations = {}
-        for azure_code, text in translations_dict.items():
-            mapped_code = map_azure_language_code(azure_code)
-            mapped_translations[mapped_code] = text
-            
-        log_message(logging.DEBUG, f"Translation recognized: current_user_language={current_user_language}, original_translations={list(translations_dict.keys())}, mapped_translations={list(mapped_translations.keys())}")
-            
-        # Only process for user view if user is viewing non-English languages
-        if current_user_language != "en-US":
-            log_message(logging.DEBUG, f"Processing final translation for user view: {mapped_translations}")
-            process_user_speech_text(translations=mapped_translations, is_recognized=True)
-        else:
-            log_message(logging.DEBUG, f"Skipping final translation processing - user language is English")
-    elif evt.result.reason == speechsdk.ResultReason.NoMatch:
-        try:
-            # Only send to user view if non-English is selected
-            if current_user_language != "en-US":
-                user_caption_data = {"en-US": user_caption}
-                asyncio.run(send_caption_to_clients(user_caption_data, languages=["en-US"], caption_type="user"))
-        except Exception as e:
-            log_message(logging.ERROR, f"Failed to send translation no-match caption: {e}")
-
-def on_canceled(evt, recognizer_type):
+def on_vosk_error(error_msg):
+    """Handle errors from Vosk recognition"""
     global is_recognizing
-    if evt.reason == speechsdk.CancellationReason.Error:
-        error_msg = f"Error in {recognizer_type}: {evt.error_details}"
-        log_message(logging.ERROR, f"Speech service error: {error_msg}")
-        try:
-            asyncio.run(send_caption_to_clients({"en-US": error_msg}, languages=["en-US"], caption_type="production"))
-        except Exception as e:
-            log_message(logging.ERROR, f"Failed to send error caption: {e}")
-        is_recognizing = False
-    elif evt.reason == speechsdk.CancellationReason.EndOfStream:
-        log_message(logging.INFO, f"Speech stream ended ({recognizer_type} canceled event).")
-        try:
-            asyncio.run(send_caption_to_clients({"en-US": "Stream ended."}, languages=["en-US"], caption_type="production"))
-        except Exception as e:
-            log_message(logging.ERROR, f"Failed to send stream-ended caption: {e}")
-        is_recognizing = False
+    log_message(logging.ERROR, f"Vosk recognition error: {error_msg}")
+    
+    try:
+        asyncio.run(send_caption_to_clients({"en-US": f"Recognition error: {error_msg}"}, languages=["en-US"], caption_type="production"))
+    except Exception as e:
+        log_message(logging.ERROR, f"Failed to send error caption: {e}")
+    
+    is_recognizing = False
 
-# Connect event handlers to recognizers
-production_recognizer.recognizing.connect(on_production_speech_recognizing)
-production_recognizer.recognized.connect(on_production_speech_recognized)
-production_recognizer.canceled.connect(lambda evt: on_canceled(evt, "ProductionRecognizer"))
+# Initialize Vosk recognizer after callbacks are defined
+vosk_recognizer = VoskSpeechRecognizer(
+    model_path=CONFIG["model_path"],
+    sample_rate=CONFIG.get("sample_rate", 16000),
+    chunk_size=CONFIG.get("audio_chunk_size", 4000)
+)
 
-translation_recognizer.recognizing.connect(on_translation_recognizing)
-translation_recognizer.recognized.connect(on_translation_recognized)
-translation_recognizer.canceled.connect(lambda evt: on_canceled(evt, "TranslationRecognizer"))
+# Set up callbacks for Vosk recognizer
+vosk_recognizer.set_callbacks(
+    on_recognizing=on_vosk_recognizing,
+    on_recognized=on_vosk_recognized,
+    on_error=on_vosk_error
+)
+
+log_message(logging.INFO, "Vosk speech recognizer initialized successfully")
 
 # -------------------------------------------------------------------
 # Transcript Saving
@@ -1203,66 +1122,45 @@ async def save_transcript():
 # Start/Stop Recognition
 # -------------------------------------------------------------------
 async def start_recognition():
-    global production_recognizer, translation_recognizer, is_recognizing, should_be_recognizing
+    global vosk_recognizer, is_recognizing, should_be_recognizing
     max_retries = 3
     for attempt in range(max_retries):
         try:
-            log_message(logging.INFO, f"Starting continuous recognition (attempt {attempt + 1}/{max_retries})")
+            log_message(logging.INFO, f"Starting Vosk recognition (attempt {attempt + 1}/{max_retries})")
             
-            # Setup phrase lists for all recognizers
-            production_phrase_list = speechsdk.PhraseListGrammar.from_recognizer(production_recognizer)
-            translation_phrase_list = speechsdk.PhraseListGrammar.from_recognizer(translation_recognizer)
-            
-            dictionary = load_dictionary()
-            for phrase in dictionary["custom_phrases"] + dictionary["bible_books"]:
-                production_phrase_list.addPhrase(phrase)
-                translation_phrase_list.addPhrase(phrase)
+            # Note: Vosk doesn't support phrase lists like Azure, but we can implement
+            # custom post-processing for dictionary terms if needed
             
             await send_caption_to_clients({"en-US": "Listening..."}, languages=["en-US"], caption_type="production")
             
-            # Start both recognizers
-            production_recognizer.start_continuous_recognition()
-            translation_recognizer.start_continuous_recognition()
+            # Start Vosk recognizer
+            vosk_recognizer.start_recognition()
             
             is_recognizing = True
             should_be_recognizing = True
-            log_message(logging.INFO, "Continuous recognition started successfully for both recognizers")
+            log_message(logging.INFO, "Vosk recognition started successfully")
             return
         except Exception as e:
-            log_message(logging.ERROR, f"Failed to start recognition (attempt {attempt + 1}/{max_retries}): {e}")
+            log_message(logging.ERROR, f"Failed to start Vosk recognition (attempt {attempt + 1}/{max_retries}): {e}")
             if attempt < max_retries - 1:
-                # Recreate recognizers on retry
-                speech_config = speechsdk.SpeechConfig(
-                    subscription=CONFIG["speech_key"],
-                    region=CONFIG["service_region"],
-                    speech_recognition_language="en-US"
+                # Recreate recognizer on retry
+                try:
+                    vosk_recognizer.stop_recognition()
+                except:
+                    pass
+                
+                vosk_recognizer = VoskSpeechRecognizer(
+                    model_path=CONFIG["model_path"],
+                    sample_rate=CONFIG.get("sample_rate", 16000),
+                    chunk_size=CONFIG.get("audio_chunk_size", 4000)
                 )
-                speech_config.set_property(speechsdk.PropertyId.SpeechServiceConnection_InitialSilenceTimeoutMs, CONFIG["initial_silence_timeout_ms"])
-                speech_config.set_property(speechsdk.PropertyId.SpeechServiceConnection_EndSilenceTimeoutMs, CONFIG["end_silence_timeout_ms"])
                 
-                production_recognizer = speechsdk.SpeechRecognizer(speech_config=speech_config)
-                
-                translation_config = speechsdk.translation.SpeechTranslationConfig(
-                    subscription=CONFIG["speech_key"],
-                    region=CONFIG["service_region"],
-                    speech_recognition_language="en-US"
+                # Reconnect callbacks
+                vosk_recognizer.set_callbacks(
+                    on_recognizing=on_vosk_recognizing,
+                    on_recognized=on_vosk_recognized,
+                    on_error=on_vosk_error
                 )
-                dictionary = load_dictionary()
-                for lang in dictionary.get("supported_languages", []):
-                    if lang["code"] != "en-US":
-                        translation_config.add_target_language(lang["code"])
-                translation_config.set_property(speechsdk.PropertyId.SpeechServiceConnection_InitialSilenceTimeoutMs, CONFIG["initial_silence_timeout_ms"])
-                translation_config.set_property(speechsdk.PropertyId.SpeechServiceConnection_EndSilenceTimeoutMs, CONFIG["end_silence_timeout_ms"])
-                translation_recognizer = speechsdk.translation.TranslationRecognizer(translation_config=translation_config)
-                
-                # Reconnect event handlers
-                production_recognizer.recognizing.connect(on_production_speech_recognizing)
-                production_recognizer.recognized.connect(on_production_speech_recognized)
-                production_recognizer.canceled.connect(lambda evt: on_canceled(evt, "ProductionRecognizer"))
-                
-                translation_recognizer.recognizing.connect(on_translation_recognizing)
-                translation_recognizer.recognized.connect(on_translation_recognized)
-                translation_recognizer.canceled.connect(lambda evt: on_canceled(evt, "TranslationRecognizer"))
             else:
                 try:
                     await send_caption_to_clients({"en-US": "Error: Failed to start speech recognition."}, languages=["en-US"], caption_type="production")
@@ -1274,16 +1172,15 @@ async def start_recognition():
 
 async def stop_recognition():
     global is_recognizing, should_be_recognizing
-    log_message(logging.INFO, "Stopping continuous recognition")
+    log_message(logging.INFO, "Stopping Vosk recognition")
     try:
-        production_recognizer.stop_continuous_recognition()
-        translation_recognizer.stop_continuous_recognition()
+        vosk_recognizer.stop_recognition()
         await send_caption_to_clients({"en-US": "Recognition stopped."}, languages=["en-US"], caption_type="production")
         is_recognizing = False
         should_be_recognizing = False
-        log_message(logging.INFO, "Continuous recognition stopped successfully for both recognizers")
+        log_message(logging.INFO, "Vosk recognition stopped successfully")
     except Exception as e:
-        log_message(logging.ERROR, f"Error stopping recognition: {e}")
+        log_message(logging.ERROR, f"Error stopping Vosk recognition: {e}")
         try:
             await send_caption_to_clients({"en-US": "Error: Failed to stop recognition."}, languages=["en-US"], caption_type="production")
         except Exception as e2:
@@ -1447,11 +1344,10 @@ health_thread.start()
 # -------------------------------------------------------------------
 def cleanup():
     try:
-        production_recognizer.stop_continuous_recognition()
-        translation_recognizer.stop_continuous_recognition()
-        log_message(logging.INFO, "Speech recognition stopped during cleanup.")
+        vosk_recognizer.stop_recognition()
+        log_message(logging.INFO, "Vosk speech recognition stopped during cleanup.")
     except Exception as e:
-        log_message(logging.ERROR, f"Error stopping speech recognition during cleanup: {e}")
+        log_message(logging.ERROR, f"Error stopping Vosk speech recognition during cleanup: {e}")
 
 atexit.register(cleanup)
 
@@ -1459,23 +1355,9 @@ atexit.register(cleanup)
 # Simulated Speech Input for Debugging
 # -------------------------------------------------------------------
 def simulate_speech_input(text):
-    on_production_speech_recognizing(type("Event", (), {"result": type("Result", (), {
-        "reason": speechsdk.ResultReason.RecognizingSpeech,
-        "text": text
-    })}))
-    on_production_speech_recognized(type("Event", (), {"result": type("Result", (), {
-        "reason": speechsdk.ResultReason.RecognizedSpeech,
-        "text": text
-    })}))
-    translations = {lang["code"]: text for lang in dictionary.get("supported_languages", []) if lang["code"] != "en-US"}
-    on_translation_recognizing(type("Event", (), {"result": type("Result", (), {
-        "reason": speechsdk.ResultReason.TranslatingSpeech,
-        "translations": translations
-    })}))
-    on_translation_recognized(type("Event", (), {"result": type("Result", (), {
-        "reason": speechsdk.ResultReason.TranslatedSpeech,
-        "translations": translations
-    })}))
+    """Simulate speech input for testing"""
+    on_vosk_recognizing(text)
+    on_vosk_recognized(text)
 
 if os.getenv("DEBUG_MODE"):
     simulate_speech_input("This is a test caption.")

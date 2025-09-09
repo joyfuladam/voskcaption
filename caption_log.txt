@@ -1,0 +1,1023 @@
+2025-09-09 15:00:54 [INFO] [SpeechCaption] [SpeechCaption] Configuration loaded successfully
+2025-09-09 15:00:54 [INFO] [SpeechCaption] [SpeechCaption] User settings loaded successfully
+2025-09-09 15:00:54 [INFO] [SpeechCaption] [SpeechCaption] Loaded HTML template: root.html
+2025-09-09 15:00:54 [INFO] [SpeechCaption] [SpeechCaption] Loaded HTML template: user.html
+2025-09-09 15:00:54 [INFO] [SpeechCaption] [SpeechCaption] Loaded HTML template: setup.html
+2025-09-09 15:00:54 [INFO] [SpeechCaption] [SpeechCaption] Loaded HTML template: dictionary_page.html
+2025-09-09 15:00:54 [INFO] [SpeechCaption] [SpeechCaption] WebSocket IP: 10.121.200.19
+2025-09-09 15:00:54 [INFO] [SpeechCaption] [SpeechCaption] Attempting to start FastAPI server on 0.0.0.0:8000
+2025-09-09 15:00:54 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:00:55 [INFO] [SpeechCaption] [SpeechCaption] Dictionary loaded successfully
+2025-09-09 15:00:55 [INFO] [SpeechCaption] [SpeechCaption] Dictionary loaded successfully
+2025-09-09 15:00:55 [INFO] [SpeechCaption] Vosk model loaded successfully from models/vosk-model-en-us-0.22-lgraph
+2025-09-09 15:00:55 [INFO] [SpeechCaption] [SpeechCaption] Vosk speech recognizer initialized successfully
+2025-09-09 15:00:55 [DEBUG] [SpeechCaption] Deleting *all* jobs
+2025-09-09 15:00:55 [INFO] [SpeechCaption] [SpeechCaption] Scheduled weekly: every sunday 08:00-12:30
+2025-09-09 15:00:55 [INFO] [SpeechCaption] [SpeechCaption] Scheduled weekly: every saturday 16:00-18:30
+2025-09-09 15:00:55 [INFO] [SpeechCaption] [SpeechCaption] Speech recognizer not active and not expected to be; skipping restart
+2025-09-09 15:00:56 [INFO] [SpeechCaption] [SpeechCaption] Dashboard opened in browser
+2025-09-09 15:00:56 [INFO] [SpeechCaption] [SpeechCaption] FastAPI server started successfully on 0.0.0.0:8000
+2025-09-09 15:00:56 [DEBUG] [SpeechCaption] [SpeechCaption] Auth attempt: provided username=admin
+2025-09-09 15:00:56 [DEBUG] [SpeechCaption] [SpeechCaption] Auth attempt: provided username=admin
+2025-09-09 15:00:56 [DEBUG] [SpeechCaption] [SpeechCaption] Auth attempt: provided username=admin
+2025-09-09 15:00:56 [DEBUG] [SpeechCaption] [SpeechCaption] Auth attempt: provided username=admin
+2025-09-09 15:00:56 [DEBUG] [SpeechCaption] [SpeechCaption] Auth attempt: provided username=admin
+2025-09-09 15:00:56 [DEBUG] [SpeechCaption] [SpeechCaption] Auth attempt: provided username=admin
+2025-09-09 15:00:56 [DEBUG] [SpeechCaption] [SpeechCaption] Auth attempt: provided username=admin
+2025-09-09 15:00:56 [INFO] [SpeechCaption] [SpeechCaption] WebSocket client connected: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:00:56 [ERROR] [SpeechCaption] [SpeechCaption] Error checking for updates: No module named 'github_updater'
+2025-09-09 15:01:01 [DEBUG] [SpeechCaption] [SpeechCaption] Auth attempt: provided username=admin
+2025-09-09 15:01:06 [DEBUG] [SpeechCaption] [SpeechCaption] Auth attempt: provided username=admin
+2025-09-09 15:01:11 [DEBUG] [SpeechCaption] [SpeechCaption] Auth attempt: provided username=admin
+2025-09-09 15:01:16 [DEBUG] [SpeechCaption] [SpeechCaption] Auth attempt: provided username=admin
+2025-09-09 15:01:21 [DEBUG] [SpeechCaption] [SpeechCaption] Auth attempt: provided username=admin
+2025-09-09 15:01:26 [DEBUG] [SpeechCaption] [SpeechCaption] Auth attempt: provided username=admin
+2025-09-09 15:01:35 [DEBUG] [SpeechCaption] [SpeechCaption] Auth attempt: provided username=admin
+2025-09-09 15:01:38 [DEBUG] [SpeechCaption] [SpeechCaption] Auth attempt: provided username=admin
+2025-09-09 15:01:38 [DEBUG] [SpeechCaption] [SpeechCaption] Auth attempt: provided username=admin
+2025-09-09 15:01:38 [INFO] [SpeechCaption] [SpeechCaption] Received request to start recognition
+2025-09-09 15:01:38 [INFO] [SpeechCaption] [SpeechCaption] Starting Vosk recognition (attempt 1/3)
+2025-09-09 15:01:38 [DEBUG] [SpeechCaption] [SpeechCaption] Sent production caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:38 [INFO] [SpeechCaption] Vosk speech recognition started
+2025-09-09 15:01:38 [INFO] [SpeechCaption] [SpeechCaption] Vosk recognition started successfully
+2025-09-09 15:01:38 [INFO] [SpeechCaption] [SpeechCaption] Speech recognition started successfully
+2025-09-09 15:01:40 [DEBUG] [SpeechCaption] [SpeechCaption] Vosk recognizing: jacqueline
+2025-09-09 15:01:40 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:40 [DEBUG] [SpeechCaption] [SpeechCaption] Sent production caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:40 [DEBUG] [SpeechCaption] [SpeechCaption] process_user_speech_text called: is_recognized=False, translations=['en-US']
+2025-09-09 15:01:40 [DEBUG] [SpeechCaption] [SpeechCaption] corrected_translations: ['en-US']
+2025-09-09 15:01:40 [DEBUG] [SpeechCaption] [SpeechCaption] Started speech timing for en-US
+2025-09-09 15:01:40 [DEBUG] [SpeechCaption] [SpeechCaption] Started auto-finalization timer for en-US (10.0 seconds)
+2025-09-09 15:01:40 [DEBUG] [SpeechCaption] [SpeechCaption] User caption updated for en-US: jacqueline
+2025-09-09 15:01:40 [DEBUG] [SpeechCaption] [SpeechCaption] Setting user_caption_update_pending=True for languages: ['en-US']
+2025-09-09 15:01:40 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sending translations for languages: ['en-US']
+2025-09-09 15:01:40 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sample translation content: [('en-US', 'jacqueline')]
+2025-09-09 15:01:40 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:40 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:40 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user captions with history for all languages: ['en-US']
+2025-09-09 15:01:40 [DEBUG] [SpeechCaption] [SpeechCaption] Vosk recognizing: jacqueline
+2025-09-09 15:01:40 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:40 [DEBUG] [SpeechCaption] [SpeechCaption] Sent production caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:40 [DEBUG] [SpeechCaption] [SpeechCaption] process_user_speech_text called: is_recognized=False, translations=['en-US']
+2025-09-09 15:01:40 [DEBUG] [SpeechCaption] [SpeechCaption] corrected_translations: ['en-US']
+2025-09-09 15:01:40 [DEBUG] [SpeechCaption] [SpeechCaption] Started auto-finalization timer for en-US (10.0 seconds)
+2025-09-09 15:01:40 [DEBUG] [SpeechCaption] [SpeechCaption] User caption updated for en-US: jacqueline
+2025-09-09 15:01:40 [DEBUG] [SpeechCaption] [SpeechCaption] Setting user_caption_update_pending=True for languages: ['en-US']
+2025-09-09 15:01:40 [DEBUG] [SpeechCaption] [SpeechCaption] Auth attempt: provided username=admin
+2025-09-09 15:01:40 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sending translations for languages: ['en-US']
+2025-09-09 15:01:40 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sample translation content: [('en-US', 'jacqueline')]
+2025-09-09 15:01:40 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:40 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:40 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user captions with history for all languages: ['en-US']
+2025-09-09 15:01:41 [DEBUG] [SpeechCaption] [SpeechCaption] Vosk recognizing: jacqueline
+2025-09-09 15:01:41 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:41 [DEBUG] [SpeechCaption] [SpeechCaption] Sent production caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:41 [DEBUG] [SpeechCaption] [SpeechCaption] process_user_speech_text called: is_recognized=False, translations=['en-US']
+2025-09-09 15:01:41 [DEBUG] [SpeechCaption] [SpeechCaption] corrected_translations: ['en-US']
+2025-09-09 15:01:41 [DEBUG] [SpeechCaption] [SpeechCaption] Started auto-finalization timer for en-US (10.0 seconds)
+2025-09-09 15:01:41 [DEBUG] [SpeechCaption] [SpeechCaption] User caption updated for en-US: jacqueline
+2025-09-09 15:01:41 [DEBUG] [SpeechCaption] [SpeechCaption] Setting user_caption_update_pending=True for languages: ['en-US']
+2025-09-09 15:01:41 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sending translations for languages: ['en-US']
+2025-09-09 15:01:41 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sample translation content: [('en-US', 'jacqueline')]
+2025-09-09 15:01:41 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:41 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:41 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user captions with history for all languages: ['en-US']
+2025-09-09 15:01:41 [DEBUG] [SpeechCaption] [SpeechCaption] Vosk recognizing: jacqueline to
+2025-09-09 15:01:41 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:41 [DEBUG] [SpeechCaption] [SpeechCaption] Sent production caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:41 [DEBUG] [SpeechCaption] [SpeechCaption] process_user_speech_text called: is_recognized=False, translations=['en-US']
+2025-09-09 15:01:41 [DEBUG] [SpeechCaption] [SpeechCaption] corrected_translations: ['en-US']
+2025-09-09 15:01:41 [DEBUG] [SpeechCaption] [SpeechCaption] Started auto-finalization timer for en-US (10.0 seconds)
+2025-09-09 15:01:41 [DEBUG] [SpeechCaption] [SpeechCaption] User caption updated for en-US: jacqueline to
+2025-09-09 15:01:41 [DEBUG] [SpeechCaption] [SpeechCaption] Setting user_caption_update_pending=True for languages: ['en-US']
+2025-09-09 15:01:41 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sending translations for languages: ['en-US']
+2025-09-09 15:01:41 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sample translation content: [('en-US', 'jacqueline to')]
+2025-09-09 15:01:41 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:41 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:41 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user captions with history for all languages: ['en-US']
+2025-09-09 15:01:41 [DEBUG] [SpeechCaption] [SpeechCaption] Vosk recognizing: jacqueline to went
+2025-09-09 15:01:41 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:41 [DEBUG] [SpeechCaption] [SpeechCaption] Sent production caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:41 [DEBUG] [SpeechCaption] [SpeechCaption] process_user_speech_text called: is_recognized=False, translations=['en-US']
+2025-09-09 15:01:41 [DEBUG] [SpeechCaption] [SpeechCaption] corrected_translations: ['en-US']
+2025-09-09 15:01:41 [DEBUG] [SpeechCaption] [SpeechCaption] Started auto-finalization timer for en-US (10.0 seconds)
+2025-09-09 15:01:41 [DEBUG] [SpeechCaption] [SpeechCaption] User caption updated for en-US: jacqueline to went
+2025-09-09 15:01:41 [DEBUG] [SpeechCaption] [SpeechCaption] Setting user_caption_update_pending=True for languages: ['en-US']
+2025-09-09 15:01:41 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sending translations for languages: ['en-US']
+2025-09-09 15:01:41 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sample translation content: [('en-US', 'jacqueline to went')]
+2025-09-09 15:01:41 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:41 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:41 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user captions with history for all languages: ['en-US']
+2025-09-09 15:01:41 [DEBUG] [SpeechCaption] [SpeechCaption] Vosk recognizing: jacqueline to went
+2025-09-09 15:01:41 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:41 [DEBUG] [SpeechCaption] [SpeechCaption] Sent production caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:41 [DEBUG] [SpeechCaption] [SpeechCaption] process_user_speech_text called: is_recognized=False, translations=['en-US']
+2025-09-09 15:01:41 [DEBUG] [SpeechCaption] [SpeechCaption] corrected_translations: ['en-US']
+2025-09-09 15:01:41 [DEBUG] [SpeechCaption] [SpeechCaption] Started auto-finalization timer for en-US (10.0 seconds)
+2025-09-09 15:01:41 [DEBUG] [SpeechCaption] [SpeechCaption] User caption updated for en-US: jacqueline to went
+2025-09-09 15:01:41 [DEBUG] [SpeechCaption] [SpeechCaption] Setting user_caption_update_pending=True for languages: ['en-US']
+2025-09-09 15:01:41 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sending translations for languages: ['en-US']
+2025-09-09 15:01:41 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sample translation content: [('en-US', 'jacqueline to went')]
+2025-09-09 15:01:41 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:41 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:41 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user captions with history for all languages: ['en-US']
+2025-09-09 15:01:42 [DEBUG] [SpeechCaption] [SpeechCaption] Vosk recognizing: jacqueline to went to
+2025-09-09 15:01:42 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:42 [DEBUG] [SpeechCaption] [SpeechCaption] Sent production caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:42 [DEBUG] [SpeechCaption] [SpeechCaption] process_user_speech_text called: is_recognized=False, translations=['en-US']
+2025-09-09 15:01:42 [DEBUG] [SpeechCaption] [SpeechCaption] corrected_translations: ['en-US']
+2025-09-09 15:01:42 [DEBUG] [SpeechCaption] [SpeechCaption] Started auto-finalization timer for en-US (10.0 seconds)
+2025-09-09 15:01:42 [DEBUG] [SpeechCaption] [SpeechCaption] User caption updated for en-US: jacqueline to went to
+2025-09-09 15:01:42 [DEBUG] [SpeechCaption] [SpeechCaption] Setting user_caption_update_pending=True for languages: ['en-US']
+2025-09-09 15:01:42 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sending translations for languages: ['en-US']
+2025-09-09 15:01:42 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sample translation content: [('en-US', 'jacqueline to went to')]
+2025-09-09 15:01:42 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:42 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:42 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user captions with history for all languages: ['en-US']
+2025-09-09 15:01:42 [DEBUG] [SpeechCaption] [SpeechCaption] Vosk recognizing: jacqueline to went to
+2025-09-09 15:01:42 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:42 [DEBUG] [SpeechCaption] [SpeechCaption] Sent production caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:42 [DEBUG] [SpeechCaption] [SpeechCaption] process_user_speech_text called: is_recognized=False, translations=['en-US']
+2025-09-09 15:01:42 [DEBUG] [SpeechCaption] [SpeechCaption] corrected_translations: ['en-US']
+2025-09-09 15:01:42 [DEBUG] [SpeechCaption] [SpeechCaption] Started auto-finalization timer for en-US (10.0 seconds)
+2025-09-09 15:01:42 [DEBUG] [SpeechCaption] [SpeechCaption] User caption updated for en-US: jacqueline to went to
+2025-09-09 15:01:42 [DEBUG] [SpeechCaption] [SpeechCaption] Setting user_caption_update_pending=True for languages: ['en-US']
+2025-09-09 15:01:42 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sending translations for languages: ['en-US']
+2025-09-09 15:01:42 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sample translation content: [('en-US', 'jacqueline to went to')]
+2025-09-09 15:01:42 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:42 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:42 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user captions with history for all languages: ['en-US']
+2025-09-09 15:01:42 [DEBUG] [SpeechCaption] [SpeechCaption] Vosk recognizing: jacqueline to went to
+2025-09-09 15:01:42 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:42 [DEBUG] [SpeechCaption] [SpeechCaption] Sent production caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:42 [DEBUG] [SpeechCaption] [SpeechCaption] process_user_speech_text called: is_recognized=False, translations=['en-US']
+2025-09-09 15:01:42 [DEBUG] [SpeechCaption] [SpeechCaption] corrected_translations: ['en-US']
+2025-09-09 15:01:42 [DEBUG] [SpeechCaption] [SpeechCaption] Started auto-finalization timer for en-US (10.0 seconds)
+2025-09-09 15:01:42 [DEBUG] [SpeechCaption] [SpeechCaption] User caption updated for en-US: jacqueline to went to
+2025-09-09 15:01:42 [DEBUG] [SpeechCaption] [SpeechCaption] Setting user_caption_update_pending=True for languages: ['en-US']
+2025-09-09 15:01:42 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sending translations for languages: ['en-US']
+2025-09-09 15:01:42 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sample translation content: [('en-US', 'jacqueline to went to')]
+2025-09-09 15:01:42 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:42 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:42 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user captions with history for all languages: ['en-US']
+2025-09-09 15:01:42 [DEBUG] [SpeechCaption] [SpeechCaption] Vosk recognizing: jacqueline to went to
+2025-09-09 15:01:42 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:42 [DEBUG] [SpeechCaption] [SpeechCaption] Sent production caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:42 [DEBUG] [SpeechCaption] [SpeechCaption] process_user_speech_text called: is_recognized=False, translations=['en-US']
+2025-09-09 15:01:42 [DEBUG] [SpeechCaption] [SpeechCaption] corrected_translations: ['en-US']
+2025-09-09 15:01:42 [DEBUG] [SpeechCaption] [SpeechCaption] Started auto-finalization timer for en-US (10.0 seconds)
+2025-09-09 15:01:42 [DEBUG] [SpeechCaption] [SpeechCaption] User caption updated for en-US: jacqueline to went to
+2025-09-09 15:01:42 [DEBUG] [SpeechCaption] [SpeechCaption] Setting user_caption_update_pending=True for languages: ['en-US']
+2025-09-09 15:01:42 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sending translations for languages: ['en-US']
+2025-09-09 15:01:42 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sample translation content: [('en-US', 'jacqueline to went to')]
+2025-09-09 15:01:42 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:42 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:42 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user captions with history for all languages: ['en-US']
+2025-09-09 15:01:43 [DEBUG] [SpeechCaption] [SpeechCaption] Vosk recognizing: jacqueline to went to check what
+2025-09-09 15:01:43 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:43 [DEBUG] [SpeechCaption] [SpeechCaption] Sent production caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:43 [DEBUG] [SpeechCaption] [SpeechCaption] process_user_speech_text called: is_recognized=False, translations=['en-US']
+2025-09-09 15:01:43 [DEBUG] [SpeechCaption] [SpeechCaption] corrected_translations: ['en-US']
+2025-09-09 15:01:43 [DEBUG] [SpeechCaption] [SpeechCaption] Started auto-finalization timer for en-US (10.0 seconds)
+2025-09-09 15:01:43 [DEBUG] [SpeechCaption] [SpeechCaption] User caption updated for en-US: jacqueline to went to check what
+2025-09-09 15:01:43 [DEBUG] [SpeechCaption] [SpeechCaption] Setting user_caption_update_pending=True for languages: ['en-US']
+2025-09-09 15:01:43 [DEBUG] [SpeechCaption] [SpeechCaption] Vosk recognizing: jacqueline to went to check one
+2025-09-09 15:01:43 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:43 [DEBUG] [SpeechCaption] [SpeechCaption] Sent production caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:43 [DEBUG] [SpeechCaption] [SpeechCaption] process_user_speech_text called: is_recognized=False, translations=['en-US']
+2025-09-09 15:01:43 [DEBUG] [SpeechCaption] [SpeechCaption] corrected_translations: ['en-US']
+2025-09-09 15:01:43 [DEBUG] [SpeechCaption] [SpeechCaption] Started auto-finalization timer for en-US (10.0 seconds)
+2025-09-09 15:01:43 [DEBUG] [SpeechCaption] [SpeechCaption] User caption updated for en-US: jacqueline to went to check one
+2025-09-09 15:01:43 [DEBUG] [SpeechCaption] [SpeechCaption] user_caption_update_pending already True, skipping Timer
+2025-09-09 15:01:43 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sending translations for languages: ['en-US']
+2025-09-09 15:01:43 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sample translation content: [('en-US', 'jacqueline to went to check one')]
+2025-09-09 15:01:43 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:43 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:43 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user captions with history for all languages: ['en-US']
+2025-09-09 15:01:43 [DEBUG] [SpeechCaption] [SpeechCaption] Vosk recognizing: jacqueline to went to check one two
+2025-09-09 15:01:43 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:43 [DEBUG] [SpeechCaption] [SpeechCaption] Sent production caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:43 [DEBUG] [SpeechCaption] [SpeechCaption] process_user_speech_text called: is_recognized=False, translations=['en-US']
+2025-09-09 15:01:43 [DEBUG] [SpeechCaption] [SpeechCaption] corrected_translations: ['en-US']
+2025-09-09 15:01:43 [DEBUG] [SpeechCaption] [SpeechCaption] Started auto-finalization timer for en-US (10.0 seconds)
+2025-09-09 15:01:43 [DEBUG] [SpeechCaption] [SpeechCaption] User caption updated for en-US: jacqueline to went to check one two
+2025-09-09 15:01:43 [DEBUG] [SpeechCaption] [SpeechCaption] Setting user_caption_update_pending=True for languages: ['en-US']
+2025-09-09 15:01:43 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sending translations for languages: ['en-US']
+2025-09-09 15:01:43 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sample translation content: [('en-US', 'jacqueline to went to check one two')]
+2025-09-09 15:01:43 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:43 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:43 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user captions with history for all languages: ['en-US']
+2025-09-09 15:01:43 [DEBUG] [SpeechCaption] [SpeechCaption] Vosk recognizing: jacqueline to went to check one two
+2025-09-09 15:01:43 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:43 [DEBUG] [SpeechCaption] [SpeechCaption] Sent production caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:43 [DEBUG] [SpeechCaption] [SpeechCaption] process_user_speech_text called: is_recognized=False, translations=['en-US']
+2025-09-09 15:01:43 [DEBUG] [SpeechCaption] [SpeechCaption] corrected_translations: ['en-US']
+2025-09-09 15:01:43 [DEBUG] [SpeechCaption] [SpeechCaption] Started auto-finalization timer for en-US (10.0 seconds)
+2025-09-09 15:01:43 [DEBUG] [SpeechCaption] [SpeechCaption] User caption updated for en-US: jacqueline to went to check one two
+2025-09-09 15:01:43 [DEBUG] [SpeechCaption] [SpeechCaption] Setting user_caption_update_pending=True for languages: ['en-US']
+2025-09-09 15:01:43 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sending translations for languages: ['en-US']
+2025-09-09 15:01:43 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sample translation content: [('en-US', 'jacqueline to went to check one two')]
+2025-09-09 15:01:43 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:43 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:43 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user captions with history for all languages: ['en-US']
+2025-09-09 15:01:44 [DEBUG] [SpeechCaption] [SpeechCaption] Vosk recognizing: jacqueline to went to check one two
+2025-09-09 15:01:44 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:44 [DEBUG] [SpeechCaption] [SpeechCaption] Sent production caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:44 [DEBUG] [SpeechCaption] [SpeechCaption] process_user_speech_text called: is_recognized=False, translations=['en-US']
+2025-09-09 15:01:44 [DEBUG] [SpeechCaption] [SpeechCaption] corrected_translations: ['en-US']
+2025-09-09 15:01:44 [DEBUG] [SpeechCaption] [SpeechCaption] Started auto-finalization timer for en-US (10.0 seconds)
+2025-09-09 15:01:44 [DEBUG] [SpeechCaption] [SpeechCaption] User caption updated for en-US: jacqueline to went to check one two
+2025-09-09 15:01:44 [DEBUG] [SpeechCaption] [SpeechCaption] Setting user_caption_update_pending=True for languages: ['en-US']
+2025-09-09 15:01:44 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sending translations for languages: ['en-US']
+2025-09-09 15:01:44 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sample translation content: [('en-US', 'jacqueline to went to check one two')]
+2025-09-09 15:01:44 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:44 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:44 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user captions with history for all languages: ['en-US']
+2025-09-09 15:01:44 [DEBUG] [SpeechCaption] [SpeechCaption] Vosk recognizing: jacqueline to went to check one two
+2025-09-09 15:01:44 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:44 [DEBUG] [SpeechCaption] [SpeechCaption] Sent production caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:44 [DEBUG] [SpeechCaption] [SpeechCaption] process_user_speech_text called: is_recognized=False, translations=['en-US']
+2025-09-09 15:01:44 [DEBUG] [SpeechCaption] [SpeechCaption] corrected_translations: ['en-US']
+2025-09-09 15:01:44 [DEBUG] [SpeechCaption] [SpeechCaption] Started auto-finalization timer for en-US (10.0 seconds)
+2025-09-09 15:01:44 [DEBUG] [SpeechCaption] [SpeechCaption] User caption updated for en-US: jacqueline to went to check one two
+2025-09-09 15:01:44 [DEBUG] [SpeechCaption] [SpeechCaption] Setting user_caption_update_pending=True for languages: ['en-US']
+2025-09-09 15:01:44 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sending translations for languages: ['en-US']
+2025-09-09 15:01:44 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sample translation content: [('en-US', 'jacqueline to went to check one two')]
+2025-09-09 15:01:44 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:44 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:44 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user captions with history for all languages: ['en-US']
+2025-09-09 15:01:44 [DEBUG] [SpeechCaption] [SpeechCaption] Vosk recognized: jacqueline to went to check one two
+2025-09-09 15:01:44 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:44 [DEBUG] [SpeechCaption] [SpeechCaption] Sent production caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:44 [DEBUG] [SpeechCaption] [SpeechCaption] process_user_speech_text called: is_recognized=True, translations=['en-US']
+2025-09-09 15:01:44 [DEBUG] [SpeechCaption] [SpeechCaption] corrected_translations: ['en-US']
+2025-09-09 15:01:44 [DEBUG] [SpeechCaption] [SpeechCaption] Cancelled auto-finalization timer due to final recognition
+2025-09-09 15:01:44 [DEBUG] [SpeechCaption] [SpeechCaption] User caption updated for en-US: jacqueline to went to check one two
+2025-09-09 15:01:44 [DEBUG] [SpeechCaption] [SpeechCaption] Setting user_caption_update_pending=True for languages: ['en-US']
+2025-09-09 15:01:44 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sending translations for languages: ['en-US']
+2025-09-09 15:01:44 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sample translation content: [('en-US', 'jacqueline to went to check one two')]
+2025-09-09 15:01:44 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:44 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:44 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user captions with history for all languages: ['en-US']
+2025-09-09 15:01:45 [DEBUG] [SpeechCaption] [SpeechCaption] Auth attempt: provided username=admin
+2025-09-09 15:01:46 [DEBUG] [SpeechCaption] [SpeechCaption] Vosk recognizing: for
+2025-09-09 15:01:46 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:46 [DEBUG] [SpeechCaption] [SpeechCaption] Sent production caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:46 [DEBUG] [SpeechCaption] [SpeechCaption] process_user_speech_text called: is_recognized=False, translations=['en-US']
+2025-09-09 15:01:46 [DEBUG] [SpeechCaption] [SpeechCaption] corrected_translations: ['en-US']
+2025-09-09 15:01:46 [DEBUG] [SpeechCaption] [SpeechCaption] Started auto-finalization timer for en-US (10.0 seconds)
+2025-09-09 15:01:46 [DEBUG] [SpeechCaption] [SpeechCaption] User caption updated for en-US: jacqueline to went to check one two
+for
+2025-09-09 15:01:46 [DEBUG] [SpeechCaption] [SpeechCaption] Setting user_caption_update_pending=True for languages: ['en-US']
+2025-09-09 15:01:46 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sending translations for languages: ['en-US']
+2025-09-09 15:01:46 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sample translation content: [('en-US', 'jacqueline to went to check one two\nfor')]
+2025-09-09 15:01:46 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:46 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:46 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user captions with history for all languages: ['en-US']
+2025-09-09 15:01:46 [DEBUG] [SpeechCaption] [SpeechCaption] Vosk recognizing: for god's
+2025-09-09 15:01:46 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:46 [DEBUG] [SpeechCaption] [SpeechCaption] Sent production caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:46 [DEBUG] [SpeechCaption] [SpeechCaption] process_user_speech_text called: is_recognized=False, translations=['en-US']
+2025-09-09 15:01:46 [DEBUG] [SpeechCaption] [SpeechCaption] corrected_translations: ['en-US']
+2025-09-09 15:01:46 [DEBUG] [SpeechCaption] [SpeechCaption] Started auto-finalization timer for en-US (10.0 seconds)
+2025-09-09 15:01:46 [DEBUG] [SpeechCaption] [SpeechCaption] User caption updated for en-US: jacqueline to went to check one two
+for god's
+2025-09-09 15:01:46 [DEBUG] [SpeechCaption] [SpeechCaption] Setting user_caption_update_pending=True for languages: ['en-US']
+2025-09-09 15:01:46 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sending translations for languages: ['en-US']
+2025-09-09 15:01:46 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sample translation content: [('en-US', "jacqueline to went to check one two\nfor god's")]
+2025-09-09 15:01:46 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:46 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:46 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user captions with history for all languages: ['en-US']
+2025-09-09 15:01:47 [DEBUG] [SpeechCaption] [SpeechCaption] Vosk recognizing: for god's sake
+2025-09-09 15:01:47 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:47 [DEBUG] [SpeechCaption] [SpeechCaption] Sent production caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:47 [DEBUG] [SpeechCaption] [SpeechCaption] process_user_speech_text called: is_recognized=False, translations=['en-US']
+2025-09-09 15:01:47 [DEBUG] [SpeechCaption] [SpeechCaption] corrected_translations: ['en-US']
+2025-09-09 15:01:47 [DEBUG] [SpeechCaption] [SpeechCaption] Started auto-finalization timer for en-US (10.0 seconds)
+2025-09-09 15:01:47 [DEBUG] [SpeechCaption] [SpeechCaption] User caption updated for en-US: jacqueline to went to check one two
+for god's sake
+2025-09-09 15:01:47 [DEBUG] [SpeechCaption] [SpeechCaption] Setting user_caption_update_pending=True for languages: ['en-US']
+2025-09-09 15:01:47 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sending translations for languages: ['en-US']
+2025-09-09 15:01:47 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sample translation content: [('en-US', "jacqueline to went to check one two\nfor god's sake")]
+2025-09-09 15:01:47 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:47 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:47 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user captions with history for all languages: ['en-US']
+2025-09-09 15:01:47 [DEBUG] [SpeechCaption] [SpeechCaption] Vosk recognizing: for god so loved the
+2025-09-09 15:01:47 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:47 [DEBUG] [SpeechCaption] [SpeechCaption] Sent production caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:47 [DEBUG] [SpeechCaption] [SpeechCaption] process_user_speech_text called: is_recognized=False, translations=['en-US']
+2025-09-09 15:01:47 [DEBUG] [SpeechCaption] [SpeechCaption] corrected_translations: ['en-US']
+2025-09-09 15:01:47 [DEBUG] [SpeechCaption] [SpeechCaption] Started auto-finalization timer for en-US (10.0 seconds)
+2025-09-09 15:01:47 [DEBUG] [SpeechCaption] [SpeechCaption] User caption updated for en-US: jacqueline to went to check one two
+for God so loved the
+2025-09-09 15:01:47 [DEBUG] [SpeechCaption] [SpeechCaption] Setting user_caption_update_pending=True for languages: ['en-US']
+2025-09-09 15:01:47 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sending translations for languages: ['en-US']
+2025-09-09 15:01:47 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sample translation content: [('en-US', 'jacqueline to went to check one two\nfor God so loved the')]
+2025-09-09 15:01:47 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:47 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:47 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user captions with history for all languages: ['en-US']
+2025-09-09 15:01:47 [DEBUG] [SpeechCaption] [SpeechCaption] Vosk recognizing: for god so loved the world
+2025-09-09 15:01:47 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:47 [DEBUG] [SpeechCaption] [SpeechCaption] Sent production caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:47 [DEBUG] [SpeechCaption] [SpeechCaption] process_user_speech_text called: is_recognized=False, translations=['en-US']
+2025-09-09 15:01:47 [DEBUG] [SpeechCaption] [SpeechCaption] corrected_translations: ['en-US']
+2025-09-09 15:01:47 [DEBUG] [SpeechCaption] [SpeechCaption] Started auto-finalization timer for en-US (10.0 seconds)
+2025-09-09 15:01:47 [DEBUG] [SpeechCaption] [SpeechCaption] User caption updated for en-US: jacqueline to went to check one two
+for God so loved the world
+2025-09-09 15:01:47 [DEBUG] [SpeechCaption] [SpeechCaption] Setting user_caption_update_pending=True for languages: ['en-US']
+2025-09-09 15:01:47 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sending translations for languages: ['en-US']
+2025-09-09 15:01:47 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sample translation content: [('en-US', 'jacqueline to went to check one two\nfor God so loved the world')]
+2025-09-09 15:01:47 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:47 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:47 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user captions with history for all languages: ['en-US']
+2025-09-09 15:01:47 [DEBUG] [SpeechCaption] [SpeechCaption] Vosk recognizing: for god so loved the world
+2025-09-09 15:01:47 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:47 [DEBUG] [SpeechCaption] [SpeechCaption] Sent production caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:47 [DEBUG] [SpeechCaption] [SpeechCaption] process_user_speech_text called: is_recognized=False, translations=['en-US']
+2025-09-09 15:01:47 [DEBUG] [SpeechCaption] [SpeechCaption] corrected_translations: ['en-US']
+2025-09-09 15:01:47 [DEBUG] [SpeechCaption] [SpeechCaption] Started auto-finalization timer for en-US (10.0 seconds)
+2025-09-09 15:01:47 [DEBUG] [SpeechCaption] [SpeechCaption] User caption updated for en-US: jacqueline to went to check one two
+for God so loved the world
+2025-09-09 15:01:47 [DEBUG] [SpeechCaption] [SpeechCaption] Setting user_caption_update_pending=True for languages: ['en-US']
+2025-09-09 15:01:47 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sending translations for languages: ['en-US']
+2025-09-09 15:01:47 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sample translation content: [('en-US', 'jacqueline to went to check one two\nfor God so loved the world')]
+2025-09-09 15:01:47 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:47 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:47 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user captions with history for all languages: ['en-US']
+2025-09-09 15:01:48 [DEBUG] [SpeechCaption] [SpeechCaption] Vosk recognizing: for god so loved the world that he
+2025-09-09 15:01:48 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:48 [DEBUG] [SpeechCaption] [SpeechCaption] Sent production caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:48 [DEBUG] [SpeechCaption] [SpeechCaption] process_user_speech_text called: is_recognized=False, translations=['en-US']
+2025-09-09 15:01:48 [DEBUG] [SpeechCaption] [SpeechCaption] corrected_translations: ['en-US']
+2025-09-09 15:01:48 [DEBUG] [SpeechCaption] [SpeechCaption] Started auto-finalization timer for en-US (10.0 seconds)
+2025-09-09 15:01:48 [DEBUG] [SpeechCaption] [SpeechCaption] User caption updated for en-US: jacqueline to went to check one two
+for God so loved the world that he
+2025-09-09 15:01:48 [DEBUG] [SpeechCaption] [SpeechCaption] Setting user_caption_update_pending=True for languages: ['en-US']
+2025-09-09 15:01:48 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sending translations for languages: ['en-US']
+2025-09-09 15:01:48 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sample translation content: [('en-US', 'jacqueline to went to check one two\nfor God so loved the world that he')]
+2025-09-09 15:01:48 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:48 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:48 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user captions with history for all languages: ['en-US']
+2025-09-09 15:01:48 [DEBUG] [SpeechCaption] [SpeechCaption] Vosk recognizing: for god so loved the world that he gave his
+2025-09-09 15:01:48 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:48 [DEBUG] [SpeechCaption] [SpeechCaption] Sent production caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:48 [DEBUG] [SpeechCaption] [SpeechCaption] process_user_speech_text called: is_recognized=False, translations=['en-US']
+2025-09-09 15:01:48 [DEBUG] [SpeechCaption] [SpeechCaption] corrected_translations: ['en-US']
+2025-09-09 15:01:48 [DEBUG] [SpeechCaption] [SpeechCaption] Started auto-finalization timer for en-US (10.0 seconds)
+2025-09-09 15:01:48 [DEBUG] [SpeechCaption] [SpeechCaption] User caption updated for en-US: jacqueline to went to check one two
+for God so loved the world that he gave his
+2025-09-09 15:01:48 [DEBUG] [SpeechCaption] [SpeechCaption] Setting user_caption_update_pending=True for languages: ['en-US']
+2025-09-09 15:01:48 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sending translations for languages: ['en-US']
+2025-09-09 15:01:48 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sample translation content: [('en-US', 'jacqueline to went to check one two\nfor God so loved the world that he gave his')]
+2025-09-09 15:01:48 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:48 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:48 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user captions with history for all languages: ['en-US']
+2025-09-09 15:01:48 [DEBUG] [SpeechCaption] [SpeechCaption] Vosk recognizing: for god so loved the world that he gave his
+2025-09-09 15:01:48 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:48 [DEBUG] [SpeechCaption] [SpeechCaption] Sent production caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:48 [DEBUG] [SpeechCaption] [SpeechCaption] process_user_speech_text called: is_recognized=False, translations=['en-US']
+2025-09-09 15:01:48 [DEBUG] [SpeechCaption] [SpeechCaption] corrected_translations: ['en-US']
+2025-09-09 15:01:48 [DEBUG] [SpeechCaption] [SpeechCaption] Started auto-finalization timer for en-US (10.0 seconds)
+2025-09-09 15:01:48 [DEBUG] [SpeechCaption] [SpeechCaption] User caption updated for en-US: jacqueline to went to check one two
+for God so loved the world that he gave his
+2025-09-09 15:01:48 [DEBUG] [SpeechCaption] [SpeechCaption] Setting user_caption_update_pending=True for languages: ['en-US']
+2025-09-09 15:01:48 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sending translations for languages: ['en-US']
+2025-09-09 15:01:48 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sample translation content: [('en-US', 'jacqueline to went to check one two\nfor God so loved the world that he gave his')]
+2025-09-09 15:01:48 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:48 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:48 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user captions with history for all languages: ['en-US']
+2025-09-09 15:01:48 [DEBUG] [SpeechCaption] [SpeechCaption] Vosk recognizing: for god so loved the world that he gave his only
+2025-09-09 15:01:48 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:48 [DEBUG] [SpeechCaption] [SpeechCaption] Sent production caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:48 [DEBUG] [SpeechCaption] [SpeechCaption] process_user_speech_text called: is_recognized=False, translations=['en-US']
+2025-09-09 15:01:48 [DEBUG] [SpeechCaption] [SpeechCaption] corrected_translations: ['en-US']
+2025-09-09 15:01:48 [DEBUG] [SpeechCaption] [SpeechCaption] Started auto-finalization timer for en-US (10.0 seconds)
+2025-09-09 15:01:48 [DEBUG] [SpeechCaption] [SpeechCaption] User caption updated for en-US: jacqueline to went to check one two
+for God so loved the world that he gave his only
+2025-09-09 15:01:48 [DEBUG] [SpeechCaption] [SpeechCaption] Setting user_caption_update_pending=True for languages: ['en-US']
+2025-09-09 15:01:48 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sending translations for languages: ['en-US']
+2025-09-09 15:01:48 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sample translation content: [('en-US', 'jacqueline to went to check one two\nfor God so loved the world that he gave his only')]
+2025-09-09 15:01:48 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:48 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:48 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user captions with history for all languages: ['en-US']
+2025-09-09 15:01:49 [DEBUG] [SpeechCaption] [SpeechCaption] Vosk recognizing: for god so loved the world that he gave his only son
+2025-09-09 15:01:49 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:49 [DEBUG] [SpeechCaption] [SpeechCaption] Sent production caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:49 [DEBUG] [SpeechCaption] [SpeechCaption] process_user_speech_text called: is_recognized=False, translations=['en-US']
+2025-09-09 15:01:49 [DEBUG] [SpeechCaption] [SpeechCaption] corrected_translations: ['en-US']
+2025-09-09 15:01:49 [DEBUG] [SpeechCaption] [SpeechCaption] Started auto-finalization timer for en-US (10.0 seconds)
+2025-09-09 15:01:49 [DEBUG] [SpeechCaption] [SpeechCaption] User caption updated for en-US: jacqueline to went to check one two
+for God so loved the world that he gave his only son
+2025-09-09 15:01:49 [DEBUG] [SpeechCaption] [SpeechCaption] Setting user_caption_update_pending=True for languages: ['en-US']
+2025-09-09 15:01:49 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sending translations for languages: ['en-US']
+2025-09-09 15:01:49 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sample translation content: [('en-US', 'jacqueline to went to check one two\nfor God so loved the world that he gave his only son')]
+2025-09-09 15:01:49 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:49 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:49 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user captions with history for all languages: ['en-US']
+2025-09-09 15:01:49 [DEBUG] [SpeechCaption] [SpeechCaption] Vosk recognizing: for god so loved the world that he gave his only son
+2025-09-09 15:01:49 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:49 [DEBUG] [SpeechCaption] [SpeechCaption] Sent production caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:49 [DEBUG] [SpeechCaption] [SpeechCaption] process_user_speech_text called: is_recognized=False, translations=['en-US']
+2025-09-09 15:01:49 [DEBUG] [SpeechCaption] [SpeechCaption] corrected_translations: ['en-US']
+2025-09-09 15:01:49 [DEBUG] [SpeechCaption] [SpeechCaption] Started auto-finalization timer for en-US (10.0 seconds)
+2025-09-09 15:01:49 [DEBUG] [SpeechCaption] [SpeechCaption] User caption updated for en-US: jacqueline to went to check one two
+for God so loved the world that he gave his only son
+2025-09-09 15:01:49 [DEBUG] [SpeechCaption] [SpeechCaption] Setting user_caption_update_pending=True for languages: ['en-US']
+2025-09-09 15:01:49 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sending translations for languages: ['en-US']
+2025-09-09 15:01:49 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sample translation content: [('en-US', 'jacqueline to went to check one two\nfor God so loved the world that he gave his only son')]
+2025-09-09 15:01:49 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:49 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:49 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user captions with history for all languages: ['en-US']
+2025-09-09 15:01:49 [DEBUG] [SpeechCaption] [SpeechCaption] Vosk recognizing: for god so loved the world that he gave his only son
+2025-09-09 15:01:49 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:49 [DEBUG] [SpeechCaption] [SpeechCaption] Sent production caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:49 [DEBUG] [SpeechCaption] [SpeechCaption] process_user_speech_text called: is_recognized=False, translations=['en-US']
+2025-09-09 15:01:49 [DEBUG] [SpeechCaption] [SpeechCaption] corrected_translations: ['en-US']
+2025-09-09 15:01:49 [DEBUG] [SpeechCaption] [SpeechCaption] Started auto-finalization timer for en-US (10.0 seconds)
+2025-09-09 15:01:49 [DEBUG] [SpeechCaption] [SpeechCaption] User caption updated for en-US: jacqueline to went to check one two
+for God so loved the world that he gave his only son
+2025-09-09 15:01:49 [DEBUG] [SpeechCaption] [SpeechCaption] Setting user_caption_update_pending=True for languages: ['en-US']
+2025-09-09 15:01:49 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sending translations for languages: ['en-US']
+2025-09-09 15:01:49 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sample translation content: [('en-US', 'jacqueline to went to check one two\nfor God so loved the world that he gave his only son')]
+2025-09-09 15:01:49 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:49 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:49 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user captions with history for all languages: ['en-US']
+2025-09-09 15:01:49 [DEBUG] [SpeechCaption] [SpeechCaption] Vosk recognizing: for god so loved the world that he gave his only son
+2025-09-09 15:01:49 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:49 [DEBUG] [SpeechCaption] [SpeechCaption] Sent production caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:49 [DEBUG] [SpeechCaption] [SpeechCaption] process_user_speech_text called: is_recognized=False, translations=['en-US']
+2025-09-09 15:01:49 [DEBUG] [SpeechCaption] [SpeechCaption] corrected_translations: ['en-US']
+2025-09-09 15:01:49 [DEBUG] [SpeechCaption] [SpeechCaption] Started auto-finalization timer for en-US (10.0 seconds)
+2025-09-09 15:01:49 [DEBUG] [SpeechCaption] [SpeechCaption] User caption updated for en-US: jacqueline to went to check one two
+for God so loved the world that he gave his only son
+2025-09-09 15:01:49 [DEBUG] [SpeechCaption] [SpeechCaption] Setting user_caption_update_pending=True for languages: ['en-US']
+2025-09-09 15:01:49 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sending translations for languages: ['en-US']
+2025-09-09 15:01:49 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sample translation content: [('en-US', 'jacqueline to went to check one two\nfor God so loved the world that he gave his only son')]
+2025-09-09 15:01:49 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:49 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:49 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user captions with history for all languages: ['en-US']
+2025-09-09 15:01:50 [DEBUG] [SpeechCaption] [SpeechCaption] Vosk recognizing: for god so loved the world that he gave his only son that whoever
+2025-09-09 15:01:50 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:50 [DEBUG] [SpeechCaption] [SpeechCaption] Sent production caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:50 [DEBUG] [SpeechCaption] [SpeechCaption] process_user_speech_text called: is_recognized=False, translations=['en-US']
+2025-09-09 15:01:50 [DEBUG] [SpeechCaption] [SpeechCaption] corrected_translations: ['en-US']
+2025-09-09 15:01:50 [DEBUG] [SpeechCaption] [SpeechCaption] Started auto-finalization timer for en-US (10.0 seconds)
+2025-09-09 15:01:50 [DEBUG] [SpeechCaption] [SpeechCaption] User caption updated for en-US: jacqueline to went to check one two
+for God so loved the world that he gave his only son that whoever
+2025-09-09 15:01:50 [DEBUG] [SpeechCaption] [SpeechCaption] Setting user_caption_update_pending=True for languages: ['en-US']
+2025-09-09 15:01:50 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sending translations for languages: ['en-US']
+2025-09-09 15:01:50 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sample translation content: [('en-US', 'jacqueline to went to check one two\nfor God so loved the world that he gave his only son that whoever')]
+2025-09-09 15:01:50 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:50 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:50 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user captions with history for all languages: ['en-US']
+2025-09-09 15:01:50 [DEBUG] [SpeechCaption] [SpeechCaption] Vosk recognizing: for god so loved the world that he gave his only son that whoever believes
+2025-09-09 15:01:50 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:50 [DEBUG] [SpeechCaption] [SpeechCaption] Sent production caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:50 [DEBUG] [SpeechCaption] [SpeechCaption] process_user_speech_text called: is_recognized=False, translations=['en-US']
+2025-09-09 15:01:50 [DEBUG] [SpeechCaption] [SpeechCaption] corrected_translations: ['en-US']
+2025-09-09 15:01:50 [DEBUG] [SpeechCaption] [SpeechCaption] Started auto-finalization timer for en-US (10.0 seconds)
+2025-09-09 15:01:50 [DEBUG] [SpeechCaption] [SpeechCaption] User caption updated for en-US: jacqueline to went to check one two
+for God so loved the world that he gave his only son that whoever believes
+2025-09-09 15:01:50 [DEBUG] [SpeechCaption] [SpeechCaption] Setting user_caption_update_pending=True for languages: ['en-US']
+2025-09-09 15:01:50 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sending translations for languages: ['en-US']
+2025-09-09 15:01:50 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sample translation content: [('en-US', 'jacqueline to went to check one two\nfor God so loved the world that he gave his only son that whoever believes')]
+2025-09-09 15:01:50 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:50 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:50 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user captions with history for all languages: ['en-US']
+2025-09-09 15:01:50 [DEBUG] [SpeechCaption] [SpeechCaption] Vosk recognizing: for god so loved the world that he gave his only son that whoever believes in
+2025-09-09 15:01:50 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:50 [DEBUG] [SpeechCaption] [SpeechCaption] Sent production caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:50 [DEBUG] [SpeechCaption] [SpeechCaption] process_user_speech_text called: is_recognized=False, translations=['en-US']
+2025-09-09 15:01:50 [DEBUG] [SpeechCaption] [SpeechCaption] corrected_translations: ['en-US']
+2025-09-09 15:01:50 [DEBUG] [SpeechCaption] [SpeechCaption] Started auto-finalization timer for en-US (10.0 seconds)
+2025-09-09 15:01:50 [DEBUG] [SpeechCaption] [SpeechCaption] User caption updated for en-US: jacqueline to went to check one two
+for God so loved the world that he gave his only son that whoever believes in
+2025-09-09 15:01:50 [DEBUG] [SpeechCaption] [SpeechCaption] Setting user_caption_update_pending=True for languages: ['en-US']
+2025-09-09 15:01:50 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sending translations for languages: ['en-US']
+2025-09-09 15:01:50 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sample translation content: [('en-US', 'jacqueline to went to check one two\nfor God so loved the world that he gave his only son that whoever believes in')]
+2025-09-09 15:01:50 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:50 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:50 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user captions with history for all languages: ['en-US']
+2025-09-09 15:01:50 [DEBUG] [SpeechCaption] [SpeechCaption] Vosk recognizing: for god so loved the world that he gave his only son that whoever believes in
+2025-09-09 15:01:50 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:50 [DEBUG] [SpeechCaption] [SpeechCaption] Sent production caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:50 [DEBUG] [SpeechCaption] [SpeechCaption] process_user_speech_text called: is_recognized=False, translations=['en-US']
+2025-09-09 15:01:50 [DEBUG] [SpeechCaption] [SpeechCaption] corrected_translations: ['en-US']
+2025-09-09 15:01:50 [DEBUG] [SpeechCaption] [SpeechCaption] Started auto-finalization timer for en-US (10.0 seconds)
+2025-09-09 15:01:50 [DEBUG] [SpeechCaption] [SpeechCaption] User caption updated for en-US: jacqueline to went to check one two
+for God so loved the world that he gave his only son that whoever believes in
+2025-09-09 15:01:50 [DEBUG] [SpeechCaption] [SpeechCaption] Setting user_caption_update_pending=True for languages: ['en-US']
+2025-09-09 15:01:50 [DEBUG] [SpeechCaption] [SpeechCaption] Auth attempt: provided username=admin
+2025-09-09 15:01:50 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sending translations for languages: ['en-US']
+2025-09-09 15:01:50 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sample translation content: [('en-US', 'jacqueline to went to check one two\nfor God so loved the world that he gave his only son that whoever believes in')]
+2025-09-09 15:01:50 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:50 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:50 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user captions with history for all languages: ['en-US']
+2025-09-09 15:01:51 [DEBUG] [SpeechCaption] [SpeechCaption] Vosk recognizing: for god so loved the world that he gave his only son that whoever believes in him
+2025-09-09 15:01:51 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:51 [DEBUG] [SpeechCaption] [SpeechCaption] Sent production caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:51 [DEBUG] [SpeechCaption] [SpeechCaption] process_user_speech_text called: is_recognized=False, translations=['en-US']
+2025-09-09 15:01:51 [DEBUG] [SpeechCaption] [SpeechCaption] corrected_translations: ['en-US']
+2025-09-09 15:01:51 [DEBUG] [SpeechCaption] [SpeechCaption] Started auto-finalization timer for en-US (10.0 seconds)
+2025-09-09 15:01:51 [DEBUG] [SpeechCaption] [SpeechCaption] User caption updated for en-US: jacqueline to went to check one two
+for God so loved the world that he gave his only son that whoever believes in
+him
+2025-09-09 15:01:51 [DEBUG] [SpeechCaption] [SpeechCaption] Setting user_caption_update_pending=True for languages: ['en-US']
+2025-09-09 15:01:51 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sending translations for languages: ['en-US']
+2025-09-09 15:01:51 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sample translation content: [('en-US', 'jacqueline to went to check one two\nfor God so loved the world that he gave his only son that whoever believes in him')]
+2025-09-09 15:01:51 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:51 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:51 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user captions with history for all languages: ['en-US']
+2025-09-09 15:01:51 [DEBUG] [SpeechCaption] [SpeechCaption] Vosk recognizing: for god so loved the world that he gave his only son that whoever believes in him should not
+2025-09-09 15:01:51 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:51 [DEBUG] [SpeechCaption] [SpeechCaption] Sent production caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:51 [DEBUG] [SpeechCaption] [SpeechCaption] process_user_speech_text called: is_recognized=False, translations=['en-US']
+2025-09-09 15:01:51 [DEBUG] [SpeechCaption] [SpeechCaption] corrected_translations: ['en-US']
+2025-09-09 15:01:51 [DEBUG] [SpeechCaption] [SpeechCaption] Started auto-finalization timer for en-US (10.0 seconds)
+2025-09-09 15:01:51 [DEBUG] [SpeechCaption] [SpeechCaption] User caption updated for en-US: jacqueline to went to check one two
+for God so loved the world that he gave his only son that whoever believes in
+him should not
+2025-09-09 15:01:51 [DEBUG] [SpeechCaption] [SpeechCaption] Setting user_caption_update_pending=True for languages: ['en-US']
+2025-09-09 15:01:51 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sending translations for languages: ['en-US']
+2025-09-09 15:01:51 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sample translation content: [('en-US', 'jacqueline to went to check one two\nfor God so loved the world that he gave his only son that whoever believes in him should not')]
+2025-09-09 15:01:51 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:51 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:51 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user captions with history for all languages: ['en-US']
+2025-09-09 15:01:51 [DEBUG] [SpeechCaption] [SpeechCaption] Vosk recognizing: for god so loved the world that he gave his only son that whoever believes in him should not
+2025-09-09 15:01:51 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:51 [DEBUG] [SpeechCaption] [SpeechCaption] Sent production caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:51 [DEBUG] [SpeechCaption] [SpeechCaption] process_user_speech_text called: is_recognized=False, translations=['en-US']
+2025-09-09 15:01:51 [DEBUG] [SpeechCaption] [SpeechCaption] corrected_translations: ['en-US']
+2025-09-09 15:01:51 [DEBUG] [SpeechCaption] [SpeechCaption] Started auto-finalization timer for en-US (10.0 seconds)
+2025-09-09 15:01:51 [DEBUG] [SpeechCaption] [SpeechCaption] User caption updated for en-US: jacqueline to went to check one two
+for God so loved the world that he gave his only son that whoever believes in
+him should not
+2025-09-09 15:01:51 [DEBUG] [SpeechCaption] [SpeechCaption] Setting user_caption_update_pending=True for languages: ['en-US']
+2025-09-09 15:01:51 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sending translations for languages: ['en-US']
+2025-09-09 15:01:51 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sample translation content: [('en-US', 'jacqueline to went to check one two\nfor God so loved the world that he gave his only son that whoever believes in him should not')]
+2025-09-09 15:01:51 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:51 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:51 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user captions with history for all languages: ['en-US']
+2025-09-09 15:01:51 [DEBUG] [SpeechCaption] [SpeechCaption] Vosk recognizing: for god so loved the world that he gave his only son that whoever believes in him should not perish
+2025-09-09 15:01:51 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:51 [DEBUG] [SpeechCaption] [SpeechCaption] Sent production caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:51 [DEBUG] [SpeechCaption] [SpeechCaption] process_user_speech_text called: is_recognized=False, translations=['en-US']
+2025-09-09 15:01:51 [DEBUG] [SpeechCaption] [SpeechCaption] corrected_translations: ['en-US']
+2025-09-09 15:01:51 [DEBUG] [SpeechCaption] [SpeechCaption] Started auto-finalization timer for en-US (10.0 seconds)
+2025-09-09 15:01:51 [DEBUG] [SpeechCaption] [SpeechCaption] User caption updated for en-US: jacqueline to went to check one two
+for God so loved the world that he gave his only son that whoever believes in
+him should not perish
+2025-09-09 15:01:51 [DEBUG] [SpeechCaption] [SpeechCaption] Setting user_caption_update_pending=True for languages: ['en-US']
+2025-09-09 15:01:51 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sending translations for languages: ['en-US']
+2025-09-09 15:01:51 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sample translation content: [('en-US', 'jacqueline to went to check one two\nfor God so loved the world that he gave his only son that whoever believes in him should not perish')]
+2025-09-09 15:01:51 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:51 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:51 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user captions with history for all languages: ['en-US']
+2025-09-09 15:01:52 [DEBUG] [SpeechCaption] [SpeechCaption] Vosk recognizing: for god so loved the world that he gave his only son that whoever believes in him should not perish but
+2025-09-09 15:01:52 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:52 [DEBUG] [SpeechCaption] [SpeechCaption] Sent production caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:52 [DEBUG] [SpeechCaption] [SpeechCaption] process_user_speech_text called: is_recognized=False, translations=['en-US']
+2025-09-09 15:01:52 [DEBUG] [SpeechCaption] [SpeechCaption] corrected_translations: ['en-US']
+2025-09-09 15:01:52 [DEBUG] [SpeechCaption] [SpeechCaption] Started auto-finalization timer for en-US (10.0 seconds)
+2025-09-09 15:01:52 [DEBUG] [SpeechCaption] [SpeechCaption] User caption updated for en-US: jacqueline to went to check one two
+for God so loved the world that he gave his only son that whoever believes in
+him should not perish but
+2025-09-09 15:01:52 [DEBUG] [SpeechCaption] [SpeechCaption] Setting user_caption_update_pending=True for languages: ['en-US']
+2025-09-09 15:01:52 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sending translations for languages: ['en-US']
+2025-09-09 15:01:52 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sample translation content: [('en-US', 'jacqueline to went to check one two\nfor God so loved the world that he gave his only son that whoever believes in him should not perish but')]
+2025-09-09 15:01:52 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:52 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:52 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user captions with history for all languages: ['en-US']
+2025-09-09 15:01:52 [DEBUG] [SpeechCaption] [SpeechCaption] Vosk recognizing: for god so loved the world that he gave his only son that whoever believes in him should not perish but have
+2025-09-09 15:01:52 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:52 [DEBUG] [SpeechCaption] [SpeechCaption] Sent production caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:52 [DEBUG] [SpeechCaption] [SpeechCaption] process_user_speech_text called: is_recognized=False, translations=['en-US']
+2025-09-09 15:01:52 [DEBUG] [SpeechCaption] [SpeechCaption] corrected_translations: ['en-US']
+2025-09-09 15:01:52 [DEBUG] [SpeechCaption] [SpeechCaption] Started auto-finalization timer for en-US (10.0 seconds)
+2025-09-09 15:01:52 [DEBUG] [SpeechCaption] [SpeechCaption] User caption updated for en-US: jacqueline to went to check one two
+for God so loved the world that he gave his only son that whoever believes in
+him should not perish but have
+2025-09-09 15:01:52 [DEBUG] [SpeechCaption] [SpeechCaption] Setting user_caption_update_pending=True for languages: ['en-US']
+2025-09-09 15:01:52 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sending translations for languages: ['en-US']
+2025-09-09 15:01:52 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sample translation content: [('en-US', 'jacqueline to went to check one two\nfor God so loved the world that he gave his only son that whoever believes in him should not perish but have')]
+2025-09-09 15:01:52 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:52 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:52 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user captions with history for all languages: ['en-US']
+2025-09-09 15:01:52 [DEBUG] [SpeechCaption] [SpeechCaption] Vosk recognizing: for god so loved the world that he gave his only son that whoever believes in him should not perish but have
+2025-09-09 15:01:52 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:52 [DEBUG] [SpeechCaption] [SpeechCaption] Sent production caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:52 [DEBUG] [SpeechCaption] [SpeechCaption] process_user_speech_text called: is_recognized=False, translations=['en-US']
+2025-09-09 15:01:52 [DEBUG] [SpeechCaption] [SpeechCaption] corrected_translations: ['en-US']
+2025-09-09 15:01:52 [DEBUG] [SpeechCaption] [SpeechCaption] Started auto-finalization timer for en-US (10.0 seconds)
+2025-09-09 15:01:52 [DEBUG] [SpeechCaption] [SpeechCaption] User caption updated for en-US: jacqueline to went to check one two
+for God so loved the world that he gave his only son that whoever believes in
+him should not perish but have
+2025-09-09 15:01:52 [DEBUG] [SpeechCaption] [SpeechCaption] Setting user_caption_update_pending=True for languages: ['en-US']
+2025-09-09 15:01:52 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sending translations for languages: ['en-US']
+2025-09-09 15:01:52 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sample translation content: [('en-US', 'jacqueline to went to check one two\nfor God so loved the world that he gave his only son that whoever believes in him should not perish but have')]
+2025-09-09 15:01:52 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:52 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:52 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user captions with history for all languages: ['en-US']
+2025-09-09 15:01:52 [DEBUG] [SpeechCaption] [SpeechCaption] Vosk recognizing: for god so loved the world that he gave his only son that whoever believes in him should not perish but have everlasting
+2025-09-09 15:01:52 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:52 [DEBUG] [SpeechCaption] [SpeechCaption] Sent production caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:52 [DEBUG] [SpeechCaption] [SpeechCaption] process_user_speech_text called: is_recognized=False, translations=['en-US']
+2025-09-09 15:01:52 [DEBUG] [SpeechCaption] [SpeechCaption] corrected_translations: ['en-US']
+2025-09-09 15:01:52 [DEBUG] [SpeechCaption] [SpeechCaption] Started auto-finalization timer for en-US (10.0 seconds)
+2025-09-09 15:01:52 [DEBUG] [SpeechCaption] [SpeechCaption] User caption updated for en-US: jacqueline to went to check one two
+for God so loved the world that he gave his only son that whoever believes in
+him should not perish but have everlasting
+2025-09-09 15:01:52 [DEBUG] [SpeechCaption] [SpeechCaption] Setting user_caption_update_pending=True for languages: ['en-US']
+2025-09-09 15:01:52 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sending translations for languages: ['en-US']
+2025-09-09 15:01:52 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sample translation content: [('en-US', 'jacqueline to went to check one two\nfor God so loved the world that he gave his only son that whoever believes in him should not perish but have everlasting')]
+2025-09-09 15:01:52 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:52 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:52 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user captions with history for all languages: ['en-US']
+2025-09-09 15:01:53 [DEBUG] [SpeechCaption] [SpeechCaption] Vosk recognizing: for god so loved the world that he gave his only son that whoever believes in him should not perish but have everlasting
+2025-09-09 15:01:53 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:53 [DEBUG] [SpeechCaption] [SpeechCaption] Sent production caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:53 [DEBUG] [SpeechCaption] [SpeechCaption] process_user_speech_text called: is_recognized=False, translations=['en-US']
+2025-09-09 15:01:53 [DEBUG] [SpeechCaption] [SpeechCaption] corrected_translations: ['en-US']
+2025-09-09 15:01:53 [DEBUG] [SpeechCaption] [SpeechCaption] Started auto-finalization timer for en-US (10.0 seconds)
+2025-09-09 15:01:53 [DEBUG] [SpeechCaption] [SpeechCaption] User caption updated for en-US: jacqueline to went to check one two
+for God so loved the world that he gave his only son that whoever believes in
+him should not perish but have everlasting
+2025-09-09 15:01:53 [DEBUG] [SpeechCaption] [SpeechCaption] Setting user_caption_update_pending=True for languages: ['en-US']
+2025-09-09 15:01:53 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sending translations for languages: ['en-US']
+2025-09-09 15:01:53 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sample translation content: [('en-US', 'jacqueline to went to check one two\nfor God so loved the world that he gave his only son that whoever believes in him should not perish but have everlasting')]
+2025-09-09 15:01:53 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:53 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:53 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user captions with history for all languages: ['en-US']
+2025-09-09 15:01:53 [DEBUG] [SpeechCaption] [SpeechCaption] Vosk recognizing: for god so loved the world that he gave his only son that whoever believes in him should not perish but have everlasting life
+2025-09-09 15:01:53 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:53 [DEBUG] [SpeechCaption] [SpeechCaption] Sent production caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:53 [DEBUG] [SpeechCaption] [SpeechCaption] process_user_speech_text called: is_recognized=False, translations=['en-US']
+2025-09-09 15:01:53 [DEBUG] [SpeechCaption] [SpeechCaption] corrected_translations: ['en-US']
+2025-09-09 15:01:53 [DEBUG] [SpeechCaption] [SpeechCaption] Started auto-finalization timer for en-US (10.0 seconds)
+2025-09-09 15:01:53 [DEBUG] [SpeechCaption] [SpeechCaption] User caption updated for en-US: jacqueline to went to check one two
+for God so loved the world that he gave his only son that whoever believes in
+him should not perish but have everlasting life
+2025-09-09 15:01:53 [DEBUG] [SpeechCaption] [SpeechCaption] Setting user_caption_update_pending=True for languages: ['en-US']
+2025-09-09 15:01:53 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sending translations for languages: ['en-US']
+2025-09-09 15:01:53 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sample translation content: [('en-US', 'jacqueline to went to check one two\nfor God so loved the world that he gave his only son that whoever believes in him should not perish but have everlasting life')]
+2025-09-09 15:01:53 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:53 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:53 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user captions with history for all languages: ['en-US']
+2025-09-09 15:01:53 [DEBUG] [SpeechCaption] [SpeechCaption] Vosk recognizing: for god so loved the world that he gave his only son that whoever believes in him should not perish but have everlasting life
+2025-09-09 15:01:53 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:53 [DEBUG] [SpeechCaption] [SpeechCaption] Sent production caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:53 [DEBUG] [SpeechCaption] [SpeechCaption] process_user_speech_text called: is_recognized=False, translations=['en-US']
+2025-09-09 15:01:53 [DEBUG] [SpeechCaption] [SpeechCaption] corrected_translations: ['en-US']
+2025-09-09 15:01:53 [DEBUG] [SpeechCaption] [SpeechCaption] Started auto-finalization timer for en-US (10.0 seconds)
+2025-09-09 15:01:53 [DEBUG] [SpeechCaption] [SpeechCaption] User caption updated for en-US: jacqueline to went to check one two
+for God so loved the world that he gave his only son that whoever believes in
+him should not perish but have everlasting life
+2025-09-09 15:01:53 [DEBUG] [SpeechCaption] [SpeechCaption] Setting user_caption_update_pending=True for languages: ['en-US']
+2025-09-09 15:01:53 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sending translations for languages: ['en-US']
+2025-09-09 15:01:53 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sample translation content: [('en-US', 'jacqueline to went to check one two\nfor God so loved the world that he gave his only son that whoever believes in him should not perish but have everlasting life')]
+2025-09-09 15:01:53 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:53 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:53 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user captions with history for all languages: ['en-US']
+2025-09-09 15:01:53 [DEBUG] [SpeechCaption] [SpeechCaption] Vosk recognizing: for god so loved the world that he gave his only son that whoever believes in him should not perish but have everlasting life
+2025-09-09 15:01:53 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:53 [DEBUG] [SpeechCaption] [SpeechCaption] Sent production caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:53 [DEBUG] [SpeechCaption] [SpeechCaption] process_user_speech_text called: is_recognized=False, translations=['en-US']
+2025-09-09 15:01:53 [DEBUG] [SpeechCaption] [SpeechCaption] corrected_translations: ['en-US']
+2025-09-09 15:01:53 [DEBUG] [SpeechCaption] [SpeechCaption] Started auto-finalization timer for en-US (10.0 seconds)
+2025-09-09 15:01:53 [DEBUG] [SpeechCaption] [SpeechCaption] User caption updated for en-US: jacqueline to went to check one two
+for God so loved the world that he gave his only son that whoever believes in
+him should not perish but have everlasting life
+2025-09-09 15:01:53 [DEBUG] [SpeechCaption] [SpeechCaption] Setting user_caption_update_pending=True for languages: ['en-US']
+2025-09-09 15:01:53 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sending translations for languages: ['en-US']
+2025-09-09 15:01:53 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sample translation content: [('en-US', 'jacqueline to went to check one two\nfor God so loved the world that he gave his only son that whoever believes in him should not perish but have everlasting life')]
+2025-09-09 15:01:53 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:53 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:53 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user captions with history for all languages: ['en-US']
+2025-09-09 15:01:54 [DEBUG] [SpeechCaption] [SpeechCaption] Vosk recognizing: for god so loved the world that he gave his only son that whoever believes in him should not perish but have everlasting life
+2025-09-09 15:01:54 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:54 [DEBUG] [SpeechCaption] [SpeechCaption] Sent production caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:54 [DEBUG] [SpeechCaption] [SpeechCaption] process_user_speech_text called: is_recognized=False, translations=['en-US']
+2025-09-09 15:01:54 [DEBUG] [SpeechCaption] [SpeechCaption] corrected_translations: ['en-US']
+2025-09-09 15:01:54 [DEBUG] [SpeechCaption] [SpeechCaption] Started auto-finalization timer for en-US (10.0 seconds)
+2025-09-09 15:01:54 [DEBUG] [SpeechCaption] [SpeechCaption] User caption updated for en-US: jacqueline to went to check one two
+for God so loved the world that he gave his only son that whoever believes in
+him should not perish but have everlasting life
+2025-09-09 15:01:54 [DEBUG] [SpeechCaption] [SpeechCaption] Setting user_caption_update_pending=True for languages: ['en-US']
+2025-09-09 15:01:54 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sending translations for languages: ['en-US']
+2025-09-09 15:01:54 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sample translation content: [('en-US', 'jacqueline to went to check one two\nfor God so loved the world that he gave his only son that whoever believes in him should not perish but have everlasting life')]
+2025-09-09 15:01:54 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:54 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:54 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user captions with history for all languages: ['en-US']
+2025-09-09 15:01:54 [DEBUG] [SpeechCaption] [SpeechCaption] Vosk recognizing: for god so loved the world that he gave his only son that whoever believes in him should not perish but have everlasting life
+2025-09-09 15:01:54 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:54 [DEBUG] [SpeechCaption] [SpeechCaption] Sent production caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:54 [DEBUG] [SpeechCaption] [SpeechCaption] process_user_speech_text called: is_recognized=False, translations=['en-US']
+2025-09-09 15:01:54 [DEBUG] [SpeechCaption] [SpeechCaption] corrected_translations: ['en-US']
+2025-09-09 15:01:54 [DEBUG] [SpeechCaption] [SpeechCaption] Started auto-finalization timer for en-US (10.0 seconds)
+2025-09-09 15:01:54 [DEBUG] [SpeechCaption] [SpeechCaption] User caption updated for en-US: jacqueline to went to check one two
+for God so loved the world that he gave his only son that whoever believes in
+him should not perish but have everlasting life
+2025-09-09 15:01:54 [DEBUG] [SpeechCaption] [SpeechCaption] Setting user_caption_update_pending=True for languages: ['en-US']
+2025-09-09 15:01:54 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sending translations for languages: ['en-US']
+2025-09-09 15:01:54 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sample translation content: [('en-US', 'jacqueline to went to check one two\nfor God so loved the world that he gave his only son that whoever believes in him should not perish but have everlasting life')]
+2025-09-09 15:01:54 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:54 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:54 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user captions with history for all languages: ['en-US']
+2025-09-09 15:01:54 [DEBUG] [SpeechCaption] [SpeechCaption] Vosk recognized: for god so loved the world that he gave his only son that whoever believes in him should not perish but have everlasting life
+2025-09-09 15:01:54 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:54 [DEBUG] [SpeechCaption] [SpeechCaption] Sent production caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:54 [DEBUG] [SpeechCaption] [SpeechCaption] process_user_speech_text called: is_recognized=True, translations=['en-US']
+2025-09-09 15:01:54 [DEBUG] [SpeechCaption] [SpeechCaption] corrected_translations: ['en-US']
+2025-09-09 15:01:54 [DEBUG] [SpeechCaption] [SpeechCaption] Cancelled auto-finalization timer due to final recognition
+2025-09-09 15:01:54 [DEBUG] [SpeechCaption] [SpeechCaption] User caption updated for en-US: jacqueline to went to check one two
+for God so loved the world that he gave his only son that whoever believes in
+him should not perish but have everlasting life
+2025-09-09 15:01:54 [DEBUG] [SpeechCaption] [SpeechCaption] Setting user_caption_update_pending=True for languages: ['en-US']
+2025-09-09 15:01:54 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sending translations for languages: ['en-US']
+2025-09-09 15:01:54 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sample translation content: [('en-US', 'jacqueline to went to check one two\nfor God so loved the world that he gave his only son that whoever believes in him should not perish but have everlasting life')]
+2025-09-09 15:01:54 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:54 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:54 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user captions with history for all languages: ['en-US']
+2025-09-09 15:01:55 [DEBUG] [SpeechCaption] [SpeechCaption] Vosk recognizing: john three
+2025-09-09 15:01:55 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:55 [DEBUG] [SpeechCaption] [SpeechCaption] Sent production caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:55 [DEBUG] [SpeechCaption] [SpeechCaption] process_user_speech_text called: is_recognized=False, translations=['en-US']
+2025-09-09 15:01:55 [DEBUG] [SpeechCaption] [SpeechCaption] corrected_translations: ['en-US']
+2025-09-09 15:01:55 [DEBUG] [SpeechCaption] [SpeechCaption] Started auto-finalization timer for en-US (10.0 seconds)
+2025-09-09 15:01:55 [DEBUG] [SpeechCaption] [SpeechCaption] User caption updated for en-US: jacqueline to went to check one two
+for God so loved the world that he gave his only son that whoever believes in
+him should not perish but have everlasting life
+John three
+2025-09-09 15:01:55 [DEBUG] [SpeechCaption] [SpeechCaption] Setting user_caption_update_pending=True for languages: ['en-US']
+2025-09-09 15:01:55 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sending translations for languages: ['en-US']
+2025-09-09 15:01:55 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sample translation content: [('en-US', 'jacqueline to went to check one two\nfor God so loved the world that he gave his only son that whoever believes in him should not perish but have everlasting life\nJohn three')]
+2025-09-09 15:01:55 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:55 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:55 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user captions with history for all languages: ['en-US']
+2025-09-09 15:01:55 [DEBUG] [SpeechCaption] [SpeechCaption] Vosk recognizing: john three sixteen
+2025-09-09 15:01:55 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:55 [DEBUG] [SpeechCaption] [SpeechCaption] Sent production caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:55 [DEBUG] [SpeechCaption] [SpeechCaption] process_user_speech_text called: is_recognized=False, translations=['en-US']
+2025-09-09 15:01:55 [DEBUG] [SpeechCaption] [SpeechCaption] corrected_translations: ['en-US']
+2025-09-09 15:01:55 [DEBUG] [SpeechCaption] [SpeechCaption] Started auto-finalization timer for en-US (10.0 seconds)
+2025-09-09 15:01:55 [DEBUG] [SpeechCaption] [SpeechCaption] User caption updated for en-US: jacqueline to went to check one two
+for God so loved the world that he gave his only son that whoever believes in
+him should not perish but have everlasting life
+John three sixteen
+2025-09-09 15:01:55 [DEBUG] [SpeechCaption] [SpeechCaption] Setting user_caption_update_pending=True for languages: ['en-US']
+2025-09-09 15:01:55 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sending translations for languages: ['en-US']
+2025-09-09 15:01:55 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sample translation content: [('en-US', 'jacqueline to went to check one two\nfor God so loved the world that he gave his only son that whoever believes in him should not perish but have everlasting life\nJohn three sixteen')]
+2025-09-09 15:01:55 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:55 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:55 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user captions with history for all languages: ['en-US']
+2025-09-09 15:01:55 [DEBUG] [SpeechCaption] [SpeechCaption] Vosk recognizing: john three sixteen
+2025-09-09 15:01:55 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:55 [DEBUG] [SpeechCaption] [SpeechCaption] Sent production caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:55 [DEBUG] [SpeechCaption] [SpeechCaption] process_user_speech_text called: is_recognized=False, translations=['en-US']
+2025-09-09 15:01:55 [DEBUG] [SpeechCaption] [SpeechCaption] corrected_translations: ['en-US']
+2025-09-09 15:01:55 [DEBUG] [SpeechCaption] [SpeechCaption] Started auto-finalization timer for en-US (10.0 seconds)
+2025-09-09 15:01:55 [DEBUG] [SpeechCaption] [SpeechCaption] User caption updated for en-US: jacqueline to went to check one two
+for God so loved the world that he gave his only son that whoever believes in
+him should not perish but have everlasting life
+John three sixteen
+2025-09-09 15:01:55 [DEBUG] [SpeechCaption] [SpeechCaption] Setting user_caption_update_pending=True for languages: ['en-US']
+2025-09-09 15:01:55 [DEBUG] [SpeechCaption] [SpeechCaption] Speech recognizer is active
+2025-09-09 15:01:55 [DEBUG] [SpeechCaption] [SpeechCaption] Auth attempt: provided username=admin
+2025-09-09 15:01:55 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sending translations for languages: ['en-US']
+2025-09-09 15:01:55 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sample translation content: [('en-US', 'jacqueline to went to check one two\nfor God so loved the world that he gave his only son that whoever believes in him should not perish but have everlasting life\nJohn three sixteen')]
+2025-09-09 15:01:55 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:55 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:55 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user captions with history for all languages: ['en-US']
+2025-09-09 15:01:56 [DEBUG] [SpeechCaption] [SpeechCaption] Vosk recognizing: john three sixteen
+2025-09-09 15:01:56 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:56 [DEBUG] [SpeechCaption] [SpeechCaption] Sent production caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:56 [DEBUG] [SpeechCaption] [SpeechCaption] process_user_speech_text called: is_recognized=False, translations=['en-US']
+2025-09-09 15:01:56 [DEBUG] [SpeechCaption] [SpeechCaption] corrected_translations: ['en-US']
+2025-09-09 15:01:56 [DEBUG] [SpeechCaption] [SpeechCaption] Started auto-finalization timer for en-US (10.0 seconds)
+2025-09-09 15:01:56 [DEBUG] [SpeechCaption] [SpeechCaption] User caption updated for en-US: jacqueline to went to check one two
+for God so loved the world that he gave his only son that whoever believes in
+him should not perish but have everlasting life
+John three sixteen
+2025-09-09 15:01:56 [DEBUG] [SpeechCaption] [SpeechCaption] Setting user_caption_update_pending=True for languages: ['en-US']
+2025-09-09 15:01:56 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sending translations for languages: ['en-US']
+2025-09-09 15:01:56 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sample translation content: [('en-US', 'jacqueline to went to check one two\nfor God so loved the world that he gave his only son that whoever believes in him should not perish but have everlasting life\nJohn three sixteen')]
+2025-09-09 15:01:56 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:56 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:56 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user captions with history for all languages: ['en-US']
+2025-09-09 15:01:56 [DEBUG] [SpeechCaption] [SpeechCaption] Vosk recognizing: john three sixteen
+2025-09-09 15:01:56 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:56 [DEBUG] [SpeechCaption] [SpeechCaption] Sent production caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:56 [DEBUG] [SpeechCaption] [SpeechCaption] process_user_speech_text called: is_recognized=False, translations=['en-US']
+2025-09-09 15:01:56 [DEBUG] [SpeechCaption] [SpeechCaption] corrected_translations: ['en-US']
+2025-09-09 15:01:56 [DEBUG] [SpeechCaption] [SpeechCaption] Started auto-finalization timer for en-US (10.0 seconds)
+2025-09-09 15:01:56 [DEBUG] [SpeechCaption] [SpeechCaption] User caption updated for en-US: jacqueline to went to check one two
+for God so loved the world that he gave his only son that whoever believes in
+him should not perish but have everlasting life
+John three sixteen
+2025-09-09 15:01:56 [DEBUG] [SpeechCaption] [SpeechCaption] Setting user_caption_update_pending=True for languages: ['en-US']
+2025-09-09 15:01:56 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sending translations for languages: ['en-US']
+2025-09-09 15:01:56 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sample translation content: [('en-US', 'jacqueline to went to check one two\nfor God so loved the world that he gave his only son that whoever believes in him should not perish but have everlasting life\nJohn three sixteen')]
+2025-09-09 15:01:56 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:56 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:56 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user captions with history for all languages: ['en-US']
+2025-09-09 15:01:56 [DEBUG] [SpeechCaption] [SpeechCaption] Vosk recognizing: john three sixteen
+2025-09-09 15:01:56 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:56 [DEBUG] [SpeechCaption] [SpeechCaption] Sent production caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:56 [DEBUG] [SpeechCaption] [SpeechCaption] process_user_speech_text called: is_recognized=False, translations=['en-US']
+2025-09-09 15:01:56 [DEBUG] [SpeechCaption] [SpeechCaption] corrected_translations: ['en-US']
+2025-09-09 15:01:56 [DEBUG] [SpeechCaption] [SpeechCaption] Started auto-finalization timer for en-US (10.0 seconds)
+2025-09-09 15:01:56 [DEBUG] [SpeechCaption] [SpeechCaption] User caption updated for en-US: jacqueline to went to check one two
+for God so loved the world that he gave his only son that whoever believes in
+him should not perish but have everlasting life
+John three sixteen
+2025-09-09 15:01:56 [DEBUG] [SpeechCaption] [SpeechCaption] Setting user_caption_update_pending=True for languages: ['en-US']
+2025-09-09 15:01:56 [DEBUG] [SpeechCaption] [SpeechCaption] Auth attempt: provided username=admin
+2025-09-09 15:01:56 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sending translations for languages: ['en-US']
+2025-09-09 15:01:56 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sample translation content: [('en-US', 'jacqueline to went to check one two\nfor God so loved the world that he gave his only son that whoever believes in him should not perish but have everlasting life\nJohn three sixteen')]
+2025-09-09 15:01:56 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:56 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:56 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user captions with history for all languages: ['en-US']
+2025-09-09 15:01:56 [DEBUG] [SpeechCaption] [SpeechCaption] Vosk recognizing: john three sixteen
+2025-09-09 15:01:56 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:56 [DEBUG] [SpeechCaption] [SpeechCaption] Sent production caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:56 [DEBUG] [SpeechCaption] [SpeechCaption] process_user_speech_text called: is_recognized=False, translations=['en-US']
+2025-09-09 15:01:56 [DEBUG] [SpeechCaption] [SpeechCaption] corrected_translations: ['en-US']
+2025-09-09 15:01:56 [DEBUG] [SpeechCaption] [SpeechCaption] Started auto-finalization timer for en-US (10.0 seconds)
+2025-09-09 15:01:56 [DEBUG] [SpeechCaption] [SpeechCaption] User caption updated for en-US: jacqueline to went to check one two
+for God so loved the world that he gave his only son that whoever believes in
+him should not perish but have everlasting life
+John three sixteen
+2025-09-09 15:01:56 [DEBUG] [SpeechCaption] [SpeechCaption] Setting user_caption_update_pending=True for languages: ['en-US']
+2025-09-09 15:01:56 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sending translations for languages: ['en-US']
+2025-09-09 15:01:56 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sample translation content: [('en-US', 'jacqueline to went to check one two\nfor God so loved the world that he gave his only son that whoever believes in him should not perish but have everlasting life\nJohn three sixteen')]
+2025-09-09 15:01:56 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:56 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:56 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user captions with history for all languages: ['en-US']
+2025-09-09 15:01:56 [DEBUG] [SpeechCaption] [SpeechCaption] Vosk recognized: john three sixteen
+2025-09-09 15:01:56 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:56 [DEBUG] [SpeechCaption] [SpeechCaption] Sent production caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:56 [DEBUG] [SpeechCaption] [SpeechCaption] process_user_speech_text called: is_recognized=True, translations=['en-US']
+2025-09-09 15:01:57 [DEBUG] [SpeechCaption] [SpeechCaption] corrected_translations: ['en-US']
+2025-09-09 15:01:57 [DEBUG] [SpeechCaption] [SpeechCaption] Cancelled auto-finalization timer due to final recognition
+2025-09-09 15:01:57 [DEBUG] [SpeechCaption] [SpeechCaption] User caption updated for en-US: jacqueline to went to check one two
+for God so loved the world that he gave his only son that whoever believes in
+him should not perish but have everlasting life
+John three sixteen
+2025-09-09 15:01:57 [DEBUG] [SpeechCaption] [SpeechCaption] Setting user_caption_update_pending=True for languages: ['en-US']
+2025-09-09 15:01:57 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sending translations for languages: ['en-US']
+2025-09-09 15:01:57 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sample translation content: [('en-US', 'jacqueline to went to check one two\nfor God so loved the world that he gave his only son that whoever believes in him should not perish but have everlasting life\nJohn three sixteen')]
+2025-09-09 15:01:57 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:57 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:57 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user captions with history for all languages: ['en-US']
+2025-09-09 15:01:58 [DEBUG] [SpeechCaption] [SpeechCaption] Vosk recognizing: dave
+2025-09-09 15:01:58 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:58 [DEBUG] [SpeechCaption] [SpeechCaption] Sent production caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:58 [DEBUG] [SpeechCaption] [SpeechCaption] process_user_speech_text called: is_recognized=False, translations=['en-US']
+2025-09-09 15:01:58 [DEBUG] [SpeechCaption] [SpeechCaption] corrected_translations: ['en-US']
+2025-09-09 15:01:58 [DEBUG] [SpeechCaption] [SpeechCaption] Started auto-finalization timer for en-US (10.0 seconds)
+2025-09-09 15:01:58 [DEBUG] [SpeechCaption] [SpeechCaption] User caption updated for en-US: jacqueline to went to check one two
+for God so loved the world that he gave his only son that whoever believes in
+him should not perish but have everlasting life
+John three sixteen
+dave
+2025-09-09 15:01:58 [DEBUG] [SpeechCaption] [SpeechCaption] Setting user_caption_update_pending=True for languages: ['en-US']
+2025-09-09 15:01:58 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sending translations for languages: ['en-US']
+2025-09-09 15:01:58 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sample translation content: [('en-US', 'jacqueline to went to check one two\nfor God so loved the world that he gave his only son that whoever believes in him should not perish but have everlasting life\nJohn three sixteen\ndave')]
+2025-09-09 15:01:58 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:58 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:58 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user captions with history for all languages: ['en-US']
+2025-09-09 15:01:59 [DEBUG] [SpeechCaption] [SpeechCaption] Vosk recognizing: dave
+2025-09-09 15:01:59 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:59 [DEBUG] [SpeechCaption] [SpeechCaption] Sent production caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:59 [DEBUG] [SpeechCaption] [SpeechCaption] process_user_speech_text called: is_recognized=False, translations=['en-US']
+2025-09-09 15:01:59 [DEBUG] [SpeechCaption] [SpeechCaption] corrected_translations: ['en-US']
+2025-09-09 15:01:59 [DEBUG] [SpeechCaption] [SpeechCaption] Started auto-finalization timer for en-US (10.0 seconds)
+2025-09-09 15:01:59 [DEBUG] [SpeechCaption] [SpeechCaption] User caption updated for en-US: jacqueline to went to check one two
+for God so loved the world that he gave his only son that whoever believes in
+him should not perish but have everlasting life
+John three sixteen
+dave
+2025-09-09 15:01:59 [DEBUG] [SpeechCaption] [SpeechCaption] Setting user_caption_update_pending=True for languages: ['en-US']
+2025-09-09 15:01:59 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sending translations for languages: ['en-US']
+2025-09-09 15:01:59 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sample translation content: [('en-US', 'jacqueline to went to check one two\nfor God so loved the world that he gave his only son that whoever believes in him should not perish but have everlasting life\nJohn three sixteen\ndave')]
+2025-09-09 15:01:59 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:59 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:59 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user captions with history for all languages: ['en-US']
+2025-09-09 15:01:59 [DEBUG] [SpeechCaption] [SpeechCaption] Vosk recognizing: dave deangelo
+2025-09-09 15:01:59 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:59 [DEBUG] [SpeechCaption] [SpeechCaption] Sent production caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:59 [DEBUG] [SpeechCaption] [SpeechCaption] process_user_speech_text called: is_recognized=False, translations=['en-US']
+2025-09-09 15:01:59 [DEBUG] [SpeechCaption] [SpeechCaption] corrected_translations: ['en-US']
+2025-09-09 15:01:59 [DEBUG] [SpeechCaption] [SpeechCaption] Started auto-finalization timer for en-US (10.0 seconds)
+2025-09-09 15:01:59 [DEBUG] [SpeechCaption] [SpeechCaption] User caption updated for en-US: jacqueline to went to check one two
+for God so loved the world that he gave his only son that whoever believes in
+him should not perish but have everlasting life
+John three sixteen
+dave D'Angelo
+2025-09-09 15:01:59 [DEBUG] [SpeechCaption] [SpeechCaption] Setting user_caption_update_pending=True for languages: ['en-US']
+2025-09-09 15:01:59 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sending translations for languages: ['en-US']
+2025-09-09 15:01:59 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sample translation content: [('en-US', "jacqueline to went to check one two\nfor God so loved the world that he gave his only son that whoever believes in him should not perish but have everlasting life\nJohn three sixteen\ndave D'Angelo")]
+2025-09-09 15:01:59 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:59 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:59 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user captions with history for all languages: ['en-US']
+2025-09-09 15:01:59 [DEBUG] [SpeechCaption] [SpeechCaption] Vosk recognizing: dave deangelo
+2025-09-09 15:01:59 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:59 [DEBUG] [SpeechCaption] [SpeechCaption] Sent production caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:59 [DEBUG] [SpeechCaption] [SpeechCaption] process_user_speech_text called: is_recognized=False, translations=['en-US']
+2025-09-09 15:01:59 [DEBUG] [SpeechCaption] [SpeechCaption] corrected_translations: ['en-US']
+2025-09-09 15:01:59 [DEBUG] [SpeechCaption] [SpeechCaption] Started auto-finalization timer for en-US (10.0 seconds)
+2025-09-09 15:01:59 [DEBUG] [SpeechCaption] [SpeechCaption] User caption updated for en-US: jacqueline to went to check one two
+for God so loved the world that he gave his only son that whoever believes in
+him should not perish but have everlasting life
+John three sixteen
+dave D'Angelo
+2025-09-09 15:01:59 [DEBUG] [SpeechCaption] [SpeechCaption] Setting user_caption_update_pending=True for languages: ['en-US']
+2025-09-09 15:01:59 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sending translations for languages: ['en-US']
+2025-09-09 15:01:59 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sample translation content: [('en-US', "jacqueline to went to check one two\nfor God so loved the world that he gave his only son that whoever believes in him should not perish but have everlasting life\nJohn three sixteen\ndave D'Angelo")]
+2025-09-09 15:01:59 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:59 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:59 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user captions with history for all languages: ['en-US']
+2025-09-09 15:01:59 [DEBUG] [SpeechCaption] [SpeechCaption] Vosk recognizing: dave deangelo
+2025-09-09 15:01:59 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:59 [DEBUG] [SpeechCaption] [SpeechCaption] Sent production caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:59 [DEBUG] [SpeechCaption] [SpeechCaption] process_user_speech_text called: is_recognized=False, translations=['en-US']
+2025-09-09 15:01:59 [DEBUG] [SpeechCaption] [SpeechCaption] corrected_translations: ['en-US']
+2025-09-09 15:01:59 [DEBUG] [SpeechCaption] [SpeechCaption] Started auto-finalization timer for en-US (10.0 seconds)
+2025-09-09 15:01:59 [DEBUG] [SpeechCaption] [SpeechCaption] User caption updated for en-US: jacqueline to went to check one two
+for God so loved the world that he gave his only son that whoever believes in
+him should not perish but have everlasting life
+John three sixteen
+dave D'Angelo
+2025-09-09 15:01:59 [DEBUG] [SpeechCaption] [SpeechCaption] Setting user_caption_update_pending=True for languages: ['en-US']
+2025-09-09 15:01:59 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sending translations for languages: ['en-US']
+2025-09-09 15:01:59 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sample translation content: [('en-US', "jacqueline to went to check one two\nfor God so loved the world that he gave his only son that whoever believes in him should not perish but have everlasting life\nJohn three sixteen\ndave D'Angelo")]
+2025-09-09 15:01:59 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:01:59 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:01:59 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user captions with history for all languages: ['en-US']
+2025-09-09 15:02:00 [DEBUG] [SpeechCaption] [SpeechCaption] Vosk recognizing: dave deangelo
+2025-09-09 15:02:00 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:02:00 [DEBUG] [SpeechCaption] [SpeechCaption] Sent production caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:02:00 [DEBUG] [SpeechCaption] [SpeechCaption] process_user_speech_text called: is_recognized=False, translations=['en-US']
+2025-09-09 15:02:00 [DEBUG] [SpeechCaption] [SpeechCaption] corrected_translations: ['en-US']
+2025-09-09 15:02:00 [DEBUG] [SpeechCaption] [SpeechCaption] Started auto-finalization timer for en-US (10.0 seconds)
+2025-09-09 15:02:00 [DEBUG] [SpeechCaption] [SpeechCaption] User caption updated for en-US: jacqueline to went to check one two
+for God so loved the world that he gave his only son that whoever believes in
+him should not perish but have everlasting life
+John three sixteen
+dave D'Angelo
+2025-09-09 15:02:00 [DEBUG] [SpeechCaption] [SpeechCaption] Setting user_caption_update_pending=True for languages: ['en-US']
+2025-09-09 15:02:00 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sending translations for languages: ['en-US']
+2025-09-09 15:02:00 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sample translation content: [('en-US', "jacqueline to went to check one two\nfor God so loved the world that he gave his only son that whoever believes in him should not perish but have everlasting life\nJohn three sixteen\ndave D'Angelo")]
+2025-09-09 15:02:00 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:02:00 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:02:00 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user captions with history for all languages: ['en-US']
+2025-09-09 15:02:00 [DEBUG] [SpeechCaption] [SpeechCaption] Vosk recognizing: dave deangelo
+2025-09-09 15:02:00 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:02:00 [DEBUG] [SpeechCaption] [SpeechCaption] Sent production caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:02:00 [DEBUG] [SpeechCaption] [SpeechCaption] process_user_speech_text called: is_recognized=False, translations=['en-US']
+2025-09-09 15:02:00 [DEBUG] [SpeechCaption] [SpeechCaption] corrected_translations: ['en-US']
+2025-09-09 15:02:00 [DEBUG] [SpeechCaption] [SpeechCaption] Started auto-finalization timer for en-US (10.0 seconds)
+2025-09-09 15:02:00 [DEBUG] [SpeechCaption] [SpeechCaption] User caption updated for en-US: jacqueline to went to check one two
+for God so loved the world that he gave his only son that whoever believes in
+him should not perish but have everlasting life
+John three sixteen
+dave D'Angelo
+2025-09-09 15:02:00 [DEBUG] [SpeechCaption] [SpeechCaption] Setting user_caption_update_pending=True for languages: ['en-US']
+2025-09-09 15:02:00 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sending translations for languages: ['en-US']
+2025-09-09 15:02:00 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sample translation content: [('en-US', "jacqueline to went to check one two\nfor God so loved the world that he gave his only son that whoever believes in him should not perish but have everlasting life\nJohn three sixteen\ndave D'Angelo")]
+2025-09-09 15:02:00 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:02:00 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:02:00 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user captions with history for all languages: ['en-US']
+2025-09-09 15:02:00 [DEBUG] [SpeechCaption] [SpeechCaption] Vosk recognized: dave deangelo
+2025-09-09 15:02:00 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:02:00 [DEBUG] [SpeechCaption] [SpeechCaption] Sent production caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:02:00 [DEBUG] [SpeechCaption] [SpeechCaption] process_user_speech_text called: is_recognized=True, translations=['en-US']
+2025-09-09 15:02:00 [DEBUG] [SpeechCaption] [SpeechCaption] corrected_translations: ['en-US']
+2025-09-09 15:02:00 [DEBUG] [SpeechCaption] [SpeechCaption] Cancelled auto-finalization timer due to final recognition
+2025-09-09 15:02:00 [DEBUG] [SpeechCaption] [SpeechCaption] User caption updated for en-US: for God so loved the world that he gave his only son that whoever believes in
+him should not perish but have everlasting life
+John three sixteen
+dave D'Angelo
+2025-09-09 15:02:00 [DEBUG] [SpeechCaption] [SpeechCaption] Setting user_caption_update_pending=True for languages: ['en-US']
+2025-09-09 15:02:00 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sending translations for languages: ['en-US']
+2025-09-09 15:02:00 [DEBUG] [SpeechCaption] [SpeechCaption] debounce_update_user_caption: sample translation content: [('en-US', "for God so loved the world that he gave his only son that whoever believes in him should not perish but have everlasting life\nJohn three sixteen\ndave D'Angelo")]
+2025-09-09 15:02:00 [DEBUG] [SpeechCaption] Using selector: KqueueSelector
+2025-09-09 15:02:00 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:02:00 [DEBUG] [SpeechCaption] [SpeechCaption] Sent user captions with history for all languages: ['en-US']
+2025-09-09 15:02:00 [DEBUG] [SpeechCaption] [SpeechCaption] Auth attempt: provided username=admin
+2025-09-09 15:02:05 [DEBUG] [SpeechCaption] [SpeechCaption] Auth attempt: provided username=admin
+2025-09-09 15:02:05 [DEBUG] [SpeechCaption] [SpeechCaption] Auth attempt: provided username=admin
+2025-09-09 15:02:05 [INFO] [SpeechCaption] [SpeechCaption] Received request to stop recognition
+2025-09-09 15:02:05 [INFO] [SpeechCaption] [SpeechCaption] Stopping Vosk recognition
+2025-09-09 15:02:05 [INFO] [SpeechCaption] Vosk speech recognition stopped
+2025-09-09 15:02:05 [DEBUG] [SpeechCaption] [SpeechCaption] Sent production caption to client: Address(host='127.0.0.1', port=55889)
+2025-09-09 15:02:05 [INFO] [SpeechCaption] [SpeechCaption] Vosk recognition stopped successfully
+2025-09-09 15:02:05 [INFO] [SpeechCaption] [SpeechCaption] Speech recognition stopped successfully
+2025-09-09 15:02:05 [DEBUG] [SpeechCaption] [SpeechCaption] Auth attempt: provided username=admin
+2025-09-09 15:02:10 [DEBUG] [SpeechCaption] [SpeechCaption] Auth attempt: provided username=admin
+2025-09-09 15:02:16 [DEBUG] [SpeechCaption] [SpeechCaption] Auth attempt: provided username=admin
+2025-09-09 15:02:21 [DEBUG] [SpeechCaption] [SpeechCaption] Auth attempt: provided username=admin
+2025-09-09 15:02:27 [DEBUG] [SpeechCaption] [SpeechCaption] Auth attempt: provided username=admin
+2025-09-09 15:02:36 [DEBUG] [SpeechCaption] [SpeechCaption] Auth attempt: provided username=admin
+2025-09-09 15:02:42 [DEBUG] [SpeechCaption] [SpeechCaption] Auth attempt: provided username=admin
+2025-09-09 15:02:47 [INFO] [SpeechCaption] [SpeechCaption] Vosk speech recognition stopped during cleanup.

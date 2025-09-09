@@ -1,6 +1,6 @@
 {
-    "speech_key": "",
-    "service_region": "eastus",
+    "model_path": "models/vosk-model-en-us-0.22-lgraph",
+    "sample_rate": 16000,
     "font_size": 45,
     "font_style": "Arial",
     "bg_color": "#000000",
@@ -16,8 +16,8 @@
     "text_padding_y": 0,
     "preview_fine_tune_x": 50,
     "preview_fine_tune_y": 50,
-    "initial_silence_timeout_ms": "15000",
-    "end_silence_timeout_ms": "15000",
     "max_transcript_lines": 1000,
-    "pause_threshold_seconds": 2.0
+    "pause_threshold_seconds": 2.0,
+    "audio_chunk_size": 4000,
+    "partial_words": true
 }

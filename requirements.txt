@@ -1,4 +1,4 @@
-azure-cognitiveservices-speech==1.34.0
+vosk==0.3.45
 fastapi==0.104.1
 uvicorn==0.24.0
 python-multipart==0.0.6
@@ -7,4 +7,5 @@ sounddevice==0.4.6
 schedule==1.2.0
 numpy>=1.26.0
 websockets==12.0
-requests>=2.31.0 
+requests>=2.31.0
+pyaudio==0.2.11 
