@@ -350,8 +350,51 @@ async def check_updates():
         log_message(logging.ERROR, f"Error checking for updates: {e}")
         return {
             'status': 'error',
-            'message': f'Error checking for updates: {str(e)}',
-            'last_check': datetime.now().isoformat()
+            'message': str(e)
+        }
+
+@app.post("/apply_update", dependencies=[Depends(get_current_username)])
+async def apply_update():
+    """Apply GitHub update"""
+    try:
+        from github_updater import GitHubUpdater
+        updater = GitHubUpdater()
+        
+        # Check if update is available first
+        status = updater.check_for_updates()
+        if status['status'] != 'update_available':
+            return {
+                'status': 'error',
+                'message': 'No update available'
+            }
+        
+        # Create backup
+        backup_dir = updater.backup_current_version()
+        if not backup_dir:
+            return {
+                'status': 'error',
+                'message': 'Failed to create backup'
+            }
+        
+        # Apply update
+        if updater.apply_update():
+            log_message(logging.INFO, "Update applied successfully via dashboard")
+            return {
+                'status': 'success',
+                'message': 'Update applied successfully',
+                'backup_dir': backup_dir
+            }
+        else:
+            return {
+                'status': 'error',
+                'message': 'Failed to apply update'
+            }
+            
+    except Exception as e:
+        log_message(logging.ERROR, f"Error applying update: {e}")
+        return {
+            'status': 'error',
+            'message': str(e)
         }
 
 @app.post("/perform_update", dependencies=[Depends(get_current_username)])
